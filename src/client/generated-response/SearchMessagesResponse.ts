@@ -53,6 +53,7 @@ export interface Attachment {
   author_subname?: string;
   blocks?: AnyMessageBlock[];
   bot_id?: string;
+  bot_team_id?: string;
   callback_id?: string;
   channel_id?: string;
   channel_name?: string;
