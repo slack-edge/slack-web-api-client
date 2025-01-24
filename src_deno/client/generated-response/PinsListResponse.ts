@@ -259,6 +259,7 @@ export interface Block {
   description?: Text | string;
   developer_trace_id?: string;
   elements?: Accessory[];
+  expand?: boolean;
   fallback?: string;
   fields?: Text[];
   function_trigger_id?: string;

@@ -26,6 +26,7 @@ export interface Match {
   access?: string;
   attachments?: MessageAttachment[];
   bot_id?: string;
+  canvas_printing_enabled?: boolean;
   cc?: Cc[];
   channels?: string[];
   comments_count?: number;
@@ -56,6 +57,7 @@ export interface Match {
   is_channel_space?: boolean;
   is_external?: boolean;
   is_public?: boolean;
+  is_restricted_sharing_enabled?: boolean;
   is_starred?: boolean;
   last_editor?: LastEditor;
   lines?: number;
@@ -246,6 +248,7 @@ export interface Block {
   description?: DescriptionElement | string;
   developer_trace_id?: string;
   elements?: Accessory[];
+  expand?: boolean;
   fallback?: string;
   fields?: DescriptionElement[];
   function_trigger_id?: string;
@@ -1342,6 +1345,7 @@ export interface TitleBlock {
   dispatch_action?: boolean;
   element?: Accessory;
   elements?: Accessory[];
+  expand?: boolean;
   external_id?: string;
   fallback?: string;
   fields?: DescriptionElement[];

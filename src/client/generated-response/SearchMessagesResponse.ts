@@ -184,6 +184,7 @@ export interface TitleBlockElement {
   description?: DescriptionElement | string;
   developer_trace_id?: string;
   elements?: Accessory[];
+  expand?: boolean;
   fallback?: string;
   fields?: DescriptionElement[];
   function_trigger_id?: string;
@@ -1250,6 +1251,7 @@ export interface MatchBlock {
   dispatch_action?: boolean;
   element?: Accessory;
   elements?: Accessory[];
+  expand?: boolean;
   external_id?: string;
   fallback?: string;
   fields?: DescriptionElement[];

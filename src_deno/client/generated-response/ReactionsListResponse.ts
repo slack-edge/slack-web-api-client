@@ -81,6 +81,7 @@ export interface AssistantAppThreadBlock {
   dispatch_action?: boolean;
   element?: Accessory;
   elements?: Accessory[];
+  expand?: boolean;
   external_id?: string;
   fallback?: string;
   fields?: DescriptionElement[];
@@ -516,6 +517,7 @@ export interface DescriptionBlockElement {
   description?: DescriptionElement | string;
   developer_trace_id?: string;
   elements?: Accessory[];
+  expand?: boolean;
   fallback?: string;
   fields?: DescriptionElement[];
   function_trigger_id?: string;
