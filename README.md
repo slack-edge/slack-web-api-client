@@ -9,7 +9,7 @@ The **slack-web-api-client** library is a type-safe Slack Web API client that pr
 * **Strong types for Web API responses and Block Kit**, which make coding enjoyable and predictable
 * **Zero additional dependencies**, allowing developers to integrate this library into their projects without any obstacles
 
-If you're looking for a solution to utilize the full features of the Slack platform, [**slack-edge**](https://github.com/seratch/slack-edge) is the one for you. The **slack-edge** library uses this **slack-web-api-client** internally, making it compatible with most JavaScript/TypeScript runtimes.
+If you're looking for a solution to utilize the full features of the Slack platform, [**slack-edge**](https://github.com/slack-edge/slack-edge) is the one for you. The **slack-edge** library uses this **slack-web-api-client** internally, making it compatible with most JavaScript/TypeScript runtimes.
 
 ### Getting Started
 
@@ -45,4 +45,4 @@ This argument, if provided, allows for further configuration of **SlackAPIClient
 
 #### Working with the Deno module
 
-Please refer to [README for the Deno module](https://github.com/seratch/slack-web-api-client/blob/main/src_deno/README.md).
+Please refer to [README for the Deno module](https://github.com/slack-edge/slack-web-api-client/blob/main/src_deno/README.md).
