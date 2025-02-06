@@ -11,6 +11,7 @@ export type ConversationsHistoryResponse = SlackAPIResponse & {
   channel_actions_ts?: number;
   error?: string;
   has_more?: boolean;
+  latest?: string;
   messages?: MessageElement[];
   needed?: string;
   ok: boolean;
