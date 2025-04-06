@@ -6,7 +6,10 @@
 import type { SlackAPIResponse } from "../response.ts";
 export type ConversationsKickResponse = SlackAPIResponse & {
   error?: string;
+  errors?: Errors;
   needed?: string;
   ok: boolean;
   provided?: string;
 };
+
+export interface Errors {}

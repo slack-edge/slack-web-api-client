@@ -31,9 +31,9 @@ describe("SlackAPIClient", () => {
       const client = new SlackAPIClient("xoxb-invalid", {
         logLevel: "DEBUG",
       });
-      const rejects = expect(client.auth.test()).rejects;
-      rejects.toThrowError(SlackAPIError);
-      rejects.toThrowError('Failed to call auth.test due to invalid_auth: {"ok":false,"error":"invalid_auth","headers":{}}');
+      const rejects = await expect(client.auth.test()).rejects;
+      await rejects.toThrowError(SlackAPIError);
+      await rejects.toThrowError('Failed to call auth.test due to invalid_auth: {"ok":false,"error":"invalid_auth","headers":{}}');
     });
   });
 
@@ -69,8 +69,8 @@ describe("SlackAPIClient", () => {
           filename: "foo.txt",
         }),
       ).rejects;
-      rejects.toThrowError(SlackAPIError);
-      rejects.toThrowError(
+      await rejects.toThrowError(SlackAPIError);
+      await rejects.toThrowError(
         'Failed to call files.getUploadURLExternal due to invalid_auth: {"ok":false,"error":"invalid_auth","headers":{}}',
       );
     });
@@ -196,16 +196,21 @@ describe("SlackAPIClient", () => {
       baseUrl: "https://localhost:9999/no-host",
     });
     const rejects = expect(client.auth.test()).rejects;
-    rejects.toThrowError(SlackAPIConnectionError);
-    rejects.toThrowError("Failed to call auth.test (status: 404, body: foo)");
+    await rejects.toThrowError(SlackAPIConnectionError);
+    await rejects.toThrowError("Failed to call auth.test (status: 404, body: foo)");
   });
 
   test("connection error (type error)", async () => {
+    server.use(
+      http.post("https://localhost:9999/xxx/auth.test", () => {
+        return HttpResponse.text("not found", { status: 404 });
+      }),
+    );
     const client = new SlackAPIClient("xoxb-invalid", {
       logLevel: "DEBUG",
       baseUrl: "https://localhost:9999/xxx/",
     });
-    const rejects = expect(client.auth.test()).rejects;
-    rejects.toThrowError(SlackAPIConnectionError);
+    const rejects = await expect(client.auth.test()).rejects;
+    await rejects.toThrowError(SlackAPIConnectionError);
   });
 });

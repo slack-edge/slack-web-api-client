@@ -46,9 +46,11 @@ describe("Retry handlers", () => {
         }),
       );
       const client = new SlackAPIClient(undefined, { logLevel: "DEBUG" });
-      const rejects = expect(client.auth.test()).rejects;
-      rejects.toThrowError(SlackAPIConnectionError);
-      rejects.toThrowError("Failed to call auth.test (cause: SlackAPIConnectionError: Failed to call auth.test (status: 429, body: ))");
+      const rejects = await expect(client.auth.test()).rejects;
+      await rejects.toThrowError(SlackAPIConnectionError);
+      await rejects.toThrowError(
+        "Failed to call auth.test (cause: SlackAPIConnectionError: Failed to call auth.test (status: 429, body: ))",
+      );
     });
   });
   describe("ServerError", async () => {
@@ -60,9 +62,9 @@ describe("Retry handlers", () => {
         }),
       );
       const client = new SlackAPIClient(undefined, { logLevel: "DEBUG" });
-      const rejects = expect(client.auth.test()).rejects;
-      rejects.toThrowError(SlackAPIConnectionError);
-      rejects.toThrowError("Failed to call auth.test (status: 500, body: foo)");
+      const rejects = await expect(client.auth.test()).rejects;
+      await rejects.toThrowError(SlackAPIConnectionError);
+      await rejects.toThrowError("Failed to call auth.test (status: 500, body: foo)");
     });
     test("successful retry", async () => {
       const responses = [HttpResponse.text("", { status: 500 }), HttpResponse.json({ ok: true })];
