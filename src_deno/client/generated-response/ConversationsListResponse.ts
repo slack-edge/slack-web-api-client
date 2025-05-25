@@ -55,6 +55,7 @@ export interface Channel {
 
 export interface Properties {
   canvas?: Canvas;
+  meeting_notes?: MeetingNotes;
   posting_restricted_to?: RestrictedTo;
   tabs?: Tab[];
   tabz?: Tab[];
@@ -64,7 +65,12 @@ export interface Properties {
 export interface Canvas {
   file_id?: string;
   is_empty?: boolean;
+  is_migrated?: boolean;
   quip_thread_id?: string;
+}
+
+export interface MeetingNotes {
+  file_id?: string;
 }
 
 export interface RestrictedTo {
@@ -73,9 +79,16 @@ export interface RestrictedTo {
 }
 
 export interface Tab {
+  data?: Data;
   id?: string;
+  is_disabled?: boolean;
   label?: string;
   type?: string;
+}
+
+export interface Data {
+  file_id?: string;
+  shared_ts?: string;
 }
 
 export interface Purpose {
