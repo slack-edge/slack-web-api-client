@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "es2021",
+    "target": "es2024",
     "noImplicitAny": true,
     "module": "commonjs",
     "declaration": true,

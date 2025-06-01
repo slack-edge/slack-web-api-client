@@ -5,7 +5,7 @@ export class SlackAPIConnectionError extends Error {
   status: number;
   body: string;
   headers: Headers | undefined;
-  cause: Error | undefined;
+  override cause: Error | undefined;
 
   constructor(
     apiName: string,
@@ -51,7 +51,7 @@ export class SlackAPIError extends Error {
 }
 
 export class TokenRotationError extends Error {
-  cause: Error;
+  override cause: Error;
   constructor(message: string, cause: Error) {
     super(message);
     this.name = "TokenRotationError";
@@ -62,7 +62,7 @@ export class TokenRotationError extends Error {
 export class WebhookError extends Error {
   status: number;
   body: string;
-  cause?: Error;
+  override cause?: Error;
   constructor(
     status: number,
     body: string,
