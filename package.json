@@ -30,10 +30,10 @@
   "homepage": "https://github.com/slack-edge/slack-web-api-client#readme",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@vitest/coverage-v8": "^3.1.4",
-    "msw": "^2.8.7",
+    "@vitest/coverage-v8": "^3.2.2",
+    "msw": "^2.9.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "vitest": "^3.2.2"
   },
   "overrides": {
     "msw": {

@@ -1,10 +1,11 @@
 // https://api.slack.com/events?filter=Events
-// var events = [].slice.call(document.getElementsByClassName('apiReferenceFilterableList__listItemLink')).map(e => '"' + e.innerText + '"').join(' | '); console.log("export type AnyManifestEvent = " + events + ";");
-export type AnyManifestEvent =
+// var events = [].slice.call(document.getElementsByClassName('apiReferenceFilterableList__listItemLink')).map(e => '"' + e.innerText + '"').join(' | '); console.log("export type AnyManifestEvent = Exclude<" + events + ", 'app_rate_limited'>;");
+export type AnyManifestEvent = Exclude<
   | "app_deleted"
   | "app_home_opened"
   | "app_installed"
   | "app_mention"
+  | "app_rate_limited"
   | "app_requested"
   | "app_uninstalled"
   | "app_uninstalled_team"
@@ -90,17 +91,16 @@ export type AnyManifestEvent =
   | "tokens_revoked"
   | "url_verification"
   | "user_change"
-  | "user_huddle_changed"
-  | "user_profile_changed"
   | "user_resource_denied"
   | "user_resource_granted"
   | "user_resource_removed"
-  | "user_status_changed"
   | "workflow_deleted"
   | "workflow_published"
   | "workflow_step_deleted"
   | "workflow_step_execute"
-  | "workflow_unpublished";
+  | "workflow_unpublished",
+  "app_rate_limited"
+>;
 
 export type AnyEventType = Exclude<
   AnyManifestEvent,
