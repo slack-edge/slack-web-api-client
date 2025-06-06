@@ -1,6 +1,6 @@
 {
   "name": "@seratch/slack-web-api-client",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "exports": "./mod.ts",
   "lint": {
     "rules": {

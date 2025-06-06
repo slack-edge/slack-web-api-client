@@ -27,7 +27,7 @@ export const def = DefineFunction({
   output_parameters: { properties: {}, required: [] },
 });
 
-import { SlackAPIClient } from "https://deno.land/x/slack_web_api_client@1.1.5/mod.ts";
+import { SlackAPIClient } from "https://deno.land/x/slack_web_api_client@1.1.6/mod.ts";
 
 export default SlackFunction(def, async ({ token }) => {
   const client = new SlackAPIClient(token, {
