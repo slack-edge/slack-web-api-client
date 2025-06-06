@@ -5,7 +5,6 @@ export type AnyManifestEvent =
   | "app_home_opened"
   | "app_installed"
   | "app_mention"
-  | "app_rate_limited"
   | "app_requested"
   | "app_uninstalled"
   | "app_uninstalled_team"
