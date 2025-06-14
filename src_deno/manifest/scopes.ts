@@ -47,7 +47,6 @@ export type AnyManifestBotScope =
   | "mpim:history"
   | "mpim:read"
   | "mpim:write"
-  | "mpim:write.invites"
   | "mpim:write.topic"
   | "none"
   | "pins:read"
@@ -59,6 +58,8 @@ export type AnyManifestBotScope =
   | "remote_files:read"
   | "remote_files:share"
   | "remote_files:write"
+  | "search:read.enterprise"
+  | "search:read.files"
   | "search:read.im"
   | "search:read.mpim"
   | "search:read.private"
@@ -75,7 +76,9 @@ export type AnyManifestBotScope =
   | "users:read"
   | "users:read.email"
   | "users:write"
-  | "workflow.steps:execute";
+  | "workflow.steps:execute"
+  | "workflows.templates:read"
+  | "workflows.templates:write";
 
 // https://api.slack.com/scopes?filter=user
 // var scopes = [].slice.call(document.getElementsByClassName('apiReferenceFilterableList__listItemLink')).map(e => '"' + e.innerText + '"').join(' | '); console.log("export type AnyManifestUserScope = " + scopes + ";");
@@ -87,6 +90,7 @@ export type AnyManifestUserScope =
   | "admin.apps:write"
   | "admin.barriers:read"
   | "admin.barriers:write"
+  | "admin.conversations:manage_objects"
   | "admin.conversations:read"
   | "admin.conversations:write"
   | "admin.invites:read"
@@ -145,7 +149,6 @@ export type AnyManifestUserScope =
   | "mpim:history"
   | "mpim:read"
   | "mpim:write"
-  | "mpim:write.invites"
   | "mpim:write.topic"
   | "openid"
   | "pins:read"
@@ -158,6 +161,11 @@ export type AnyManifestUserScope =
   | "remote_files:read"
   | "remote_files:share"
   | "search:read"
+  | "search:read.files"
+  | "search:read.im"
+  | "search:read.mpim"
+  | "search:read.private"
+  | "search:read.public"
   | "stars:read"
   | "stars:write"
   | "team.billing:read"
@@ -172,7 +180,9 @@ export type AnyManifestUserScope =
   | "users.profile:write"
   | "users:read"
   | "users:read.email"
-  | "users:write";
+  | "users:write"
+  | "workflows.templates:read"
+  | "workflows.templates:write";
 
 // https://api.slack.com/scopes?query=Configuration
 // var scopes = [].slice.call(document.getElementsByClassName('apiReferenceFilterableList__listItemLink')).map(e => '"' + e.innerText + '"').join(' | '); console.log("export type AnyManifestConfigurationScope = " + scopes + ";");
