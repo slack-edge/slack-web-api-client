@@ -32,6 +32,7 @@ export interface Paging {
   page?: number;
   pages?: number;
   total?: number;
+  warnings?: string[];
 }
 
 export interface ResponseMetadata {

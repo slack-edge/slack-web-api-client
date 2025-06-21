@@ -22,6 +22,7 @@ export interface Team {
   enterprise_name?: string;
   icon?: Icon;
   id?: string;
+  is_sfdc_auto_slack?: boolean;
   is_verified?: boolean;
   lob_sales_home_enabled?: boolean;
   name?: string;
