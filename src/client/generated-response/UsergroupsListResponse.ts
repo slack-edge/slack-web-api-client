@@ -24,6 +24,7 @@ export interface Usergroup {
   handle?: string;
   id?: string;
   is_external?: boolean;
+  is_idp_group?: boolean;
   is_section?: boolean;
   is_subteam?: boolean;
   is_usergroup?: boolean;
