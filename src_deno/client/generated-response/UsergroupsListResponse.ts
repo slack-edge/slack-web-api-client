@@ -28,6 +28,7 @@ export interface Usergroup {
   is_section?: boolean;
   is_subteam?: boolean;
   is_usergroup?: boolean;
+  is_visible?: boolean;
   name?: string;
   prefs?: Prefs;
   team_id?: string;

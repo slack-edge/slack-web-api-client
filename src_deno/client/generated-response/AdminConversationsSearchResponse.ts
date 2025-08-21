@@ -81,6 +81,7 @@ export interface Properties {
   at_here_restricted?: boolean;
   canvas?: PropertiesCanvas;
   huddles_restricted?: boolean;
+  is_dormant?: boolean;
   meeting_notes?: MeetingNotes;
   posting_restricted_to?: PostingRestrictedTo;
   tabs?: Tab[];

@@ -55,6 +55,7 @@ export interface Channel {
 
 export interface Properties {
   canvas?: Canvas;
+  is_dormant?: boolean;
   meeting_notes?: MeetingNotes;
   posting_restricted_to?: RestrictedTo;
   tabs?: Tab[];
