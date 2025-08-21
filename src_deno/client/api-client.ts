@@ -772,21 +772,26 @@ export class SlackAPIClient {
     for (const f of files) {
       // deno-lint-ignore no-inner-declarations
       async function uploadAsync(): Promise<FileUploadComplete> {
-        const body: Uint8Array = f.file
-          ? new Uint8Array(
-            f.file instanceof Blob ? await f.file.arrayBuffer() : f.file,
-          )
-          : new TextEncoder().encode(f.content);
+        const bodyLength = (
+          f.file
+            ? new Uint8Array(
+              f.file instanceof Blob ? await f.file.arrayBuffer() : f.file,
+            )
+            : new TextEncoder().encode(f.content)
+        ).length;
         const getUrl = await client.files.getUploadURLExternal({
           token: params.token,
           filename: f.filename,
-          length: body.length,
+          length: bodyLength,
           snippet_type: f.snippet_type,
         });
         const { upload_url, file_id } = getUrl;
         let response: Response;
         try {
-          response = await fetch(upload_url!, { method: "POST", body });
+          response = await fetch(upload_url!, {
+            method: "POST",
+            body: f.file ? f.file : new TextEncoder().encode(f.content),
+          });
         } catch (e) {
           throw new SlackAPIConnectionError(
             "files.slack.com",
