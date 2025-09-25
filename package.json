@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/slack-edge/slack-web-api-client#readme",
   "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
+    "@biomejs/biome": "^2.2.4",
     "@vitest/coverage-v8": "^3.2.4",
-    "msw": "^2.10.5",
+    "msw": "^2.11.3",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
