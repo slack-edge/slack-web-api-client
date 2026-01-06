@@ -54,6 +54,7 @@ export interface Properties {
   meeting_notes?: MeetingNotes;
   tabs?: Tab[];
   tabz?: Tab[];
+  use_case?: string;
 }
 
 export interface Canvas {

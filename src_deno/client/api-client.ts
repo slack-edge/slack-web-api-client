@@ -72,6 +72,7 @@ import type {
   AdminUsergroupsListChannelsRequest,
   AdminUsergroupsRemoveChannelsRequest,
   AdminUsersAssignRequest,
+  AdminUsersGetExpirationRequest,
   AdminUsersInviteRequest,
   AdminUsersListRequest,
   AdminUsersRemoveRequest,
@@ -123,6 +124,7 @@ import type {
   CanvasesDeleteRequest,
   CanvasesEditRequest,
   CanvasesSectionsLookupRequest,
+  ChatAppendStreamRequest,
   ChatDeleteRequest,
   ChatDeleteScheduledMessageRequest,
   ChatGetPermalinkRequest,
@@ -131,6 +133,8 @@ import type {
   ChatPostMessageRequest,
   ChatScheduledMessagesListRequest,
   ChatScheduleMessageRequest,
+  ChatStartStreamRequest,
+  ChatStopStreamRequest,
   ChatUnfurlRequest,
   ChatUpdateRequest,
   ConversationsAcceptSharedInviteRequest,
@@ -167,6 +171,7 @@ import type {
   DndSetSnoozeRequest,
   DndTeamInfoRequest,
   EmojiListRequest,
+  EntityPresentDetailsRequest,
   FilesCompleteUploadExternalRequest,
   FilesDeleteRequest,
   FilesGetUploadURLExternalRequest,
@@ -207,6 +212,18 @@ import type {
   SearchFilesRequest,
   SearchMessagesRequest,
   SlackAPIRequest,
+  SlackListsAccessDeleteRequest,
+  SlackListsAccessSetRequest,
+  SlackListsCreateRequest,
+  SlackListsDownloadGetRequest,
+  SlackListsDownloadStartRequest,
+  SlackListsItemsCreateRequest,
+  SlackListsItemsDeleteMultipleRequest,
+  SlackListsItemsDeleteRequest,
+  SlackListsItemsInfoRequest,
+  SlackListsItemsListRequest,
+  SlackListsItemsUpdateRequest,
+  SlackListsUpdateRequest,
   StarsAddRequest,
   StarsListRequest,
   StarsRemoveRequest,
@@ -321,6 +338,7 @@ import type {
   AdminUsergroupsListChannelsResponse,
   AdminUsergroupsRemoveChannelsResponse,
   AdminUsersAssignResponse,
+  AdminUsersGetExpirationResponse,
   AdminUsersInviteResponse,
   AdminUsersListResponse,
   AdminUsersRemoveResponse,
@@ -367,6 +385,7 @@ import type {
   CanvasesDeleteResponse,
   CanvasesEditResponse,
   CanvasesSectionsLookupResponse,
+  ChatAppendStreamResponse,
   ChatDeleteResponse,
   ChatDeleteScheduledMessageResponse,
   ChatGetPermalinkResponse,
@@ -375,6 +394,8 @@ import type {
   ChatPostMessageResponse,
   ChatScheduledMessagesListResponse,
   ChatScheduleMessageResponse,
+  ChatStartStreamResponse,
+  ChatStopStreamResponse,
   ChatUnfurlResponse,
   ChatUpdateResponse,
   ConversationsAcceptSharedInviteResponse,
@@ -411,6 +432,7 @@ import type {
   DndSetSnoozeResponse,
   DndTeamInfoResponse,
   EmojiListResponse,
+  EntityPresentDetailsResponse,
   FilesCompleteUploadExternalResponse,
   FilesDeleteResponse,
   FilesGetUploadURLExternalResponse,
@@ -447,6 +469,18 @@ import type {
   SearchAllResponse,
   SearchFilesResponse,
   SearchMessagesResponse,
+  SlackListsAccessDeleteResponse,
+  SlackListsAccessSetResponse,
+  SlackListsCreateResponse,
+  SlackListsDownloadGetResponse,
+  SlackListsDownloadStartResponse,
+  SlackListsItemsCreateResponse,
+  SlackListsItemsDeleteMultipleResponse,
+  SlackListsItemsDeleteResponse,
+  SlackListsItemsInfoResponse,
+  SlackListsItemsListResponse,
+  SlackListsItemsUpdateResponse,
+  SlackListsUpdateResponse,
   StarsAddResponse,
   StarsListResponse,
   StarsRemoveResponse,
@@ -1361,6 +1395,10 @@ export class SlackAPIClient {
         AdminUsersRemoveRequest,
         AdminUsersRemoveResponse
       >(this, "admin.users.remove"),
+      getExpiration: this.#bindApiCall<
+        AdminUsersGetExpirationRequest,
+        AdminUsersGetExpirationResponse
+      >(this, "admin.users.getExpiration"),
       session: {
         list: this.#bindNoArgAllowedApiCall<
           AdminUsersSessionListRequest,
@@ -1642,6 +1680,18 @@ export class SlackAPIClient {
   };
 
   public readonly chat = {
+    appendStream: this.#bindApiCall<
+      ChatAppendStreamRequest,
+      ChatAppendStreamResponse
+    >(this, "chat.appendStream"),
+    startStream: this.#bindApiCall<
+      ChatStartStreamRequest,
+      ChatStartStreamResponse
+    >(this, "chat.startStream"),
+    stopStream: this.#bindApiCall<
+      ChatStopStreamRequest,
+      ChatStopStreamResponse
+    >(this, "chat.stopStream"),
     delete: this.#bindApiCall<ChatDeleteRequest, ChatDeleteResponse>(
       this,
       "chat.delete",
@@ -1844,6 +1894,13 @@ export class SlackAPIClient {
     ),
   };
 
+  public readonly entity = {
+    presentDetails: this.#bindApiCall<
+      EntityPresentDetailsRequest,
+      EntityPresentDetailsResponse
+    >(this, "entity.presentDetails"),
+  };
+
   public readonly files = {
     delete: this.#bindApiCall<FilesDeleteRequest, FilesDeleteResponse>(
       this,
@@ -2029,6 +2086,66 @@ export class SlackAPIClient {
       this,
       "search.messages",
     ),
+  };
+
+  public readonly slackLists = {
+    create: this.#bindApiCall<
+      SlackListsCreateRequest,
+      SlackListsCreateResponse
+    >(this, "slackLists.create"),
+    update: this.#bindApiCall<
+      SlackListsUpdateRequest,
+      SlackListsUpdateResponse
+    >(this, "slackLists.update"),
+    access: {
+      delete: this.#bindApiCall<
+        SlackListsAccessDeleteRequest,
+        SlackListsAccessDeleteResponse
+      >(this, "slackLists.access.delete"),
+      set: this.#bindApiCall<
+        SlackListsAccessSetRequest,
+        SlackListsAccessSetResponse
+      >(this, "slackLists.access.set"),
+    },
+    download: {
+      start: this.#bindApiCall<
+        SlackListsDownloadStartRequest,
+        SlackListsDownloadStartResponse
+      >(this, "slackLists.download.start"),
+      get: this.#bindApiCall<
+        SlackListsDownloadGetRequest,
+        SlackListsDownloadGetResponse
+      >(this, "slackLists.download.get"),
+    },
+    items: {
+      create: this.#bindApiCall<
+        SlackListsItemsCreateRequest,
+        SlackListsItemsCreateResponse
+      >(this, "slackLists.items.create"),
+      delete: this.#bindApiCall<
+        SlackListsItemsDeleteRequest,
+        SlackListsItemsDeleteResponse
+      >(this, "slackLists.items.delete"),
+      deleteMultiple: this.#bindApiCall<
+        SlackListsItemsDeleteMultipleRequest,
+        SlackListsItemsDeleteMultipleResponse
+      >(
+        this,
+        "slackLists.items.deleteMultiple",
+      ),
+      info: this.#bindApiCall<
+        SlackListsItemsInfoRequest,
+        SlackListsItemsInfoResponse
+      >(this, "slackLists.items.info"),
+      list: this.#bindNoArgAllowedApiCall<
+        SlackListsItemsListRequest,
+        SlackListsItemsListResponse
+      >(this, "slackLists.items.list"),
+      update: this.#bindApiCall<
+        SlackListsItemsUpdateRequest,
+        SlackListsItemsUpdateResponse
+      >(this, "slackLists.items.update"),
+    },
   };
 
   public readonly stars = {

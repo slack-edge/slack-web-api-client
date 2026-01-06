@@ -13,6 +13,7 @@ export type UsersProfileGetResponse = SlackAPIResponse & {
 };
 
 export interface Profile {
+  always_active?: boolean;
   avatar_hash?: string;
   display_name?: string;
   display_name_normalized?: string;
@@ -36,6 +37,7 @@ export interface Profile {
   real_name?: string;
   real_name_normalized?: string;
   skype?: string;
+  start_date?: string;
   status_emoji?: string;
   status_emoji_display_info?: StatusEmojiDisplayInfo[];
   status_emoji_url?: string;

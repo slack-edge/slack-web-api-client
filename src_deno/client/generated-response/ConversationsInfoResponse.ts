@@ -58,6 +58,18 @@ export interface Channel {
 
 export interface Properties {
   is_dormant?: boolean;
+  tabs?: Tab[];
+  tabz?: Tabz[];
+}
+
+export interface Tab {
+  id?: string;
+  label?: string;
+  type?: string;
+}
+
+export interface Tabz {
+  type?: string;
 }
 
 export interface Purpose {

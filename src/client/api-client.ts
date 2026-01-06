@@ -73,6 +73,7 @@ import type {
   AdminUsergroupsListChannelsRequest,
   AdminUsergroupsRemoveChannelsRequest,
   AdminUsersAssignRequest,
+  AdminUsersGetExpirationRequest,
   AdminUsersInviteRequest,
   AdminUsersListRequest,
   AdminUsersRemoveRequest,
@@ -123,6 +124,7 @@ import type {
   CanvasesDeleteRequest,
   CanvasesEditRequest,
   CanvasesSectionsLookupRequest,
+  ChatAppendStreamRequest,
   ChatDeleteRequest,
   ChatDeleteScheduledMessageRequest,
   ChatGetPermalinkRequest,
@@ -131,6 +133,8 @@ import type {
   ChatPostMessageRequest,
   ChatScheduleMessageRequest,
   ChatScheduledMessagesListRequest,
+  ChatStartStreamRequest,
+  ChatStopStreamRequest,
   ChatUnfurlRequest,
   ChatUpdateRequest,
   ConversationsAcceptSharedInviteRequest,
@@ -167,6 +171,7 @@ import type {
   DndSetSnoozeRequest,
   DndTeamInfoRequest,
   EmojiListRequest,
+  EntityPresentDetailsRequest,
   FileUploadComplete,
   FileUploadV2,
   FilesCompleteUploadExternalRequest,
@@ -207,6 +212,18 @@ import type {
   SearchFilesRequest,
   SearchMessagesRequest,
   SlackAPIRequest,
+  SlackListsAccessDeleteRequest,
+  SlackListsAccessSetRequest,
+  SlackListsCreateRequest,
+  SlackListsDownloadGetRequest,
+  SlackListsDownloadStartRequest,
+  SlackListsItemsCreateRequest,
+  SlackListsItemsDeleteMultipleRequest,
+  SlackListsItemsDeleteRequest,
+  SlackListsItemsInfoRequest,
+  SlackListsItemsListRequest,
+  SlackListsItemsUpdateRequest,
+  SlackListsUpdateRequest,
   StarsAddRequest,
   StarsListRequest,
   StarsRemoveRequest,
@@ -483,6 +500,23 @@ import type {
   AssistantThreadsSetSuggestedPromptsResponse,
   AssistantThreadsSetTitleResponse,
   ConversationsRequestSharedInviteListResponse,
+  AdminUsersGetExpirationResponse,
+  ChatAppendStreamResponse,
+  ChatStartStreamResponse,
+  ChatStopStreamResponse,
+  EntityPresentDetailsResponse,
+  SlackListsAccessDeleteResponse,
+  SlackListsAccessSetResponse,
+  SlackListsCreateResponse,
+  SlackListsItemsDeleteResponse,
+  SlackListsItemsInfoResponse,
+  SlackListsItemsListResponse,
+  SlackListsItemsUpdateResponse,
+  SlackListsDownloadStartResponse,
+  SlackListsDownloadGetResponse,
+  SlackListsItemsCreateResponse,
+  SlackListsItemsDeleteMultipleResponse,
+  SlackListsUpdateResponse,
 } from "./generated-response/index";
 
 import type { SlackAPIResponse } from "./response";
@@ -1070,6 +1104,7 @@ export class SlackAPIClient {
       invite: this.#bindApiCall<AdminUsersInviteRequest, AdminUsersInviteResponse>(this, "admin.users.invite"),
       list: this.#bindApiCall<AdminUsersListRequest, AdminUsersListResponse>(this, "admin.users.list"),
       remove: this.#bindApiCall<AdminUsersRemoveRequest, AdminUsersRemoveResponse>(this, "admin.users.remove"),
+      getExpiration: this.#bindApiCall<AdminUsersGetExpirationRequest, AdminUsersGetExpirationResponse>(this, "admin.users.getExpiration"),
       session: {
         list: this.#bindNoArgAllowedApiCall<AdminUsersSessionListRequest, AdminUsersSessionListResponse>(this, "admin.users.session.list"),
         reset: this.#bindApiCall<AdminUsersSessionResetRequest, AdminUsersSessionResetResponse>(this, "admin.users.session.reset"),
@@ -1207,6 +1242,9 @@ export class SlackAPIClient {
   };
 
   public readonly chat = {
+    appendStream: this.#bindApiCall<ChatAppendStreamRequest, ChatAppendStreamResponse>(this, "chat.appendStream"),
+    startStream: this.#bindApiCall<ChatStartStreamRequest, ChatStartStreamResponse>(this, "chat.startStream"),
+    stopStream: this.#bindApiCall<ChatStopStreamRequest, ChatStopStreamResponse>(this, "chat.stopStream"),
     delete: this.#bindApiCall<ChatDeleteRequest, ChatDeleteResponse>(this, "chat.delete"),
     deleteScheduledMessage: this.#bindApiCall<ChatDeleteScheduledMessageRequest, ChatDeleteScheduledMessageResponse>(
       this,
@@ -1289,6 +1327,10 @@ export class SlackAPIClient {
     list: this.#bindNoArgAllowedApiCall<EmojiListRequest, EmojiListResponse>(this, "emoji.list"),
   };
 
+  public readonly entity = {
+    presentDetails: this.#bindApiCall<EntityPresentDetailsRequest, EntityPresentDetailsResponse>(this, "entity.presentDetails"),
+  };
+
   public readonly files = {
     delete: this.#bindApiCall<FilesDeleteRequest, FilesDeleteResponse>(this, "files.delete"),
     info: this.#bindApiCall<FilesInfoRequest, FilesInfoResponse>(this, "files.info"),
@@ -1369,6 +1411,30 @@ export class SlackAPIClient {
     all: this.#bindApiCall<SearchAllRequest, SearchAllResponse>(this, "search.all"),
     files: this.#bindApiCall<SearchFilesRequest, SearchFilesResponse>(this, "search.files"),
     messages: this.#bindApiCall<SearchMessagesRequest, SearchMessagesResponse>(this, "search.messages"),
+  };
+
+  public readonly slackLists = {
+    create: this.#bindApiCall<SlackListsCreateRequest, SlackListsCreateResponse>(this, "slackLists.create"),
+    update: this.#bindApiCall<SlackListsUpdateRequest, SlackListsUpdateResponse>(this, "slackLists.update"),
+    access: {
+      delete: this.#bindApiCall<SlackListsAccessDeleteRequest, SlackListsAccessDeleteResponse>(this, "slackLists.access.delete"),
+      set: this.#bindApiCall<SlackListsAccessSetRequest, SlackListsAccessSetResponse>(this, "slackLists.access.set"),
+    },
+    download: {
+      start: this.#bindApiCall<SlackListsDownloadStartRequest, SlackListsDownloadStartResponse>(this, "slackLists.download.start"),
+      get: this.#bindApiCall<SlackListsDownloadGetRequest, SlackListsDownloadGetResponse>(this, "slackLists.download.get"),
+    },
+    items: {
+      create: this.#bindApiCall<SlackListsItemsCreateRequest, SlackListsItemsCreateResponse>(this, "slackLists.items.create"),
+      delete: this.#bindApiCall<SlackListsItemsDeleteRequest, SlackListsItemsDeleteResponse>(this, "slackLists.items.delete"),
+      deleteMultiple: this.#bindApiCall<SlackListsItemsDeleteMultipleRequest, SlackListsItemsDeleteMultipleResponse>(
+        this,
+        "slackLists.items.deleteMultiple",
+      ),
+      info: this.#bindApiCall<SlackListsItemsInfoRequest, SlackListsItemsInfoResponse>(this, "slackLists.items.info"),
+      list: this.#bindNoArgAllowedApiCall<SlackListsItemsListRequest, SlackListsItemsListResponse>(this, "slackLists.items.list"),
+      update: this.#bindApiCall<SlackListsItemsUpdateRequest, SlackListsItemsUpdateResponse>(this, "slackLists.items.update"),
+    },
   };
 
   public readonly stars = {

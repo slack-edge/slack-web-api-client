@@ -19,6 +19,7 @@ export interface Usergroup {
   date_create?: number;
   date_delete?: number;
   date_update?: number;
+  deleted_by?: string;
   description?: string;
   enterprise_subteam_id?: string;
   handle?: string;

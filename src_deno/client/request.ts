@@ -413,6 +413,10 @@ export interface AdminUsersAssignRequest extends SlackAPIRequest {
   is_restricted?: boolean;
   is_ultra_restricted?: boolean;
 }
+export interface AdminUsersGetExpirationRequest extends SlackAPIRequest {
+  user_id?: string;
+  target_team?: string;
+}
 export interface AdminUsersInviteRequest extends SlackAPIRequest {
   channel_ids: string | string[];
   email: string;
@@ -835,6 +839,26 @@ export interface ChatUpdateRequest extends SlackAPIRequest {
   as_user?: boolean;
 }
 
+export interface ChatAppendStreamRequest extends SlackAPIRequest {
+  channel: string;
+  ts: string;
+  markdown_text: string;
+}
+export interface ChatStartStreamRequest extends SlackAPIRequest {
+  channel: string;
+  thread_ts: string;
+  markdown_text?: string;
+  recipient_user_id?: string;
+  recipient_team_id?: string;
+}
+export interface ChatStopStreamRequest extends SlackAPIRequest {
+  channel: string;
+  ts: string;
+  markdown_text?: string;
+  blocks?: AnyMessageBlock[];
+  metadata?: MessageMetadata;
+}
+
 /*
  * `conversations.*`
  */
@@ -998,6 +1022,18 @@ export interface DndTeamInfoRequest extends SlackAPIRequest {
  */
 export interface EmojiListRequest extends SlackAPIRequest {
   include_categories?: boolean;
+}
+
+/**
+ * `entity.*`
+ */
+// entity.presentDetails
+export interface EntityPresentDetailsRequest extends SlackAPIRequest {
+  trigger_id: string;
+  // deno-lint-ignore no-explicit-any
+  metadata?: any;
+  user_auth_required?: boolean;
+  user_auth_url?: string;
 }
 
 /*
@@ -1269,6 +1305,77 @@ export interface SearchFilesRequest
   extends SlackAPIRequest, TraditionalPagingEnabled, Searchable {}
 export interface SearchMessagesRequest
   extends SlackAPIRequest, TraditionalPagingEnabled, Searchable {}
+
+/*
+ * `slackLists.*`
+ */
+export interface SlackListsAccessDeleteRequest extends SlackAPIRequest {
+  list_id: string;
+  channel_ids?: string[];
+  user_ids?: string[];
+}
+export interface SlackListsAccessSetRequest extends SlackAPIRequest {
+  list_id: string;
+  access_level: string;
+  channel_ids?: string[];
+  user_ids?: string[];
+}
+export interface SlackListsCreateRequest extends SlackAPIRequest {
+  name: string;
+  description_block?: AnyMessageBlock[];
+  // deno-lint-ignore no-explicit-any
+  schema?: any;
+  copy_from_list_id?: string;
+  include_copied_list_records?: boolean;
+  todo_mode?: boolean;
+}
+export interface SlackListsDownloadGetRequest extends SlackAPIRequest {
+  list_id: string;
+  job_id: string;
+}
+export interface SlackListsDownloadStartRequest extends SlackAPIRequest {
+  list_id: string;
+  include_archived?: boolean;
+}
+export interface SlackListsItemsCreateRequest extends SlackAPIRequest {
+  list_id: string;
+  duplicated_item_id?: string;
+  parent_item_id?: string;
+  // deno-lint-ignore no-explicit-any
+  initial_fields?: any;
+}
+export interface SlackListsItemsDeleteMultipleRequest extends SlackAPIRequest {
+  list_id: string;
+  id: string;
+}
+export interface SlackListsItemsDeleteRequest extends SlackAPIRequest {
+  list_id: string;
+  ids: string[];
+}
+export interface SlackListsItemsInfoRequest extends SlackAPIRequest {
+  list_id: string;
+  id: string;
+  include_is_subscribed?: boolean;
+}
+export interface SlackListsItemsListRequest extends SlackAPIRequest {
+  list_id: string;
+  limit?: number;
+  cursor?: string;
+  archived?: boolean;
+}
+export interface SlackListsItemsUpdateRequest extends SlackAPIRequest {
+  list_id: string;
+  // deno-lint-ignore no-explicit-any
+  cells: any;
+}
+export interface SlackListsUpdateRequest extends SlackAPIRequest {
+  id: string;
+  name?: string;
+  description_block?: AnyMessageBlock[];
+  // deno-lint-ignore no-explicit-any
+  schema?: any;
+  todo_mode?: boolean;
+}
 
 /*
  * `stars.*`

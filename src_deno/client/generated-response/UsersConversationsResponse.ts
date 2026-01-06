@@ -5,6 +5,7 @@
 
 import type { SlackAPIResponse } from "../response.ts";
 export type UsersConversationsResponse = SlackAPIResponse & {
+  arg?: string;
   channels?: Channel[];
   error?: string;
   needed?: string;

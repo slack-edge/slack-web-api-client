@@ -5,8 +5,16 @@
 
 import type { SlackAPIResponse } from "../response";
 export type ChatUnfurlResponse = SlackAPIResponse & {
+  callstack?: string;
   error?: string;
   needed?: string;
   ok: boolean;
   provided?: string;
+  response_metadata?: ResponseMetadata;
+  warning?: string;
 };
+
+export interface ResponseMetadata {
+  messages?: string[];
+  warnings?: string[];
+}

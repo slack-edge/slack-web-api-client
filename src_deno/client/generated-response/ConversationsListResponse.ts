@@ -5,6 +5,8 @@
 
 import type { SlackAPIResponse } from "../response.ts";
 export type ConversationsListResponse = SlackAPIResponse & {
+  arg?: string;
+  callstack?: string;
   channels?: Channel[];
   error?: string;
   needed?: string;
@@ -55,12 +57,14 @@ export interface Channel {
 
 export interface Properties {
   canvas?: Canvas;
+  channel_workflows?: ChannelWorkflow[];
   is_dormant?: boolean;
   meeting_notes?: MeetingNotes;
   posting_restricted_to?: RestrictedTo;
   tabs?: Tab[];
   tabz?: Tab[];
   threads_restricted_to?: RestrictedTo;
+  use_case?: string;
 }
 
 export interface Canvas {
@@ -68,6 +72,11 @@ export interface Canvas {
   is_empty?: boolean;
   is_migrated?: boolean;
   quip_thread_id?: string;
+}
+
+export interface ChannelWorkflow {
+  title?: string;
+  workflow_trigger_id?: string;
 }
 
 export interface MeetingNotes {
@@ -89,6 +98,7 @@ export interface Tab {
 
 export interface Data {
   file_id?: string;
+  folder_bookmark_id?: string;
   shared_ts?: string;
 }
 
