@@ -644,7 +644,7 @@ export class SlackAPIClient {
       for (const rh of this.retryHandlers) {
         if (await rh.shouldRetry({ state, request, response })) {
           // Drain the response body to release the connection
-          await response.body?.cancel().catch(() => {});
+          await response.body?.cancel?.().catch(() => {});
           if (isDebugLogEnabled(this.#logLevel)) {
             console.log(
               `Retrying ${name} API call (params: ${JSON.stringify(params)})`,
@@ -746,7 +746,7 @@ export class SlackAPIClient {
       for (const rh of this.retryHandlers) {
         if (await rh.shouldRetry({ state, request, response })) {
           // Drain the response body to release the connection
-          await response.body?.cancel().catch(() => {});
+          await response.body?.cancel?.().catch(() => {});
           if (isDebugLogEnabled(this.#logLevel)) {
             console.log(`Retrying ${name} API call`);
           }
