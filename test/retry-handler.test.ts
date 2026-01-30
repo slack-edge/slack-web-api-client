@@ -12,12 +12,12 @@ afterEach(() => server.resetHandlers());
 describe("Retry handlers", () => {
   describe("Ratelimit", async () => {
     test("successful retry", async () => {
-      const responses = [
-        HttpResponse.text("", {
+      const responses: Response[] = [
+        new Response(null, {
           status: 429,
           headers: { "Retry-After": "0.01" },
         }),
-        HttpResponse.json({ ok: true }),
+        Response.json({ ok: true }),
       ];
       server.use(
         http.post("https://slack.com/api/auth.test", () => {
@@ -29,16 +29,16 @@ describe("Retry handlers", () => {
       expect(response.ok).true;
     });
     test("exceeding max attempts", async () => {
-      const responses = [
-        HttpResponse.text("", {
+      const responses: Response[] = [
+        new Response(null, {
           status: 429,
           headers: { "Retry-After": "0.01" },
         }),
-        HttpResponse.text("", {
+        new Response(null, {
           status: 429,
           headers: { "Retry-After": "0.01" },
         }),
-        HttpResponse.json({ ok: true }),
+        Response.json({ ok: true }),
       ];
       server.use(
         http.post("https://slack.com/api/auth.test", () => {
@@ -67,7 +67,7 @@ describe("Retry handlers", () => {
       await rejects.toThrowError("Failed to call auth.test (status: 500, body: foo)");
     });
     test("successful retry", async () => {
-      const responses = [HttpResponse.text("", { status: 500 }), HttpResponse.json({ ok: true })];
+      const responses: Response[] = [new Response(null, { status: 500 }), Response.json({ ok: true })];
       server.use(
         http.post("https://slack.com/api/auth.test", () => {
           return responses.shift();
