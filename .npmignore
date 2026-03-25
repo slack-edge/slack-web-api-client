@@ -12,3 +12,4 @@ vite.config.ts
 .vscode/
 vite.config.mjs
 coverage/
+.context/
