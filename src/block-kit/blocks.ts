@@ -6,7 +6,9 @@ import type {
   DateTimepicker,
   Datepicker,
   EmailInput,
+  FeedbackButtons,
   FileInput,
+  IconButton,
   ImageElement,
   NumberInput,
   Overflow,
@@ -25,7 +27,18 @@ import type { PlainTextField, AnyTextField } from "./text-fields";
 // Basic types
 // -----------------------------
 
-export type AnyBlockType = "image" | "context" | "actions" | "divider" | "section" | "input" | "file" | "header" | "video" | "rich_text";
+export type AnyBlockType =
+  | "image"
+  | "context"
+  | "context_actions"
+  | "actions"
+  | "divider"
+  | "section"
+  | "input"
+  | "file"
+  | "header"
+  | "video"
+  | "rich_text";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -39,6 +52,7 @@ export interface Block<T extends AnyBlockType = AnyBlockType> {
 export declare type AnyMessageBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | FileBlock
   | HeaderBlock
@@ -51,6 +65,7 @@ export declare type AnyMessageBlock =
 export declare type AnyModalBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | HeaderBlock
   | ImageBlock
@@ -62,6 +77,7 @@ export declare type AnyModalBlock =
 export declare type AnyHomeTabBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | HeaderBlock
   | ImageBlock
@@ -93,6 +109,11 @@ export interface ActionsBlock extends Block<"actions"> {
 export interface ContextBlock extends Block<"context"> {
   type: "context";
   elements: (ImageElement | AnyTextField)[];
+}
+
+export interface ContextActionsBlock extends Block<"context_actions"> {
+  type: "context_actions";
+  elements: (FeedbackButtons | IconButton)[];
 }
 
 export interface DividerBlock extends Block<"divider"> {

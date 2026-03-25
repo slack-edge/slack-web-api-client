@@ -39,7 +39,9 @@ export type AnyActionBlockElementType =
   | "url_text_input"
   | "email_text_input"
   | "number_input"
-  | "file_input";
+  | "file_input"
+  | "feedback_buttons"
+  | "icon_button";
 
 export interface BlockElement<
   T extends AnyBlockElementType = AnyBlockElementType,
@@ -74,7 +76,9 @@ export declare type AnyBlockElement =
   | WorkflowButton
   | Overflow
   | RadioButtons
-  | Checkboxes;
+  | Checkboxes
+  | FeedbackButtons
+  | IconButton;
 
 export declare type AnySelectElement =
   | UsersSelect
@@ -362,6 +366,21 @@ export interface FileInput extends ActionBlockElement<"file_input"> {
   type: "file_input";
   filetypes?: string[];
   max_files?: number;
+}
+export interface FeedbackButton {
+  text: PlainTextField;
+  value: string;
+}
+export interface FeedbackButtons extends ActionBlockElement<"feedback_buttons"> {
+  type: "feedback_buttons";
+  positive_button: FeedbackButton;
+  negative_button: FeedbackButton;
+}
+export interface IconButton extends ActionBlockElement<"icon_button"> {
+  type: "icon_button";
+  icon: string;
+  text: PlainTextField;
+  value?: string;
 }
 
 // https://api.slack.com/changelog/2019-09-what-they-see-is-what-you-get-and-more-and-less
