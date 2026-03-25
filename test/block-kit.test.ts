@@ -1,5 +1,5 @@
 import { assert, test, describe } from "vitest";
-import { AnyMessageBlock, AnyRichTextBlockElement, MessageInputBlock, RichTextBlock } from "../src/index";
+import { AnyMessageBlock, AnyRichTextBlockElement, ContextActionsBlock, MessageInputBlock, RichTextBlock } from "../src/index";
 
 describe("Block Kit types", () => {
   test("parse rich text ones", async () => {
@@ -195,6 +195,39 @@ describe("Block Kit types", () => {
       },
     ];
     assert.isTrue(blocks.length > 0);
+  });
+
+  test("parse context actions blocks", async () => {
+    const block: ContextActionsBlock = {
+      type: "context_actions",
+      block_id: "block1",
+      elements: [
+        {
+          type: "feedback_buttons",
+          action_id: "feedback_1",
+          positive_button: {
+            text: { type: "plain_text", text: "\ud83d\udc4d" },
+            value: "positive",
+          },
+          negative_button: {
+            text: { type: "plain_text", text: "\ud83d\udc4e" },
+            value: "negative",
+          },
+        },
+        {
+          type: "icon_button",
+          action_id: "delete_1",
+          icon: "trash",
+          text: { type: "plain_text", text: "Delete" },
+          value: "delete_item",
+        },
+      ],
+    };
+    assert.equal(block.elements.length, 2);
+
+    // Verify context_actions works in AnyMessageBlock
+    const blocks: AnyMessageBlock[] = [block];
+    assert.equal(blocks.length, 1);
   });
 
   describe("parse rich text block elements", async () => {

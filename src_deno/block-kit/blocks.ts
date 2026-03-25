@@ -6,7 +6,9 @@ import type {
   Datepicker,
   DateTimepicker,
   EmailInput,
+  FeedbackButtons,
   FileInput,
+  IconButton,
   ImageElement,
   NumberInput,
   Overflow,
@@ -28,6 +30,7 @@ import type { AnyTextField, PlainTextField } from "./text-fields.ts";
 export type AnyBlockType =
   | "image"
   | "context"
+  | "context_actions"
   | "actions"
   | "divider"
   | "section"
@@ -49,6 +52,7 @@ export interface Block<T extends AnyBlockType = AnyBlockType> {
 export declare type AnyMessageBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | FileBlock
   | HeaderBlock
@@ -61,6 +65,7 @@ export declare type AnyMessageBlock =
 export declare type AnyModalBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | HeaderBlock
   | ImageBlock
@@ -72,6 +77,7 @@ export declare type AnyModalBlock =
 export declare type AnyHomeTabBlock =
   | ActionsBlock
   | ContextBlock
+  | ContextActionsBlock
   | DividerBlock
   | HeaderBlock
   | ImageBlock
@@ -103,6 +109,11 @@ export interface ActionsBlock extends Block<"actions"> {
 export interface ContextBlock extends Block<"context"> {
   type: "context";
   elements: (ImageElement | AnyTextField)[];
+}
+
+export interface ContextActionsBlock extends Block<"context_actions"> {
+  type: "context_actions";
+  elements: (FeedbackButtons | IconButton)[];
 }
 
 export interface DividerBlock extends Block<"divider"> {
