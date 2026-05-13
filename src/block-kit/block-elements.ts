@@ -285,6 +285,13 @@ export interface IconButton extends ActionBlockElement<"icon_button"> {
   text: PlainTextField;
   value?: string;
 }
+// https://docs.slack.dev/reference/block-kit/block-elements/url-source-element
+// Used inside `task_card.sources`; cannot appear in other blocks.
+export interface UrlSource {
+  type: "url";
+  url: string;
+  text: string;
+}
 
 // https://api.slack.com/changelog/2019-09-what-they-see-is-what-you-get-and-more-and-less
 

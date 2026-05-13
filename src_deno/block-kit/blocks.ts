@@ -17,6 +17,7 @@ import type {
   RichTextInput,
   Timepicker,
   URLInput,
+  UrlSource,
   WorkflowButton,
 } from "./block-elements.ts";
 import type { RichTextBlock } from "./rich-text-block.ts";
@@ -38,7 +39,14 @@ export type AnyBlockType =
   | "file"
   | "header"
   | "video"
-  | "rich_text";
+  | "rich_text"
+  | "markdown"
+  | "alert"
+  | "card"
+  | "carousel"
+  | "plan"
+  | "table"
+  | "task_card";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -60,7 +68,14 @@ export declare type AnyMessageBlock =
   | MessageInputBlock
   | SectionBlock
   | VideoBlock
-  | RichTextBlock;
+  | RichTextBlock
+  | MarkdownBlock
+  | AlertBlock
+  | CardBlock
+  | CarouselBlock
+  | PlanBlock
+  | TableBlock
+  | TaskCardBlock;
 
 export declare type AnyModalBlock =
   | ActionsBlock
@@ -72,7 +87,8 @@ export declare type AnyModalBlock =
   | ViewInputBlock
   | SectionBlock
   | VideoBlock
-  | RichTextBlock;
+  | RichTextBlock
+  | MarkdownBlock;
 
 export declare type AnyHomeTabBlock =
   | ActionsBlock
@@ -84,7 +100,8 @@ export declare type AnyHomeTabBlock =
   | ViewInputBlock
   | SectionBlock
   | VideoBlock
-  | RichTextBlock;
+  | RichTextBlock
+  | MarkdownBlock;
 
 // -----------------------------
 // Blocks
@@ -202,6 +219,7 @@ export interface SectionBlock extends Block<"section"> {
     | AnyMultiSelectElement
     | RadioButtons
     | Checkboxes;
+  expand?: boolean;
 }
 
 export interface VideoBlock extends Block<"video"> {
@@ -215,4 +233,68 @@ export interface VideoBlock extends Block<"video"> {
   provider_name?: string;
   provider_icon_url?: string;
   description?: PlainTextField;
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/markdown-block
+export interface MarkdownBlock extends Block<"markdown"> {
+  type: "markdown";
+  text: string;
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/alert-block
+export interface AlertBlock extends Block<"alert"> {
+  type: "alert";
+  text: AnyTextField;
+  level?: "default" | "info" | "warning" | "error" | "success";
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/card-block
+export interface CardBlock extends Block<"card"> {
+  type: "card";
+  hero_image?: ImageElement;
+  icon?: ImageElement;
+  title?: AnyTextField;
+  subtitle?: AnyTextField;
+  body?: AnyTextField;
+  actions?: Button[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/carousel-block
+export interface CarouselBlock extends Block<"carousel"> {
+  type: "carousel";
+  elements: CardBlock[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/plan-block
+export interface PlanBlock extends Block<"plan"> {
+  type: "plan";
+  title: PlainTextField;
+  tasks?: TaskCardBlock[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/table-block
+export interface TableRawTextCell {
+  type: "raw_text";
+  text: string;
+}
+export type TableCell = TableRawTextCell | RichTextBlock;
+export interface TableColumnSetting {
+  align?: "left" | "center" | "right";
+  is_wrapped?: boolean;
+}
+export interface TableBlock extends Block<"table"> {
+  type: "table";
+  rows: TableCell[][];
+  column_settings?: TableColumnSetting[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/task-card-block
+export interface TaskCardBlock extends Block<"task_card"> {
+  type: "task_card";
+  task_id: string;
+  title: string;
+  details?: RichTextBlock;
+  output?: RichTextBlock;
+  sources?: UrlSource[];
+  status?: "pending" | "in_progress" | "complete" | "error";
 }

@@ -1,5 +1,20 @@
 import { assert, test, describe } from "vitest";
-import { AnyMessageBlock, AnyRichTextBlockElement, ContextActionsBlock, MessageInputBlock, RichTextBlock } from "../src/index";
+import {
+  AlertBlock,
+  AnyMessageBlock,
+  AnyModalBlock,
+  AnyRichTextBlockElement,
+  CardBlock,
+  CarouselBlock,
+  ContextActionsBlock,
+  MarkdownBlock,
+  MessageInputBlock,
+  PlanBlock,
+  RichTextBlock,
+  SectionBlock,
+  TableBlock,
+  TaskCardBlock,
+} from "../src/index";
 
 describe("Block Kit types", () => {
   test("parse rich text ones", async () => {
@@ -195,6 +210,200 @@ describe("Block Kit types", () => {
       },
     ];
     assert.isTrue(blocks.length > 0);
+  });
+
+  test("parse markdown blocks", async () => {
+    const block: MarkdownBlock = {
+      type: "markdown",
+      text: "**Lots of information here!!**",
+    };
+    const blocks: AnyMessageBlock[] = [block];
+    const modalBlocks: AnyModalBlock[] = [block];
+    assert.equal(blocks.length, 1);
+    assert.equal(modalBlocks.length, 1);
+  });
+
+  test("parse alert blocks", async () => {
+    const blocks: AlertBlock[] = [
+      {
+        type: "alert",
+        text: { type: "mrkdwn", text: "Heads up!" },
+      },
+      {
+        type: "alert",
+        block_id: "a1",
+        text: { type: "plain_text", text: "Something went wrong" },
+        level: "error",
+      },
+      {
+        type: "alert",
+        text: { type: "mrkdwn", text: "FYI" },
+        level: "info",
+      },
+      {
+        type: "alert",
+        text: { type: "mrkdwn", text: "Be careful" },
+        level: "warning",
+      },
+      {
+        type: "alert",
+        text: { type: "mrkdwn", text: "Nice!" },
+        level: "success",
+      },
+    ];
+    const messageBlocks: AnyMessageBlock[] = blocks;
+    assert.equal(messageBlocks.length, 5);
+  });
+
+  test("parse card blocks", async () => {
+    const block: CardBlock = {
+      type: "card",
+      icon: {
+        type: "image",
+        image_url: "https://picsum.photos/36/36",
+        alt_text: "Icon",
+      },
+      title: { type: "mrkdwn", text: "Lumon Industries" },
+      subtitle: { type: "mrkdwn", text: "Committed to work-life balance" },
+      hero_image: {
+        type: "image",
+        image_url: "https://picsum.photos/400/300",
+        alt_text: "Sample hero image",
+      },
+      body: { type: "mrkdwn", text: "Please enjoy each card equally." },
+      actions: [
+        {
+          type: "button",
+          text: { type: "plain_text", text: "Action Button" },
+          action_id: "button_action",
+        },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.actions?.length, 1);
+  });
+
+  test("parse carousel blocks", async () => {
+    const block: CarouselBlock = {
+      type: "carousel",
+      elements: [
+        {
+          type: "card",
+          title: { type: "plain_text", text: "First card" },
+          body: { type: "mrkdwn", text: "Body 1" },
+        },
+        {
+          type: "card",
+          title: { type: "plain_text", text: "Second card" },
+          body: { type: "mrkdwn", text: "Body 2" },
+        },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.elements.length, 2);
+  });
+
+  test("parse task_card blocks", async () => {
+    const block: TaskCardBlock = {
+      type: "task_card",
+      task_id: "task-1",
+      title: "Investigate failure",
+      status: "in_progress",
+      details: {
+        type: "rich_text",
+        elements: [
+          {
+            type: "rich_text_section",
+            elements: [{ type: "text", text: "Looking into the logs" }],
+          },
+        ],
+      },
+      output: {
+        type: "rich_text",
+        elements: [
+          {
+            type: "rich_text_section",
+            elements: [{ type: "text", text: "Found a stack trace" }],
+          },
+        ],
+      },
+      sources: [
+        { type: "url", url: "https://example.com/", text: "Reference" },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.sources?.length, 1);
+    assert.equal(block.sources?.[0].type, "url");
+  });
+
+  test("parse plan blocks", async () => {
+    const block: PlanBlock = {
+      type: "plan",
+      title: { type: "plain_text", text: "Release plan" },
+      tasks: [
+        {
+          type: "task_card",
+          task_id: "t1",
+          title: "Run tests",
+          status: "complete",
+        },
+        {
+          type: "task_card",
+          task_id: "t2",
+          title: "Deploy",
+          status: "pending",
+        },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.tasks?.length, 2);
+  });
+
+  test("parse table blocks", async () => {
+    const block: TableBlock = {
+      type: "table",
+      rows: [
+        [
+          { type: "raw_text", text: "Name" },
+          { type: "raw_text", text: "Score" },
+        ],
+        [
+          { type: "raw_text", text: "Alice" },
+          {
+            type: "rich_text",
+            elements: [
+              {
+                type: "rich_text_section",
+                elements: [
+                  { type: "text", text: "100", style: { bold: true } },
+                ],
+              },
+            ],
+          },
+        ],
+      ],
+      column_settings: [
+        { align: "left", is_wrapped: false },
+        { align: "right" },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.rows.length, 2);
+    assert.equal(block.column_settings?.length, 2);
+  });
+
+  test("section block supports expand", async () => {
+    const block: SectionBlock = {
+      type: "section",
+      text: { type: "mrkdwn", text: "long content..." },
+      expand: true,
+    };
+    assert.equal(block.expand, true);
   });
 
   test("parse context actions blocks", async () => {
