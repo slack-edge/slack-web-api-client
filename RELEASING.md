@@ -30,11 +30,18 @@ How to publish a new version of `slack-web-api-client` to npm.
    ```
    npm publish --otp=123456
    ```
-6. **Tag the published commit** (lightweight tag, no `v` prefix — matches the existing tag history):
+6. **Tag the published commit.** Lightweight tag with a `v` prefix, matching the convention used in [`slack-edge/slack-edge`](https://github.com/slack-edge/slack-edge/releases):
    ```
-   git tag X.Y.Z
-   git push origin X.Y.Z
+   git tag vX.Y.Z
+   git push origin vX.Y.Z
    ```
+   (Older tags `1.0.0` through `1.1.12` predate this convention and lack the `v` prefix — leave them as-is.)
+7. **Publish a GitHub Release** at `vX.Y.Z`. Match the style of recent slack-edge releases: title equal to the tag, body a short bulleted changelog of changes since the previous version (no headings or extra prose).
+   ```
+   gh release create vX.Y.Z --title vX.Y.Z --latest --notes "- First change
+   - Second change"
+   ```
+   Or omit `--notes` to draft the body interactively in `$EDITOR`.
 
 ## Verifying the release
 
