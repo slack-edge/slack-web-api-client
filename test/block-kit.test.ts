@@ -14,7 +14,7 @@ describe("Block Kit types", () => {
               {
                 type: "text",
                 text: "Hello world",
-                style: { bold: true, italic: true, strike: true, code: true },
+                style: { bold: true, italic: true, strike: true, underline: true, code: true },
               },
               {
                 type: "channel",

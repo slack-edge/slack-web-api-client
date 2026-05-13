@@ -386,6 +386,7 @@ export interface RichTextSectionElementStyle {
   bold?: boolean;
   italic?: boolean;
   strike?: boolean;
+  underline?: boolean;
   highlight?: boolean;
   client_highlight?: boolean;
   unlink?: boolean;
