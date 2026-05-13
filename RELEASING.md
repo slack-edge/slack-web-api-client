@@ -35,7 +35,6 @@ How to publish a new version of `slack-web-api-client` to npm.
    git tag vX.Y.Z
    git push origin vX.Y.Z
    ```
-   (Older tags `1.0.0` through `1.1.12` predate this convention and lack the `v` prefix — leave them as-is.)
 7. **Publish a GitHub Release** at `vX.Y.Z`. Match the style of recent slack-edge releases: title equal to the tag, body a short bulleted changelog of changes since the previous version (no headings or extra prose).
    ```
    gh release create vX.Y.Z --title vX.Y.Z --latest --notes "- First change
