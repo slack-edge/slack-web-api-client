@@ -10,7 +10,7 @@
     "build": "tsc",
     "build:clean": "rm -rf ./dist && tsc",
     "format": "npx @biomejs/biome format --write src/ test/",
-    "knip": "npx knip",
+    "lint": "npx knip",
     "test": "npm run format && npx vitest",
     "ci-test": "npx vitest run --coverage",
     "prepublishOnly": "npm run build:clean && npm run ci-test"

@@ -2,5 +2,14 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": ["test/**/*.test.ts"],
   "project": ["src/**/*.ts", "test/**/*.ts"],
-  "ignoreExportsUsedInFile": true
+  "ignore": [
+    "src/**/*_test.ts",
+    "src/client/generated-response/**",
+    "test/files-upload-v2-test.ts",
+    "test/remote-function-setup.ts"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "duplicates": "off"
+  }
 }

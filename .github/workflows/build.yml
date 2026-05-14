@@ -23,3 +23,5 @@ jobs:
       run: npm i && npm run build
     - name: Test
       run: npm run ci-test
+    - name: Lint
+      run: npm run lint
