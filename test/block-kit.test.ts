@@ -7,6 +7,7 @@ import {
   CardBlock,
   CarouselBlock,
   ContextActionsBlock,
+  DataVisualizationBlock,
   MarkdownBlock,
   MessageInputBlock,
   PlanBlock,
@@ -329,9 +330,7 @@ describe("Block Kit types", () => {
           },
         ],
       },
-      sources: [
-        { type: "url", url: "https://example.com/", text: "Reference" },
-      ],
+      sources: [{ type: "url", url: "https://example.com/", text: "Reference" }],
     };
     const messageBlocks: AnyMessageBlock[] = [block];
     assert.equal(messageBlocks.length, 1);
@@ -378,23 +377,103 @@ describe("Block Kit types", () => {
             elements: [
               {
                 type: "rich_text_section",
-                elements: [
-                  { type: "text", text: "100", style: { bold: true } },
-                ],
+                elements: [{ type: "text", text: "100", style: { bold: true } }],
               },
             ],
           },
         ],
       ],
-      column_settings: [
-        { align: "left", is_wrapped: false },
-        { align: "right" },
-      ],
+      column_settings: [{ align: "left", is_wrapped: false }, { align: "right" }],
     };
     const messageBlocks: AnyMessageBlock[] = [block];
     assert.equal(messageBlocks.length, 1);
     assert.equal(block.rows.length, 2);
     assert.equal(block.column_settings?.length, 2);
+  });
+
+  test("parse data visualization blocks", async () => {
+    const blocks: DataVisualizationBlock[] = [
+      {
+        type: "data_visualization",
+        block_id: "viz-line-multi",
+        title: "Weekly active users by platform",
+        chart: {
+          type: "line",
+          series: [
+            {
+              name: "Desktop",
+              data: [
+                { label: "Mon", value: 800 },
+                { label: "Tue", value: 920 },
+              ],
+            },
+            {
+              name: "Mobile",
+              data: [
+                { label: "Mon", value: 400 },
+                { label: "Tue", value: 530 },
+              ],
+            },
+          ],
+          axis_config: {
+            categories: ["Mon", "Tue"],
+            x_label: "Day",
+            y_label: "Users",
+          },
+        },
+      },
+      {
+        type: "data_visualization",
+        block_id: "viz-bar-negative",
+        title: "Net headcount change",
+        chart: {
+          type: "bar",
+          series: [
+            {
+              name: "Delta",
+              data: [
+                { label: "Mon", value: 4 },
+                { label: "Tue", value: -2 },
+              ],
+            },
+          ],
+          axis_config: { x_label: "Day", y_label: "People (delta)" },
+        },
+      },
+      {
+        type: "data_visualization",
+        title: "Concurrent users by platform",
+        chart: {
+          type: "area",
+          series: [
+            {
+              name: "Desktop",
+              data: [{ label: "Mon", value: 2800 }],
+            },
+          ],
+        },
+      },
+      {
+        type: "data_visualization",
+        block_id: "viz-pie-multi",
+        title: "Plan distribution by tier",
+        chart: {
+          type: "pie",
+          segments: [
+            { label: "Free", value: 4200 },
+            { label: "Pro", value: 2300 },
+            { label: "Enterprise", value: 480 },
+          ],
+        },
+      },
+    ];
+    const messageBlocks: AnyMessageBlock[] = blocks;
+    assert.equal(messageBlocks.length, 4);
+    assert.equal(blocks[0].chart.type, "line");
+    const pie = blocks[3].chart;
+    if (pie.type === "pie") {
+      assert.equal(pie.segments.length, 3);
+    }
   });
 
   test("section block supports expand", async () => {
