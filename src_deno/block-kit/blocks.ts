@@ -46,7 +46,8 @@ export type AnyBlockType =
   | "carousel"
   | "plan"
   | "table"
-  | "task_card";
+  | "task_card"
+  | "data_visualization";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -75,7 +76,8 @@ export declare type AnyMessageBlock =
   | CarouselBlock
   | PlanBlock
   | TableBlock
-  | TaskCardBlock;
+  | TaskCardBlock
+  | DataVisualizationBlock;
 
 export declare type AnyModalBlock =
   | ActionsBlock
@@ -297,4 +299,37 @@ export interface TaskCardBlock extends Block<"task_card"> {
   output?: RichTextBlock;
   sources?: UrlSource[];
   status?: "pending" | "in_progress" | "complete" | "error";
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/data-visualization-block
+export interface DataVisualizationDataPoint {
+  label: string;
+  value: number;
+}
+export interface DataVisualizationSeries {
+  name: string;
+  data: DataVisualizationDataPoint[];
+}
+export interface DataVisualizationAxisConfig {
+  categories?: string[];
+  x_label?: string;
+  y_label?: string;
+}
+// Used by line, bar, and area charts
+export interface DataVisualizationSeriesChart {
+  type: "line" | "bar" | "area";
+  series: DataVisualizationSeries[];
+  axis_config?: DataVisualizationAxisConfig;
+}
+export interface DataVisualizationPieChart {
+  type: "pie";
+  segments: DataVisualizationDataPoint[];
+}
+export type DataVisualizationChart =
+  | DataVisualizationSeriesChart
+  | DataVisualizationPieChart;
+export interface DataVisualizationBlock extends Block<"data_visualization"> {
+  type: "data_visualization";
+  title: string;
+  chart: DataVisualizationChart;
 }
