@@ -371,7 +371,8 @@ export interface FeedbackButton {
   text: PlainTextField;
   value: string;
 }
-export interface FeedbackButtons extends ActionBlockElement<"feedback_buttons"> {
+export interface FeedbackButtons
+  extends ActionBlockElement<"feedback_buttons"> {
   type: "feedback_buttons";
   positive_button: FeedbackButton;
   negative_button: FeedbackButton;
@@ -509,6 +510,7 @@ export interface RichTextSectionElementStyle {
   bold?: boolean;
   italic?: boolean;
   strike?: boolean;
+  underline?: boolean;
   highlight?: boolean;
   client_highlight?: boolean;
   unlink?: boolean;

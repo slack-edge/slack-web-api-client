@@ -264,6 +264,27 @@ import type {
   WorkflowsTriggersDeleteRequest,
   WorkflowsTriggersListRequest,
   WorkflowsTriggersUpdateRequest,
+  WorkflowsFeaturedAddRequest,
+  WorkflowsFeaturedSetRequest,
+  WorkflowsFeaturedRemoveRequest,
+  WorkflowsFeaturedListRequest,
+  AppsUserConnectionUpdateRequest,
+  AssistantSearchContextRequest,
+  AssistantSearchInfoRequest,
+  FunctionsDistributionsPermissionsSetRequest,
+  FunctionsDistributionsPermissionsListRequest,
+  FunctionsDistributionsPermissionsAddRequest,
+  FunctionsDistributionsPermissionsRemoveRequest,
+  FunctionsWorkflowsStepsListRequest,
+  CallsAddRequest,
+  CallsEndRequest,
+  CallsInfoRequest,
+  CallsUpdateRequest,
+  CallsParticipantsAddRequest,
+  CallsParticipantsRemoveRequest,
+  AdminAnalyticsGetFileRequest,
+  AdminAppsConfigLookupRequest,
+  AdminAppsConfigSetRequest,
 } from "./request";
 import type {
   AdminAppsApproveResponse,
@@ -470,6 +491,8 @@ import type {
   AdminFunctionsListResponse,
   AdminFunctionsPermissionsLookupResponse,
   AdminFunctionsPermissionsSetResponse,
+  AdminAppsConfigLookupResponse,
+  AdminAppsConfigSetResponse,
   AdminWorkflowsSearchResponse,
   AdminWorkflowsUnpublishResponse,
   AdminWorkflowsPermissionsLookupResponse,
@@ -535,6 +558,16 @@ import type {
   WorkflowsTriggersUpdateResponse,
 } from "./automation-response/index";
 import type { FilesUploadV2Response } from "./custom-response/FilesUploadV2Response";
+import type { AssistantSearchContextResponse } from "./custom-response/AssistantSearchContextResponse";
+import type { AssistantSearchInfoResponse } from "./custom-response/AssistantSearchInfoResponse";
+import type {
+  FunctionsDistributionsPermissionsSetResponse,
+  FunctionsDistributionsPermissionsListResponse,
+} from "./custom-response/FunctionsDistributionsPermissionsResponse";
+import type { FunctionsWorkflowsStepsListResponse } from "./custom-response/FunctionsWorkflowsStepsListResponse";
+import type { WorkflowsFeaturedListResponse } from "./custom-response/WorkflowsFeaturedListResponse";
+import type { CallsAddResponse, CallsInfoResponse, CallsUpdateResponse } from "./custom-response/CallsResponse";
+import type { AdminAnalyticsGetFileResponse } from "./custom-response/AdminAnalyticsGetFileResponse";
 import type { RetryHandler, RetryHandlerState } from "./retry-handler/index";
 import { RatelimitRetryHandler } from "./retry-handler/index";
 
@@ -849,6 +882,9 @@ export class SlackAPIClient {
   // --------------------------------------
 
   public readonly admin = {
+    analytics: {
+      getFile: this.#bindApiCall<AdminAnalyticsGetFileRequest, AdminAnalyticsGetFileResponse>(this, "admin.analytics.getFile"),
+    },
     apps: {
       approve: this.#bindNoArgAllowedApiCall<AdminAppsApproveRequest, AdminAppsApproveResponse>(this, "admin.apps.approve"),
       approved: {
@@ -875,6 +911,10 @@ export class SlackAPIClient {
           this,
           "admin.apps.activities.list",
         ),
+      },
+      config: {
+        lookup: this.#bindApiCall<AdminAppsConfigLookupRequest, AdminAppsConfigLookupResponse>(this, "admin.apps.config.lookup"),
+        set: this.#bindApiCall<AdminAppsConfigSetRequest, AdminAppsConfigSetResponse>(this, "admin.apps.config.set"),
       },
     },
     auth: {
@@ -1196,6 +1236,11 @@ export class SlackAPIClient {
       export: this.#bindApiCall<AppsManifestExportRequest, AppsManifestExportResponse>(this, "apps.manifest.export"),
       validate: this.#bindApiCall<AppsManifestValidateRequest, AppsManifestValidateResponse>(this, "apps.manifest.validate"),
     },
+    user: {
+      connection: {
+        update: this.#bindApiCall<AppsUserConnectionUpdateRequest, SlackAPIResponse>(this, "apps.user.connection.update"),
+      },
+    },
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(this, "apps.uninstall"),
   };
 
@@ -1210,6 +1255,10 @@ export class SlackAPIClient {
         "assistant.threads.setSuggestedPrompts",
       ),
       setTitle: this.#bindApiCall<AssistantThreadsSetTitleRequest, AssistantThreadsSetTitleResponse>(this, "assistant.threads.setTitle"),
+    },
+    search: {
+      context: this.#bindApiCall<AssistantSearchContextRequest, AssistantSearchContextResponse>(this, "assistant.search.context"),
+      info: this.#bindNoArgAllowedApiCall<AssistantSearchInfoRequest, AssistantSearchInfoResponse>(this, "assistant.search.info"),
     },
   };
 
@@ -1230,6 +1279,17 @@ export class SlackAPIClient {
     edit: this.#bindApiCall<BookmarksEditRequest, BookmarksEditResponse>(this, "bookmarks.edit"),
     list: this.#bindApiCall<BookmarksListRequest, BookmarksListResponse>(this, "bookmarks.list"),
     remove: this.#bindApiCall<BookmarksRemoveRequest, BookmarksRemoveResponse>(this, "bookmarks.remove"),
+  };
+
+  public readonly calls = {
+    add: this.#bindApiCall<CallsAddRequest, CallsAddResponse>(this, "calls.add"),
+    end: this.#bindApiCall<CallsEndRequest, SlackAPIResponse>(this, "calls.end"),
+    info: this.#bindApiCall<CallsInfoRequest, CallsInfoResponse>(this, "calls.info"),
+    update: this.#bindApiCall<CallsUpdateRequest, CallsUpdateResponse>(this, "calls.update"),
+    participants: {
+      add: this.#bindApiCall<CallsParticipantsAddRequest, SlackAPIResponse>(this, "calls.participants.add"),
+      remove: this.#bindApiCall<CallsParticipantsRemoveRequest, SlackAPIResponse>(this, "calls.participants.remove"),
+    },
   };
 
   public readonly canvases = {
@@ -1370,6 +1430,34 @@ export class SlackAPIClient {
       "functions.completeSuccess",
     ),
     completeError: this.#bindApiCall<FunctionsCompleteErrorRequest, FunctionsCompleteErrorResponse>(this, "functions.completeError"),
+    distributions: {
+      permissions: {
+        set: this.#bindApiCall<FunctionsDistributionsPermissionsSetRequest, FunctionsDistributionsPermissionsSetResponse>(
+          this,
+          "functions.distributions.permissions.set",
+        ),
+        list: this.#bindApiCall<FunctionsDistributionsPermissionsListRequest, FunctionsDistributionsPermissionsListResponse>(
+          this,
+          "functions.distributions.permissions.list",
+        ),
+        add: this.#bindApiCall<FunctionsDistributionsPermissionsAddRequest, SlackAPIResponse>(
+          this,
+          "functions.distributions.permissions.add",
+        ),
+        remove: this.#bindApiCall<FunctionsDistributionsPermissionsRemoveRequest, SlackAPIResponse>(
+          this,
+          "functions.distributions.permissions.remove",
+        ),
+      },
+    },
+    workflows: {
+      steps: {
+        list: this.#bindApiCall<FunctionsWorkflowsStepsListRequest, FunctionsWorkflowsStepsListResponse>(
+          this,
+          "functions.workflows.steps.list",
+        ),
+      },
+    },
   };
 
   public readonly migration = {
@@ -1523,6 +1611,12 @@ export class SlackAPIClient {
       update: this.#bindApiCall<WorkflowsTriggersUpdateRequest, WorkflowsTriggersUpdateResponse>(this, "workflows.triggers.update"),
       delete: this.#bindApiCall<WorkflowsTriggersDeleteRequest, WorkflowsTriggersDeleteResponse>(this, "workflows.triggers.delete"),
       list: this.#bindNoArgAllowedApiCall<WorkflowsTriggersListRequest, WorkflowsTriggersListResponse>(this, "workflows.triggers.list"),
+    },
+    featured: {
+      add: this.#bindApiCall<WorkflowsFeaturedAddRequest, SlackAPIResponse>(this, "workflows.featured.add"),
+      set: this.#bindApiCall<WorkflowsFeaturedSetRequest, SlackAPIResponse>(this, "workflows.featured.set"),
+      remove: this.#bindApiCall<WorkflowsFeaturedRemoveRequest, SlackAPIResponse>(this, "workflows.featured.remove"),
+      list: this.#bindApiCall<WorkflowsFeaturedListRequest, WorkflowsFeaturedListResponse>(this, "workflows.featured.list"),
     },
   };
 }
