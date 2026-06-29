@@ -38,7 +38,7 @@
     "@vitest/coverage-v8": "^4.1.6",
     "knip": "^6.13.1",
     "msw": "^2.11.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.6"
   },
   "overrides": {
