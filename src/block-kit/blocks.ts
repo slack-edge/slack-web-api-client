@@ -47,7 +47,8 @@ export type AnyBlockType =
   | "plan"
   | "table"
   | "task_card"
-  | "data_visualization";
+  | "data_visualization"
+  | "container";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -77,7 +78,8 @@ export declare type AnyMessageBlock =
   | PlanBlock
   | TableBlock
   | TaskCardBlock
-  | DataVisualizationBlock;
+  | DataVisualizationBlock
+  | ContainerBlock;
 
 export declare type AnyModalBlock =
   | ActionsBlock
@@ -330,4 +332,28 @@ export interface DataVisualizationBlock extends Block<"data_visualization"> {
   type: "data_visualization";
   title: string;
   chart: DataVisualizationChart;
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/container-block
+export type ContainerChildBlock =
+  | ActionsBlock
+  | ContextBlock
+  | DividerBlock
+  | FileBlock
+  | HeaderBlock
+  | ImageBlock
+  | MessageInputBlock
+  | RichTextBlock
+  | SectionBlock
+  | TableBlock
+  | VideoBlock;
+export interface ContainerBlock extends Block<"container"> {
+  type: "container";
+  title: PlainTextField;
+  child_blocks: ContainerChildBlock[];
+  subtitle?: AnyTextField;
+  icon?: ImageElement;
+  width?: "narrow" | "standard" | "wide" | "full";
+  is_collapsible?: boolean;
+  default_collapsed?: boolean;
 }
