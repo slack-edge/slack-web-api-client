@@ -6,6 +6,7 @@ import {
   AnyRichTextBlockElement,
   CardBlock,
   CarouselBlock,
+  ContainerBlock,
   ContextActionsBlock,
   DataVisualizationBlock,
   MarkdownBlock,
@@ -474,6 +475,28 @@ describe("Block Kit types", () => {
     if (pie.type === "pie") {
       assert.equal(pie.segments.length, 3);
     }
+  });
+
+  test("parse container blocks", async () => {
+    const block: ContainerBlock = {
+      type: "container",
+      block_id: "container-1",
+      title: { type: "plain_text", text: "Deployment summary" },
+      subtitle: { type: "mrkdwn", text: "*3* services updated" },
+      icon: { type: "image", image_url: "https://example.com/icon.png", alt_text: "icon" },
+      width: "wide",
+      is_collapsible: true,
+      default_collapsed: false,
+      child_blocks: [
+        { type: "header", text: { type: "plain_text", text: "Services" } },
+        { type: "divider" },
+        { type: "section", text: { type: "mrkdwn", text: "All green ✅" } },
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(block.width, "wide");
+    assert.equal(block.child_blocks.length, 3);
   });
 
   test("section block supports expand", async () => {
