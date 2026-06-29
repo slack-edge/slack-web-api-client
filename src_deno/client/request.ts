@@ -6,7 +6,10 @@ import type {
 import type { AnyMessageBlock } from "../block-kit/blocks.ts";
 import type { LinkUnfurls } from "../block-kit/link-unfurls.ts";
 import type { MessageAttachment } from "../block-kit/message-attachment.ts";
-import type { MessageMetadata } from "../block-kit/message-metadata.ts";
+import type {
+  EntityMetadata,
+  MessageMetadata,
+} from "../block-kit/message-metadata.ts";
 import type { HomeTabView, ModalView } from "../block-kit/views.ts";
 import type { ManifestParams } from "../manifest/manifest-params.ts";
 
@@ -597,6 +600,7 @@ export interface AssistantThreadsSetStatusRequest extends SlackAPIRequest {
   channel_id: string;
   thread_ts: string;
   status: string;
+  loading_messages?: string[];
 }
 export interface AssistantThreadsSetSuggestedPromptsRequest
   extends SlackAPIRequest {
@@ -817,7 +821,12 @@ export type ChatUnfurlRequest =
   & (ChannelAndTSRequest | SourceAndUnfurlIDRequest)
   & SlackAPIRequest
   & {
-    unfurls: LinkUnfurls;
+    /** Provide either `unfurls` (URL -> unfurl blocks) or `metadata` (entity unfurls), not both. */
+    unfurls?: LinkUnfurls;
+    /** Unfurl metadata attaching an array of entities to the message (work-object unfurls). */
+    metadata?: Partial<MessageMetadata> & {
+      entities: EntityMetadata[];
+    };
     user_auth_message?: string;
     user_auth_required?: boolean;
     user_auth_url?: string;
@@ -839,15 +848,55 @@ export interface ChatUpdateRequest extends SlackAPIRequest {
   as_user?: boolean;
 }
 
+/** A URL source reference rendered beneath a streamed task. */
+export interface MessageChunkURLSource {
+  type: "url";
+  url: string;
+  text?: string;
+}
+/** Streams an array of Block Kit blocks within a message stream. */
+export interface BlocksChunk {
+  type: "blocks";
+  blocks: AnyMessageBlock[];
+}
+/** Streams markdown-formatted text within a message stream. */
+export interface MarkdownTextChunk {
+  type: "markdown_text";
+  text: string;
+}
+/** Updates the title of the streamed plan. */
+export interface PlanUpdateChunk {
+  type: "plan_update";
+  title: string;
+}
+/** Updates a task's progress in a timeline-style UI. */
+export interface TaskUpdateChunk {
+  type: "task_update";
+  id: string;
+  title: string;
+  status: "pending" | "in_progress" | "complete" | "error";
+  details?: string;
+  output?: string;
+  sources?: MessageChunkURLSource[];
+}
+/** Any streaming message chunk accepted by the chat streaming methods. */
+export type AnyMessageChunk =
+  | BlocksChunk
+  | MarkdownTextChunk
+  | PlanUpdateChunk
+  | TaskUpdateChunk;
 export interface ChatAppendStreamRequest extends SlackAPIRequest {
   channel: string;
   ts: string;
-  markdown_text: string;
+  markdown_text?: string;
+  chunks?: AnyMessageChunk[];
 }
 export interface ChatStartStreamRequest extends SlackAPIRequest {
   channel: string;
   thread_ts: string;
   markdown_text?: string;
+  chunks?: AnyMessageChunk[];
+  task_display_mode?: string;
   recipient_user_id?: string;
   recipient_team_id?: string;
 }
@@ -855,6 +904,7 @@ export interface ChatStopStreamRequest extends SlackAPIRequest {
   channel: string;
   ts: string;
   markdown_text?: string;
+  chunks?: AnyMessageChunk[];
   blocks?: AnyMessageBlock[];
   metadata?: MessageMetadata;
 }
