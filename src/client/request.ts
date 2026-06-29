@@ -545,6 +545,14 @@ export interface AppsUninstallRequest extends SlackAPIRequest {
 }
 
 /*
+ * `apps.user.*`
+ */
+export interface AppsUserConnectionUpdateRequest extends SlackAPIRequest {
+  user_id: string;
+  status: "connected" | "disconnected";
+}
+
+/*
  * `assistant.threads.*`
  */
 
@@ -567,6 +575,31 @@ export interface AssistantThreadsSetTitleRequest extends SlackAPIRequest {
   thread_ts: string;
   title: string;
 }
+
+/*
+ * `assistant.search.*`
+ */
+export interface AssistantSearchContextRequest extends SlackAPIRequest, CursorPaginationEnabled {
+  query: string;
+  action_token?: string;
+  channel_types?: string[];
+  content_types?: string[];
+  include_bots?: boolean;
+  include_deleted_users?: boolean;
+  before?: number;
+  after?: number;
+  include_context_messages?: boolean;
+  context_channel_id?: string;
+  sort?: string;
+  sort_dir?: string;
+  include_message_blocks?: boolean;
+  highlight?: boolean;
+  term_clauses?: string[];
+  modifiers?: string;
+  include_archived_channels?: boolean;
+  disable_semantic_search?: boolean;
+}
+export type AssistantSearchInfoRequest = SlackAPIRequest;
 
 /*
  * `auth.*`
@@ -1114,6 +1147,32 @@ export interface FunctionsCompleteErrorRequest extends SlackAPIRequest {
   error: string;
   function_execution_id: string;
 }
+export interface FunctionsDistributionsPermissionsSetRequest extends SlackAPIRequest {
+  function_id?: string;
+  function_callback_id?: string;
+  function_app_id?: string;
+  permission_type: "everyone" | "app_collaborators" | "named_entities" | "system";
+  user_ids?: string[];
+  team_ids?: string[];
+  org_ids?: string[];
+}
+export interface FunctionsDistributionsPermissionsListRequest extends SlackAPIRequest {
+  function_id: string;
+}
+export interface FunctionsDistributionsPermissionsAddRequest extends SlackAPIRequest {
+  function_id: string;
+  user_ids: string[];
+}
+export interface FunctionsDistributionsPermissionsRemoveRequest extends SlackAPIRequest {
+  function_id: string;
+  user_ids: string[];
+}
+export interface FunctionsWorkflowsStepsListRequest extends SlackAPIRequest {
+  function_id: string;
+  workflow_id?: string;
+  workflow?: string;
+  workflow_app_id?: string;
+}
 
 /*
  * `migration.*`
@@ -1537,4 +1596,64 @@ export interface WorkflowsTriggersDeleteRequest extends SlackAPIRequest {
 export interface WorkflowsTriggersListRequest extends SlackAPIRequest, CursorPaginationEnabled {
   is_owner?: boolean;
   is_published?: boolean;
+}
+
+/*
+ * `workflows.featured.*`
+ */
+export interface WorkflowsFeaturedAddRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[];
+}
+export interface WorkflowsFeaturedSetRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[];
+}
+export interface WorkflowsFeaturedRemoveRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[];
+}
+export interface WorkflowsFeaturedListRequest extends SlackAPIRequest {
+  channel_ids: string[];
+}
+
+/*
+ * `calls.*`
+ */
+export interface CallUser {
+  slack_id?: string;
+  external_id?: string;
+  display_name?: string;
+  avatar_url?: string;
+}
+export interface CallsAddRequest extends SlackAPIRequest {
+  external_unique_id: string;
+  join_url: string;
+  created_by?: string;
+  date_start?: number;
+  desktop_app_join_url?: string;
+  external_display_id?: string;
+  title?: string;
+  users?: CallUser[];
+}
+export interface CallsEndRequest extends SlackAPIRequest {
+  id: string;
+  duration?: number;
+}
+export interface CallsInfoRequest extends SlackAPIRequest {
+  id: string;
+}
+export interface CallsUpdateRequest extends SlackAPIRequest {
+  id: string;
+  join_url?: string;
+  desktop_app_join_url?: string;
+  title?: string;
+}
+export interface CallsParticipantsAddRequest extends SlackAPIRequest {
+  id: string;
+  users: CallUser[];
+}
+export interface CallsParticipantsRemoveRequest extends SlackAPIRequest {
+  id: string;
+  users: CallUser[];
 }

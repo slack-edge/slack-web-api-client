@@ -1,9 +1,12 @@
 import { SlackAPIConnectionError, SlackAPIError } from "../errors.ts";
 import type {
+  AdminAnalyticsGetFileRequest,
   AdminAppsActivitiesListRequest,
   AdminAppsApprovedListRequest,
   AdminAppsApproveRequest,
   AdminAppsClearResolutionRequest,
+  AdminAppsConfigLookupRequest,
+  AdminAppsConfigSetRequest,
   AdminAppsRequestsCancelRequest,
   AdminAppsRequestsListRequest,
   AdminAppsRestrictedListRequest,
@@ -107,6 +110,9 @@ import type {
   AppsManifestUpdateRequest,
   AppsManifestValidateRequest,
   AppsUninstallRequest,
+  AppsUserConnectionUpdateRequest,
+  AssistantSearchContextRequest,
+  AssistantSearchInfoRequest,
   AssistantThreadsSetStatusRequest,
   AssistantThreadsSetSuggestedPromptsRequest,
   AssistantThreadsSetTitleRequest,
@@ -118,6 +124,12 @@ import type {
   BookmarksListRequest,
   BookmarksRemoveRequest,
   BotsInfoRequest,
+  CallsAddRequest,
+  CallsEndRequest,
+  CallsInfoRequest,
+  CallsParticipantsAddRequest,
+  CallsParticipantsRemoveRequest,
+  CallsUpdateRequest,
   CanvasesAccessDeleteRequest,
   CanvasesAccessSetRequest,
   CanvasesCreateRequest,
@@ -191,6 +203,11 @@ import type {
   FileUploadV2,
   FunctionsCompleteErrorRequest,
   FunctionsCompleteSuccessRequest,
+  FunctionsDistributionsPermissionsAddRequest,
+  FunctionsDistributionsPermissionsListRequest,
+  FunctionsDistributionsPermissionsRemoveRequest,
+  FunctionsDistributionsPermissionsSetRequest,
+  FunctionsWorkflowsStepsListRequest,
   MigrationExchangeRequest,
   OAuthV2AccessRequest,
   OAuthV2ExchangeRequest,
@@ -260,6 +277,10 @@ import type {
   ViewsPublishRequest,
   ViewsPushRequest,
   ViewsUpdateRequest,
+  WorkflowsFeaturedAddRequest,
+  WorkflowsFeaturedListRequest,
+  WorkflowsFeaturedRemoveRequest,
+  WorkflowsFeaturedSetRequest,
   WorkflowsTriggersCreateRequest,
   WorkflowsTriggersDeleteRequest,
   WorkflowsTriggersListRequest,
@@ -270,6 +291,8 @@ import type {
   AdminAppsApprovedListResponse,
   AdminAppsApproveResponse,
   AdminAppsClearResolutionResponse,
+  AdminAppsConfigLookupResponse,
+  AdminAppsConfigSetResponse,
   AdminAppsRequestsCancelResponse,
   AdminAppsRequestsListResponse,
   AdminAppsRestrictedListResponse,
@@ -535,6 +558,20 @@ import type {
   WorkflowsTriggersUpdateResponse,
 } from "./automation-response/index.ts";
 import type { FilesUploadV2Response } from "./custom-response/FilesUploadV2Response.ts";
+import type { AssistantSearchContextResponse } from "./custom-response/AssistantSearchContextResponse.ts";
+import type { AssistantSearchInfoResponse } from "./custom-response/AssistantSearchInfoResponse.ts";
+import type {
+  FunctionsDistributionsPermissionsListResponse,
+  FunctionsDistributionsPermissionsSetResponse,
+} from "./custom-response/FunctionsDistributionsPermissionsResponse.ts";
+import type { FunctionsWorkflowsStepsListResponse } from "./custom-response/FunctionsWorkflowsStepsListResponse.ts";
+import type { WorkflowsFeaturedListResponse } from "./custom-response/WorkflowsFeaturedListResponse.ts";
+import type {
+  CallsAddResponse,
+  CallsInfoResponse,
+  CallsUpdateResponse,
+} from "./custom-response/CallsResponse.ts";
+import type { AdminAnalyticsGetFileResponse } from "./custom-response/AdminAnalyticsGetFileResponse.ts";
 import type { RetryHandler, RetryHandlerState } from "./retry-handler/index.ts";
 import { RatelimitRetryHandler } from "./retry-handler/index.ts";
 
@@ -924,6 +961,12 @@ export class SlackAPIClient {
   // --------------------------------------
 
   public readonly admin = {
+    analytics: {
+      getFile: this.#bindApiCall<
+        AdminAnalyticsGetFileRequest,
+        AdminAnalyticsGetFileResponse
+      >(this, "admin.analytics.getFile"),
+    },
     apps: {
       approve: this.#bindNoArgAllowedApiCall<
         AdminAppsApproveRequest,
@@ -977,6 +1020,16 @@ export class SlackAPIClient {
           this,
           "admin.apps.activities.list",
         ),
+      },
+      config: {
+        lookup: this.#bindApiCall<
+          AdminAppsConfigLookupRequest,
+          AdminAppsConfigLookupResponse
+        >(this, "admin.apps.config.lookup"),
+        set: this.#bindApiCall<
+          AdminAppsConfigSetRequest,
+          AdminAppsConfigSetResponse
+        >(this, "admin.apps.config.set"),
       },
     },
     auth: {
@@ -1580,6 +1633,14 @@ export class SlackAPIClient {
         AppsManifestValidateResponse
       >(this, "apps.manifest.validate"),
     },
+    user: {
+      connection: {
+        update: this.#bindApiCall<
+          AppsUserConnectionUpdateRequest,
+          SlackAPIResponse
+        >(this, "apps.user.connection.update"),
+      },
+    },
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(
       this,
       "apps.uninstall",
@@ -1606,6 +1667,16 @@ export class SlackAPIClient {
         AssistantThreadsSetTitleRequest,
         AssistantThreadsSetTitleResponse
       >(this, "assistant.threads.setTitle"),
+    },
+    search: {
+      context: this.#bindApiCall<
+        AssistantSearchContextRequest,
+        AssistantSearchContextResponse
+      >(this, "assistant.search.context"),
+      info: this.#bindNoArgAllowedApiCall<
+        AssistantSearchInfoRequest,
+        AssistantSearchInfoResponse
+      >(this, "assistant.search.info"),
     },
   };
 
@@ -1650,6 +1721,35 @@ export class SlackAPIClient {
       this,
       "bookmarks.remove",
     ),
+  };
+
+  public readonly calls = {
+    add: this.#bindApiCall<CallsAddRequest, CallsAddResponse>(
+      this,
+      "calls.add",
+    ),
+    end: this.#bindApiCall<CallsEndRequest, SlackAPIResponse>(
+      this,
+      "calls.end",
+    ),
+    info: this.#bindApiCall<CallsInfoRequest, CallsInfoResponse>(
+      this,
+      "calls.info",
+    ),
+    update: this.#bindApiCall<CallsUpdateRequest, CallsUpdateResponse>(
+      this,
+      "calls.update",
+    ),
+    participants: {
+      add: this.#bindApiCall<CallsParticipantsAddRequest, SlackAPIResponse>(
+        this,
+        "calls.participants.add",
+      ),
+      remove: this.#bindApiCall<
+        CallsParticipantsRemoveRequest,
+        SlackAPIResponse
+      >(this, "calls.participants.remove"),
+    },
   };
 
   public readonly canvases = {
@@ -1988,6 +2088,49 @@ export class SlackAPIClient {
       FunctionsCompleteErrorRequest,
       FunctionsCompleteErrorResponse
     >(this, "functions.completeError"),
+    distributions: {
+      permissions: {
+        set: this.#bindApiCall<
+          FunctionsDistributionsPermissionsSetRequest,
+          FunctionsDistributionsPermissionsSetResponse
+        >(
+          this,
+          "functions.distributions.permissions.set",
+        ),
+        list: this.#bindApiCall<
+          FunctionsDistributionsPermissionsListRequest,
+          FunctionsDistributionsPermissionsListResponse
+        >(
+          this,
+          "functions.distributions.permissions.list",
+        ),
+        add: this.#bindApiCall<
+          FunctionsDistributionsPermissionsAddRequest,
+          SlackAPIResponse
+        >(
+          this,
+          "functions.distributions.permissions.add",
+        ),
+        remove: this.#bindApiCall<
+          FunctionsDistributionsPermissionsRemoveRequest,
+          SlackAPIResponse
+        >(
+          this,
+          "functions.distributions.permissions.remove",
+        ),
+      },
+    },
+    workflows: {
+      steps: {
+        list: this.#bindApiCall<
+          FunctionsWorkflowsStepsListRequest,
+          FunctionsWorkflowsStepsListResponse
+        >(
+          this,
+          "functions.workflows.steps.list",
+        ),
+      },
+    },
   };
 
   public readonly migration = {
@@ -2354,6 +2497,24 @@ export class SlackAPIClient {
         WorkflowsTriggersListRequest,
         WorkflowsTriggersListResponse
       >(this, "workflows.triggers.list"),
+    },
+    featured: {
+      add: this.#bindApiCall<WorkflowsFeaturedAddRequest, SlackAPIResponse>(
+        this,
+        "workflows.featured.add",
+      ),
+      set: this.#bindApiCall<WorkflowsFeaturedSetRequest, SlackAPIResponse>(
+        this,
+        "workflows.featured.set",
+      ),
+      remove: this.#bindApiCall<
+        WorkflowsFeaturedRemoveRequest,
+        SlackAPIResponse
+      >(this, "workflows.featured.remove"),
+      list: this.#bindApiCall<
+        WorkflowsFeaturedListRequest,
+        WorkflowsFeaturedListResponse
+      >(this, "workflows.featured.list"),
     },
   };
 }
