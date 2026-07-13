@@ -7,6 +7,7 @@ describe("Manifest", () => {
       return true;
     }
     assert.isTrue(validateEvents("app_deleted"));
+    assert.isTrue(validateEvents("app_context_changed"));
 
     // compile error
     // validateEvents("app_rate_limited");

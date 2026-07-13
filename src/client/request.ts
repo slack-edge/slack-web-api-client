@@ -543,6 +543,10 @@ export interface AppsUninstallRequest extends SlackAPIRequest {
   client_id: string;
   client_secret: string;
 }
+export interface AppsUserConnectionUpdateRequest extends SlackAPIRequest {
+  user_id?: string;
+  status?: string;
+}
 
 /*
  * `assistant.threads.*`
@@ -616,6 +620,48 @@ export interface BookmarksListRequest extends SlackAPIRequest {
 export interface BookmarksRemoveRequest extends SlackAPIRequest {
   bookmark_id: string;
   channel_id: string;
+}
+
+/*
+ * `calls.*`
+ */
+
+export interface CallParticipant {
+  slack_id?: string;
+  external_id?: string;
+  display_name?: string;
+  avatar_url?: string;
+}
+export interface CallsAddRequest extends SlackAPIRequest {
+  external_unique_id: string;
+  join_url: string;
+  created_by?: string;
+  date_start?: number;
+  desktop_app_join_url?: string;
+  external_display_id?: string;
+  title?: string;
+  users?: CallParticipant[];
+}
+export interface CallsEndRequest extends SlackAPIRequest {
+  id: string;
+  duration?: number;
+}
+export interface CallsInfoRequest extends SlackAPIRequest {
+  id: string;
+}
+export interface CallsUpdateRequest extends SlackAPIRequest {
+  id: string;
+  desktop_app_join_url?: string;
+  join_url?: string;
+  title?: string;
+}
+export interface CallsParticipantsAddRequest extends SlackAPIRequest {
+  id: string;
+  users: CallParticipant[];
+}
+export interface CallsParticipantsRemoveRequest extends SlackAPIRequest {
+  id: string;
+  users: CallParticipant[];
 }
 
 /*
@@ -1580,4 +1626,19 @@ export interface WorkflowsTriggersDeleteRequest extends SlackAPIRequest {
 export interface WorkflowsTriggersListRequest extends SlackAPIRequest, CursorPaginationEnabled {
   is_owner?: boolean;
   is_published?: boolean;
+}
+export interface WorkflowsFeaturedAddRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[]; // max 15
+}
+export interface WorkflowsFeaturedListRequest extends SlackAPIRequest {
+  channel_ids: string[];
+}
+export interface WorkflowsFeaturedRemoveRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[];
+}
+export interface WorkflowsFeaturedSetRequest extends SlackAPIRequest {
+  channel_id: string;
+  trigger_ids: string[];
 }
