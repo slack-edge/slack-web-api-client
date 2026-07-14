@@ -264,6 +264,20 @@ import type {
   WorkflowsTriggersDeleteRequest,
   WorkflowsTriggersListRequest,
   WorkflowsTriggersUpdateRequest,
+  AdminAnalyticsGetFileRequest,
+  AdminAppsConfigLookupRequest,
+  AdminAppsConfigSetRequest,
+  AppsUserConnectionUpdateRequest,
+  CallsAddRequest,
+  CallsEndRequest,
+  CallsInfoRequest,
+  CallsUpdateRequest,
+  CallsParticipantsAddRequest,
+  CallsParticipantsRemoveRequest,
+  WorkflowsFeaturedAddRequest,
+  WorkflowsFeaturedListRequest,
+  WorkflowsFeaturedRemoveRequest,
+  WorkflowsFeaturedSetRequest,
 } from "./request";
 import type {
   AdminAppsApproveResponse,
@@ -517,6 +531,20 @@ import type {
   SlackListsItemsCreateResponse,
   SlackListsItemsDeleteMultipleResponse,
   SlackListsUpdateResponse,
+  AdminAnalyticsGetFileResponse,
+  AdminAppsConfigLookupResponse,
+  AdminAppsConfigSetResponse,
+  AppsUserConnectionUpdateResponse,
+  CallsAddResponse,
+  CallsEndResponse,
+  CallsInfoResponse,
+  CallsUpdateResponse,
+  CallsParticipantsAddResponse,
+  CallsParticipantsRemoveResponse,
+  WorkflowsFeaturedAddResponse,
+  WorkflowsFeaturedListResponse,
+  WorkflowsFeaturedRemoveResponse,
+  WorkflowsFeaturedSetResponse,
 } from "./generated-response/index";
 
 import type { SlackAPIResponse } from "./response";
@@ -876,6 +904,15 @@ export class SlackAPIClient {
           "admin.apps.activities.list",
         ),
       },
+      config: {
+        lookup: this.#bindApiCall<AdminAppsConfigLookupRequest, AdminAppsConfigLookupResponse>(this, "admin.apps.config.lookup"),
+        set: this.#bindApiCall<AdminAppsConfigSetRequest, AdminAppsConfigSetResponse>(this, "admin.apps.config.set"),
+      },
+    },
+    analytics: {
+      // SHORTCUT: admin.analytics.getFile returns a gzipped export file unless metadata_only is true;
+      // this JSON client only supports the metadata_only response. Add binary handling if raw exports are needed.
+      getFile: this.#bindApiCall<AdminAnalyticsGetFileRequest, AdminAnalyticsGetFileResponse>(this, "admin.analytics.getFile"),
     },
     auth: {
       policy: {
@@ -1197,6 +1234,11 @@ export class SlackAPIClient {
       validate: this.#bindApiCall<AppsManifestValidateRequest, AppsManifestValidateResponse>(this, "apps.manifest.validate"),
     },
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(this, "apps.uninstall"),
+    user: {
+      connection: {
+        update: this.#bindApiCall<AppsUserConnectionUpdateRequest, AppsUserConnectionUpdateResponse>(this, "apps.user.connection.update"),
+      },
+    },
   };
 
   public readonly assistant = {
@@ -1230,6 +1272,17 @@ export class SlackAPIClient {
     edit: this.#bindApiCall<BookmarksEditRequest, BookmarksEditResponse>(this, "bookmarks.edit"),
     list: this.#bindApiCall<BookmarksListRequest, BookmarksListResponse>(this, "bookmarks.list"),
     remove: this.#bindApiCall<BookmarksRemoveRequest, BookmarksRemoveResponse>(this, "bookmarks.remove"),
+  };
+
+  public readonly calls = {
+    add: this.#bindApiCall<CallsAddRequest, CallsAddResponse>(this, "calls.add"),
+    end: this.#bindApiCall<CallsEndRequest, CallsEndResponse>(this, "calls.end"),
+    info: this.#bindApiCall<CallsInfoRequest, CallsInfoResponse>(this, "calls.info"),
+    update: this.#bindApiCall<CallsUpdateRequest, CallsUpdateResponse>(this, "calls.update"),
+    participants: {
+      add: this.#bindApiCall<CallsParticipantsAddRequest, CallsParticipantsAddResponse>(this, "calls.participants.add"),
+      remove: this.#bindApiCall<CallsParticipantsRemoveRequest, CallsParticipantsRemoveResponse>(this, "calls.participants.remove"),
+    },
   };
 
   public readonly canvases = {
@@ -1523,6 +1576,12 @@ export class SlackAPIClient {
       update: this.#bindApiCall<WorkflowsTriggersUpdateRequest, WorkflowsTriggersUpdateResponse>(this, "workflows.triggers.update"),
       delete: this.#bindApiCall<WorkflowsTriggersDeleteRequest, WorkflowsTriggersDeleteResponse>(this, "workflows.triggers.delete"),
       list: this.#bindNoArgAllowedApiCall<WorkflowsTriggersListRequest, WorkflowsTriggersListResponse>(this, "workflows.triggers.list"),
+    },
+    featured: {
+      add: this.#bindApiCall<WorkflowsFeaturedAddRequest, WorkflowsFeaturedAddResponse>(this, "workflows.featured.add"),
+      list: this.#bindApiCall<WorkflowsFeaturedListRequest, WorkflowsFeaturedListResponse>(this, "workflows.featured.list"),
+      remove: this.#bindApiCall<WorkflowsFeaturedRemoveRequest, WorkflowsFeaturedRemoveResponse>(this, "workflows.featured.remove"),
+      set: this.#bindApiCall<WorkflowsFeaturedSetRequest, WorkflowsFeaturedSetResponse>(this, "workflows.featured.set"),
     },
   };
 }
