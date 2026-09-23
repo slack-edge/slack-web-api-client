@@ -7,6 +7,7 @@ export type AgentsSessionsRenameResponse = SlackAPIResponse & {
   error?: string;
   needed?: string;
   provided?: string;
+  warning?: string;
 
   title?: string;
 };
