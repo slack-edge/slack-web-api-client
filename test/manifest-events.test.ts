@@ -8,6 +8,7 @@ describe("Manifest", () => {
     }
     assert.isTrue(validateEvents("app_deleted"));
     assert.isTrue(validateEvents("app_context_changed"));
+    assert.isTrue(validateEvents("entity_comments_requested"));
 
     // compile error
     // validateEvents("app_rate_limited");

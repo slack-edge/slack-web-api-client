@@ -27,6 +27,7 @@ export type AnyManifestEvent = Exclude<
   | "dnd_updated_user"
   | "email_domain_changed"
   | "emoji_changed"
+  | "entity_comments_requested"
   | "entity_details_requested"
   | "file_change"
   | "file_comment_added"
