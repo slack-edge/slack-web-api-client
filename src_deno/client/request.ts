@@ -623,6 +623,33 @@ export interface AssistantThreadsSetTitleRequest extends SlackAPIRequest {
 }
 
 /*
+ * `assistant.search.*`
+ */
+
+export interface AssistantSearchContextRequest
+  extends SlackAPIRequest, CursorPaginationEnabled {
+  query: string;
+  action_token?: string; // required when calling with a bot token
+  channel_types?: ("public_channel" | "private_channel" | "mpim" | "im")[];
+  content_types?: ("messages" | "files" | "channels" | "users")[];
+  include_bots?: boolean;
+  include_deleted_users?: boolean;
+  before?: number;
+  after?: number;
+  include_context_messages?: boolean;
+  context_channel_id?: string;
+  sort?: "score" | "timestamp";
+  sort_dir?: "asc" | "desc";
+  include_message_blocks?: boolean;
+  highlight?: boolean;
+  term_clauses?: string[];
+  modifiers?: string;
+  include_archived_channels?: boolean;
+  disable_semantic_search?: boolean;
+}
+export type AssistantSearchInfoRequest = SlackAPIRequest;
+
+/*
  * `auth.*`
  */
 export interface AuthRevokeRequest extends SlackAPIRequest {
@@ -1284,6 +1311,49 @@ export interface FunctionsCompleteSuccessRequest extends SlackAPIRequest {
 export interface FunctionsCompleteErrorRequest extends SlackAPIRequest {
   error: string;
   function_execution_id: string;
+}
+
+// Identify the function by function_id, or by function_callback_id + function_app_id
+export interface FunctionsDistributionsPermissionsAddRequest
+  extends SlackAPIRequest {
+  function_id?: string;
+  function_callback_id?: string;
+  function_app_id?: string;
+  user_ids?: string[];
+}
+export interface FunctionsDistributionsPermissionsListRequest
+  extends SlackAPIRequest {
+  function_id?: string;
+  function_callback_id?: string;
+  function_app_id?: string;
+}
+export interface FunctionsDistributionsPermissionsRemoveRequest
+  extends SlackAPIRequest {
+  function_id?: string;
+  function_callback_id?: string;
+  function_app_id?: string;
+  user_ids?: string[];
+}
+export interface FunctionsDistributionsPermissionsSetRequest
+  extends SlackAPIRequest {
+  function_id?: string;
+  function_callback_id?: string;
+  function_app_id?: string;
+  permission_type?:
+    | "everyone"
+    | "app_collaborators"
+    | "named_entities"
+    | "system";
+  user_ids?: string[];
+  team_ids?: string[];
+  org_ids?: string[];
+}
+// Identify the workflow by workflow_id, or by workflow + workflow_app_id
+export interface FunctionsWorkflowsStepsListRequest extends SlackAPIRequest {
+  function_id: string;
+  workflow_id?: string;
+  workflow?: string;
+  workflow_app_id?: string;
 }
 
 /*

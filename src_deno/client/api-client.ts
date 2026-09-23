@@ -111,6 +111,8 @@ import type {
   AppsManifestValidateRequest,
   AppsUninstallRequest,
   AppsUserConnectionUpdateRequest,
+  AssistantSearchContextRequest,
+  AssistantSearchInfoRequest,
   AssistantThreadsSetStatusRequest,
   AssistantThreadsSetSuggestedPromptsRequest,
   AssistantThreadsSetTitleRequest,
@@ -201,6 +203,11 @@ import type {
   FileUploadV2,
   FunctionsCompleteErrorRequest,
   FunctionsCompleteSuccessRequest,
+  FunctionsDistributionsPermissionsAddRequest,
+  FunctionsDistributionsPermissionsListRequest,
+  FunctionsDistributionsPermissionsRemoveRequest,
+  FunctionsDistributionsPermissionsSetRequest,
+  FunctionsWorkflowsStepsListRequest,
   MigrationExchangeRequest,
   OAuthV2AccessRequest,
   OAuthV2ExchangeRequest,
@@ -563,6 +570,15 @@ import type {
   WorkflowsTriggersUpdateResponse,
 } from "./automation-response/index.ts";
 import type { FilesUploadV2Response } from "./custom-response/FilesUploadV2Response.ts";
+import type {
+  AssistantSearchContextResponse,
+  AssistantSearchInfoResponse,
+  FunctionsDistributionsPermissionsAddResponse,
+  FunctionsDistributionsPermissionsListResponse,
+  FunctionsDistributionsPermissionsRemoveResponse,
+  FunctionsDistributionsPermissionsSetResponse,
+  FunctionsWorkflowsStepsListResponse,
+} from "./custom-response/index.ts";
 import type { RetryHandler, RetryHandlerState } from "./retry-handler/index.ts";
 import { RatelimitRetryHandler } from "./retry-handler/index.ts";
 
@@ -1661,6 +1677,16 @@ export class SlackAPIClient {
         AssistantThreadsSetTitleResponse
       >(this, "assistant.threads.setTitle"),
     },
+    search: {
+      context: this.#bindApiCall<
+        AssistantSearchContextRequest,
+        AssistantSearchContextResponse
+      >(this, "assistant.search.context"),
+      info: this.#bindNoArgAllowedApiCall<
+        AssistantSearchInfoRequest,
+        AssistantSearchInfoResponse
+      >(this, "assistant.search.info"),
+    },
   };
 
   public readonly auth = {
@@ -2071,6 +2097,49 @@ export class SlackAPIClient {
       FunctionsCompleteErrorRequest,
       FunctionsCompleteErrorResponse
     >(this, "functions.completeError"),
+    distributions: {
+      permissions: {
+        add: this.#bindApiCall<
+          FunctionsDistributionsPermissionsAddRequest,
+          FunctionsDistributionsPermissionsAddResponse
+        >(
+          this,
+          "functions.distributions.permissions.add",
+        ),
+        list: this.#bindApiCall<
+          FunctionsDistributionsPermissionsListRequest,
+          FunctionsDistributionsPermissionsListResponse
+        >(
+          this,
+          "functions.distributions.permissions.list",
+        ),
+        remove: this.#bindApiCall<
+          FunctionsDistributionsPermissionsRemoveRequest,
+          FunctionsDistributionsPermissionsRemoveResponse
+        >(
+          this,
+          "functions.distributions.permissions.remove",
+        ),
+        set: this.#bindApiCall<
+          FunctionsDistributionsPermissionsSetRequest,
+          FunctionsDistributionsPermissionsSetResponse
+        >(
+          this,
+          "functions.distributions.permissions.set",
+        ),
+      },
+    },
+    workflows: {
+      steps: {
+        list: this.#bindApiCall<
+          FunctionsWorkflowsStepsListRequest,
+          FunctionsWorkflowsStepsListResponse
+        >(
+          this,
+          "functions.workflows.steps.list",
+        ),
+      },
+    },
   };
 
   public readonly migration = {

@@ -31,6 +31,8 @@ export * from "./client/retry-handler/index";
 export type * from "./client/retry-handler/index";
 export * from "./client/automation-response/index";
 export type * from "./client/automation-response/index";
+export * from "./client/custom-response/index";
+export type * from "./client/custom-response/index";
 export * from "./client/generated-response/index";
 export type * from "./client/generated-response/index";
 export * from "./client/webhook-client";
