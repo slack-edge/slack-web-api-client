@@ -46,6 +46,7 @@ export type AnyBlockType =
   | "carousel"
   | "plan"
   | "table"
+  | "data_table"
   | "task_card"
   | "data_visualization"
   | "container";
@@ -77,6 +78,7 @@ export declare type AnyMessageBlock =
   | CarouselBlock
   | PlanBlock
   | TableBlock
+  | DataTableBlock
   | TaskCardBlock
   | DataVisualizationBlock
   | ContainerBlock;
@@ -290,6 +292,29 @@ export interface TableBlock extends Block<"table"> {
   type: "table";
   rows: TableCell[][];
   column_settings?: TableColumnSetting[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/data-table-block
+export interface DataTableRawNumberCell {
+  type: "raw_number";
+  value: number;
+  text?: string;
+}
+export interface DataTableActionCell {
+  type: "action_cell";
+  element: Button;
+  fallback?: TableRawTextCell;
+}
+export type DataTableCell = TableRawTextCell | DataTableRawNumberCell | RichTextBlock | DataTableActionCell;
+export interface DataTableBlock extends Block<"data_table"> {
+  type: "data_table";
+  /** The first row is the header (rich_text is not allowed in header cells). 2-201 rows, 1-20 columns. */
+  rows: DataTableCell[][];
+  caption: string;
+  /** Rows per page, 1-100. Defaults to 5. */
+  page_size?: number;
+  /** 0-based index of the row header column. Defaults to 0. */
+  row_header_column_index?: number;
 }
 
 // https://docs.slack.dev/reference/block-kit/blocks/task-card-block

@@ -2,6 +2,7 @@
 // var events = [].slice.call(document.getElementsByClassName('apiReferenceFilterableList__listItemLink')).map(e => '"' + e.innerText + '"').join(' | '); console.log("export type AnyManifestEvent = Exclude<" + events + ", 'app_rate_limited'>;");
 export type AnyManifestEvent = Exclude<
   | "agent_session_stopped"
+  | "agent_session_title_changed"
   | "app_context_changed"
   | "app_deleted"
   | "app_home_opened"

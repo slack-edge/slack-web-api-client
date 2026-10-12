@@ -94,6 +94,15 @@ import type {
   AdminWorkflowsPermissionsLookupRequest,
   AdminWorkflowsSearchRequest,
   AdminWorkflowsUnpublishRequest,
+  AgentsConversationsArchiveRequest,
+  AgentsConversationsCreateRequest,
+  AgentsConversationsGetCanvasRequest,
+  AgentsConversationsListViewsRequest,
+  AgentsConversationsRemoveViewRequest,
+  AgentsConversationsSetCanvasContentRequest,
+  AgentsConversationsSetCommandsRequest,
+  AgentsConversationsSetPropertiesRequest,
+  AgentsConversationsSetViewRequest,
   AgentsSessionsRenameRequest,
   AgentsSessionsSetStatusRequest,
   AppsConnectionsOpenRequest,
@@ -117,6 +126,7 @@ import type {
   AuthRevokeRequest,
   AuthTeamsListRequest,
   AuthTestRequest,
+  BlocksValidateRequest,
   BookmarksAddRequest,
   BookmarksEditRequest,
   BookmarksListRequest,
@@ -571,6 +581,16 @@ import type {
   WorkflowsTriggersListResponse,
   WorkflowsTriggersUpdateResponse,
 } from "./automation-response/index";
+import type { AgentsConversationsArchiveResponse } from "./custom-response/AgentsConversationsArchiveResponse";
+import type { AgentsConversationsCreateResponse } from "./custom-response/AgentsConversationsCreateResponse";
+import type { AgentsConversationsGetCanvasResponse } from "./custom-response/AgentsConversationsGetCanvasResponse";
+import type { AgentsConversationsListViewsResponse } from "./custom-response/AgentsConversationsListViewsResponse";
+import type { AgentsConversationsRemoveViewResponse } from "./custom-response/AgentsConversationsRemoveViewResponse";
+import type { AgentsConversationsSetCanvasContentResponse } from "./custom-response/AgentsConversationsSetCanvasContentResponse";
+import type { AgentsConversationsSetCommandsResponse } from "./custom-response/AgentsConversationsSetCommandsResponse";
+import type { AgentsConversationsSetPropertiesResponse } from "./custom-response/AgentsConversationsSetPropertiesResponse";
+import type { AgentsConversationsSetViewResponse } from "./custom-response/AgentsConversationsSetViewResponse";
+import type { BlocksValidateResponse } from "./custom-response/BlocksValidateResponse";
 import type { AgentsSessionsRenameResponse } from "./custom-response/AgentsSessionsRenameResponse";
 import type { AgentsSessionsSetStatusResponse } from "./custom-response/AgentsSessionsSetStatusResponse";
 import type { FilesUploadV2Response } from "./custom-response/FilesUploadV2Response";
@@ -1224,6 +1244,41 @@ export class SlackAPIClient {
   };
 
   public readonly agents = {
+    conversations: {
+      archive: this.#bindApiCall<AgentsConversationsArchiveRequest, AgentsConversationsArchiveResponse>(
+        this,
+        "agents.conversations.archive",
+      ),
+      create: this.#bindApiCall<AgentsConversationsCreateRequest, AgentsConversationsCreateResponse>(this, "agents.conversations.create"),
+      getCanvas: this.#bindApiCall<AgentsConversationsGetCanvasRequest, AgentsConversationsGetCanvasResponse>(
+        this,
+        "agents.conversations.getCanvas",
+      ),
+      listViews: this.#bindApiCall<AgentsConversationsListViewsRequest, AgentsConversationsListViewsResponse>(
+        this,
+        "agents.conversations.listViews",
+      ),
+      removeView: this.#bindApiCall<AgentsConversationsRemoveViewRequest, AgentsConversationsRemoveViewResponse>(
+        this,
+        "agents.conversations.removeView",
+      ),
+      setCanvasContent: this.#bindApiCall<AgentsConversationsSetCanvasContentRequest, AgentsConversationsSetCanvasContentResponse>(
+        this,
+        "agents.conversations.setCanvasContent",
+      ),
+      setCommands: this.#bindApiCall<AgentsConversationsSetCommandsRequest, AgentsConversationsSetCommandsResponse>(
+        this,
+        "agents.conversations.setCommands",
+      ),
+      setProperties: this.#bindApiCall<AgentsConversationsSetPropertiesRequest, AgentsConversationsSetPropertiesResponse>(
+        this,
+        "agents.conversations.setProperties",
+      ),
+      setView: this.#bindApiCall<AgentsConversationsSetViewRequest, AgentsConversationsSetViewResponse>(
+        this,
+        "agents.conversations.setView",
+      ),
+    },
     sessions: {
       setStatus: this.#bindApiCall<AgentsSessionsSetStatusRequest, AgentsSessionsSetStatusResponse>(this, "agents.sessions.setStatus"),
       rename: this.#bindApiCall<AgentsSessionsRenameRequest, AgentsSessionsRenameResponse>(this, "agents.sessions.rename"),
@@ -1296,6 +1351,10 @@ export class SlackAPIClient {
 
   public readonly bots = {
     info: this.#bindApiCall<BotsInfoRequest, BotsInfoResponse>(this, "bots.info"),
+  };
+
+  public readonly blocks = {
+    validate: this.#bindApiCall<BlocksValidateRequest, BlocksValidateResponse>(this, "blocks.validate"),
   };
 
   public readonly bookmarks = {
