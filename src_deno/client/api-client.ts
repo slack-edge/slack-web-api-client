@@ -96,6 +96,15 @@ import type {
   AdminWorkflowsPermissionsLookupRequest,
   AdminWorkflowsSearchRequest,
   AdminWorkflowsUnpublishRequest,
+  AgentsConversationsArchiveRequest,
+  AgentsConversationsCreateRequest,
+  AgentsConversationsGetCanvasRequest,
+  AgentsConversationsListViewsRequest,
+  AgentsConversationsRemoveViewRequest,
+  AgentsConversationsSetCanvasContentRequest,
+  AgentsConversationsSetCommandsRequest,
+  AgentsConversationsSetPropertiesRequest,
+  AgentsConversationsSetViewRequest,
   AgentsSessionsRenameRequest,
   AgentsSessionsSetStatusRequest,
   APITestRequest,
@@ -121,6 +130,7 @@ import type {
   AuthRevokeRequest,
   AuthTeamsListRequest,
   AuthTestRequest,
+  BlocksValidateRequest,
   BookmarksAddRequest,
   BookmarksEditRequest,
   BookmarksListRequest,
@@ -571,6 +581,16 @@ import type {
   WorkflowsTriggersListResponse,
   WorkflowsTriggersUpdateResponse,
 } from "./automation-response/index.ts";
+import type { AgentsConversationsArchiveResponse } from "./custom-response/AgentsConversationsArchiveResponse.ts";
+import type { AgentsConversationsCreateResponse } from "./custom-response/AgentsConversationsCreateResponse.ts";
+import type { AgentsConversationsGetCanvasResponse } from "./custom-response/AgentsConversationsGetCanvasResponse.ts";
+import type { AgentsConversationsListViewsResponse } from "./custom-response/AgentsConversationsListViewsResponse.ts";
+import type { AgentsConversationsRemoveViewResponse } from "./custom-response/AgentsConversationsRemoveViewResponse.ts";
+import type { AgentsConversationsSetCanvasContentResponse } from "./custom-response/AgentsConversationsSetCanvasContentResponse.ts";
+import type { AgentsConversationsSetCommandsResponse } from "./custom-response/AgentsConversationsSetCommandsResponse.ts";
+import type { AgentsConversationsSetPropertiesResponse } from "./custom-response/AgentsConversationsSetPropertiesResponse.ts";
+import type { AgentsConversationsSetViewResponse } from "./custom-response/AgentsConversationsSetViewResponse.ts";
+import type { BlocksValidateResponse } from "./custom-response/BlocksValidateResponse.ts";
 import type { AgentsSessionsRenameResponse } from "./custom-response/AgentsSessionsRenameResponse.ts";
 import type { AgentsSessionsSetStatusResponse } from "./custom-response/AgentsSessionsSetStatusResponse.ts";
 import type { FilesUploadV2Response } from "./custom-response/FilesUploadV2Response.ts";
@@ -1578,6 +1598,68 @@ export class SlackAPIClient {
   };
 
   public readonly agents = {
+    conversations: {
+      archive: this.#bindApiCall<
+        AgentsConversationsArchiveRequest,
+        AgentsConversationsArchiveResponse
+      >(
+        this,
+        "agents.conversations.archive",
+      ),
+      create: this.#bindApiCall<
+        AgentsConversationsCreateRequest,
+        AgentsConversationsCreateResponse
+      >(this, "agents.conversations.create"),
+      getCanvas: this.#bindApiCall<
+        AgentsConversationsGetCanvasRequest,
+        AgentsConversationsGetCanvasResponse
+      >(
+        this,
+        "agents.conversations.getCanvas",
+      ),
+      listViews: this.#bindApiCall<
+        AgentsConversationsListViewsRequest,
+        AgentsConversationsListViewsResponse
+      >(
+        this,
+        "agents.conversations.listViews",
+      ),
+      removeView: this.#bindApiCall<
+        AgentsConversationsRemoveViewRequest,
+        AgentsConversationsRemoveViewResponse
+      >(
+        this,
+        "agents.conversations.removeView",
+      ),
+      setCanvasContent: this.#bindApiCall<
+        AgentsConversationsSetCanvasContentRequest,
+        AgentsConversationsSetCanvasContentResponse
+      >(
+        this,
+        "agents.conversations.setCanvasContent",
+      ),
+      setCommands: this.#bindApiCall<
+        AgentsConversationsSetCommandsRequest,
+        AgentsConversationsSetCommandsResponse
+      >(
+        this,
+        "agents.conversations.setCommands",
+      ),
+      setProperties: this.#bindApiCall<
+        AgentsConversationsSetPropertiesRequest,
+        AgentsConversationsSetPropertiesResponse
+      >(
+        this,
+        "agents.conversations.setProperties",
+      ),
+      setView: this.#bindApiCall<
+        AgentsConversationsSetViewRequest,
+        AgentsConversationsSetViewResponse
+      >(
+        this,
+        "agents.conversations.setView",
+      ),
+    },
     sessions: {
       setStatus: this.#bindApiCall<
         AgentsSessionsSetStatusRequest,
@@ -1727,6 +1809,13 @@ export class SlackAPIClient {
     info: this.#bindApiCall<BotsInfoRequest, BotsInfoResponse>(
       this,
       "bots.info",
+    ),
+  };
+
+  public readonly blocks = {
+    validate: this.#bindApiCall<BlocksValidateRequest, BlocksValidateResponse>(
+      this,
+      "blocks.validate",
     ),
   };
 

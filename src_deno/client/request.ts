@@ -568,6 +568,86 @@ export interface AgentsSessionsRenameRequest extends SlackAPIRequest {
   thread_ts?: string;
 }
 
+export interface AgentsConversationsArchiveRequest extends SlackAPIRequest {
+  channel_id: string;
+  summary_message_ts?: string;
+}
+export interface AgentsConversationsCreateRequest extends SlackAPIRequest {
+  team_id?: string;
+  session_id?: string;
+  name?: string;
+  is_private?: boolean;
+  origin_channel_id?: string;
+  origin_message_ts?: string;
+}
+export interface AgentsConversationsGetCanvasRequest extends SlackAPIRequest {
+  channel: string;
+  canvas_id: string;
+  content_format?: "markdown";
+  include_resolved?: boolean;
+}
+export interface AgentsConversationsListViewsRequest extends SlackAPIRequest {
+  channel_id: string;
+}
+export interface AgentsConversationsRemoveViewRequest extends SlackAPIRequest {
+  channel_id: string;
+  view_key?: string;
+  view_id?: string;
+}
+export interface AgentsConversationsSetCanvasContentRequest
+  extends SlackAPIRequest {
+  channel: string;
+  canvas_id: string;
+  content: string;
+}
+export interface AgentsConversationsCommand {
+  name: string;
+  description: string;
+  argument_hint?: string;
+  should_escape?: boolean;
+}
+export interface AgentsConversationsSetCommandsRequest extends SlackAPIRequest {
+  channel_id: string;
+  commands: AgentsConversationsCommand[];
+}
+export interface AgentsConversationsContextBarItem {
+  key: string;
+  label?: string;
+  icon?: string;
+  url?: string;
+  item_type?: string;
+}
+export interface AgentsConversationsSetPropertiesRequest
+  extends SlackAPIRequest {
+  channel_id: string;
+  code_channel?: {
+    context_bar_items?: AgentsConversationsContextBarItem[];
+    summary_message?: { message_ts: string; thread_ts?: string };
+  };
+  agent_resource?: {
+    url?: string;
+    resource_type?: string;
+    title?: string;
+    provider?: string;
+  };
+}
+export interface AgentsConversationsSetViewRequest extends SlackAPIRequest {
+  channel_id: string;
+  /** Defaults to "html". */
+  type?: "html" | "diff" | "block_kit" | "canvas" | "pull_request";
+  view_key?: string;
+  content?: string;
+  blocks?: AnyMessageBlock[];
+  canvas_id?: string;
+  access_level?: "read" | "write" | "comment";
+  agent_content_hash?: string;
+  pr_url?: string;
+  base_branch?: string;
+  head_branch?: string;
+  name?: string;
+  csp?: { connect_domains?: string[]; resource_domains?: string[] };
+}
+
 /*
  * `api.*`
  */
@@ -710,6 +790,17 @@ export type AuthTestRequest = SlackAPIRequest;
 export interface BotsInfoRequest extends SlackAPIRequest {
   bot: string;
   team_id?: string;
+}
+
+/*
+ * `blocks.*`
+ */
+export interface BlocksValidateRequest extends SlackAPIRequest {
+  blocks?: AnyMessageBlock[] | string;
+  message?:
+    | { blocks?: AnyMessageBlock[]; attachments?: MessageAttachment[] }
+    | string;
+  view?: ModalView | HomeTabView | string;
 }
 
 /*
