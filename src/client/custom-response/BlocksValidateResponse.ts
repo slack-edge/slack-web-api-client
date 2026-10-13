@@ -13,6 +13,6 @@ export type BlocksValidateResponse = SlackAPIResponse & {
     pointer?: string;
     code?: string;
     message?: string;
-    constraint?: { type?: string; expected?: any; got?: any };
+    constraint?: { type?: string; expected?: unknown; got?: unknown };
   }[];
 };

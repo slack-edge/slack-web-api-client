@@ -8,5 +8,4 @@ export type AgentsConversationsArchiveResponse = SlackAPIResponse & {
   needed?: string;
   provided?: string;
   warning?: string;
-
 };

@@ -1602,7 +1602,10 @@ export class SlackAPIClient {
       archive: this.#bindApiCall<
         AgentsConversationsArchiveRequest,
         AgentsConversationsArchiveResponse
-      >(this, "agents.conversations.archive"),
+      >(
+        this,
+        "agents.conversations.archive",
+      ),
       create: this.#bindApiCall<
         AgentsConversationsCreateRequest,
         AgentsConversationsCreateResponse
@@ -1610,31 +1613,52 @@ export class SlackAPIClient {
       getCanvas: this.#bindApiCall<
         AgentsConversationsGetCanvasRequest,
         AgentsConversationsGetCanvasResponse
-      >(this, "agents.conversations.getCanvas"),
+      >(
+        this,
+        "agents.conversations.getCanvas",
+      ),
       listViews: this.#bindApiCall<
         AgentsConversationsListViewsRequest,
         AgentsConversationsListViewsResponse
-      >(this, "agents.conversations.listViews"),
+      >(
+        this,
+        "agents.conversations.listViews",
+      ),
       removeView: this.#bindApiCall<
         AgentsConversationsRemoveViewRequest,
         AgentsConversationsRemoveViewResponse
-      >(this, "agents.conversations.removeView"),
+      >(
+        this,
+        "agents.conversations.removeView",
+      ),
       setCanvasContent: this.#bindApiCall<
         AgentsConversationsSetCanvasContentRequest,
         AgentsConversationsSetCanvasContentResponse
-      >(this, "agents.conversations.setCanvasContent"),
+      >(
+        this,
+        "agents.conversations.setCanvasContent",
+      ),
       setCommands: this.#bindApiCall<
         AgentsConversationsSetCommandsRequest,
         AgentsConversationsSetCommandsResponse
-      >(this, "agents.conversations.setCommands"),
+      >(
+        this,
+        "agents.conversations.setCommands",
+      ),
       setProperties: this.#bindApiCall<
         AgentsConversationsSetPropertiesRequest,
         AgentsConversationsSetPropertiesResponse
-      >(this, "agents.conversations.setProperties"),
+      >(
+        this,
+        "agents.conversations.setProperties",
+      ),
       setView: this.#bindApiCall<
         AgentsConversationsSetViewRequest,
         AgentsConversationsSetViewResponse
-      >(this, "agents.conversations.setView"),
+      >(
+        this,
+        "agents.conversations.setView",
+      ),
     },
     sessions: {
       setStatus: this.#bindApiCall<

@@ -32,11 +32,11 @@ describe("agents.conversations.* and blocks.validate", () => {
     const client = new SlackAPIClient("xoxb-valid");
     await client.agents.conversations.archive({ channel_id: "C123" });
     await client.agents.conversations.create({ name: "x" });
-    await client.agents.conversations.getCanvas({ channel: "C123" });
+    await client.agents.conversations.getCanvas({ channel: "C123", canvas_id: "F1" });
     await client.agents.conversations.listViews({ channel_id: "C123" });
     await client.agents.conversations.removeView({ channel_id: "C123", view_key: "k" });
-    await client.agents.conversations.setCanvasContent({ channel: "C123", content: "hi" });
-    await client.agents.conversations.setCommands({ channel_id: "C123", commands: [{ name: "run" }] });
+    await client.agents.conversations.setCanvasContent({ channel: "C123", canvas_id: "F1", content: "hi" });
+    await client.agents.conversations.setCommands({ channel_id: "C123", commands: [{ name: "run", description: "Run it" }] });
     await client.agents.conversations.setProperties({ channel_id: "C123", code_channel: { context_bar_items: [{ key: "a" }] } });
     await client.agents.conversations.setView({ channel_id: "C123", type: "canvas", canvas_id: "F1" });
     const table: DataTableBlock = {

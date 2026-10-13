@@ -582,8 +582,8 @@ export interface AgentsConversationsCreateRequest extends SlackAPIRequest {
 }
 export interface AgentsConversationsGetCanvasRequest extends SlackAPIRequest {
   channel: string;
-  canvas_id?: string;
-  content_format?: string;
+  canvas_id: string;
+  content_format?: "markdown";
   include_resolved?: boolean;
 }
 export interface AgentsConversationsListViewsRequest extends SlackAPIRequest {
@@ -594,14 +594,15 @@ export interface AgentsConversationsRemoveViewRequest extends SlackAPIRequest {
   view_key?: string;
   view_id?: string;
 }
-export interface AgentsConversationsSetCanvasContentRequest extends SlackAPIRequest {
+export interface AgentsConversationsSetCanvasContentRequest
+  extends SlackAPIRequest {
   channel: string;
-  canvas_id?: string;
+  canvas_id: string;
   content: string;
 }
 export interface AgentsConversationsCommand {
   name: string;
-  description?: string;
+  description: string;
   argument_hint?: string;
   should_escape?: boolean;
 }
@@ -616,14 +617,15 @@ export interface AgentsConversationsContextBarItem {
   url?: string;
   item_type?: string;
 }
-export interface AgentsConversationsSetPropertiesRequest extends SlackAPIRequest {
+export interface AgentsConversationsSetPropertiesRequest
+  extends SlackAPIRequest {
   channel_id: string;
   code_channel?: {
     context_bar_items?: AgentsConversationsContextBarItem[];
     summary_message?: { message_ts: string; thread_ts?: string };
   };
   agent_resource?: {
-    url: string;
+    url?: string;
     resource_type?: string;
     title?: string;
     provider?: string;
@@ -631,12 +633,13 @@ export interface AgentsConversationsSetPropertiesRequest extends SlackAPIRequest
 }
 export interface AgentsConversationsSetViewRequest extends SlackAPIRequest {
   channel_id: string;
-  type: string;
+  /** Defaults to "html". */
+  type?: "html" | "diff" | "block_kit" | "canvas" | "pull_request";
   view_key?: string;
   content?: string;
   blocks?: AnyMessageBlock[];
   canvas_id?: string;
-  access_level?: string;
+  access_level?: "read" | "write" | "comment";
   agent_content_hash?: string;
   pr_url?: string;
   base_branch?: string;
@@ -794,7 +797,9 @@ export interface BotsInfoRequest extends SlackAPIRequest {
  */
 export interface BlocksValidateRequest extends SlackAPIRequest {
   blocks?: AnyMessageBlock[] | string;
-  message?: { blocks?: AnyMessageBlock[]; attachments?: MessageAttachment[] } | string;
+  message?:
+    | { blocks?: AnyMessageBlock[]; attachments?: MessageAttachment[] }
+    | string;
   view?: ModalView | HomeTabView | string;
 }
 
