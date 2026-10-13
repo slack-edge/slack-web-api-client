@@ -1,6 +1,7 @@
 import { assert, test, describe } from "vitest";
 import {
   AlertBlock,
+  AnyHomeTabBlock,
   AnyMessageBlock,
   AnyModalBlock,
   AnyRichTextBlockElement,
@@ -8,6 +9,7 @@ import {
   CarouselBlock,
   ContainerBlock,
   ContextActionsBlock,
+  DataTableBlock,
   DataVisualizationBlock,
   MarkdownBlock,
   MessageInputBlock,
@@ -497,6 +499,56 @@ describe("Block Kit types", () => {
     assert.equal(messageBlocks.length, 1);
     assert.equal(block.width, "wide");
     assert.equal(block.child_blocks.length, 3);
+  });
+
+  test("parse data table blocks", async () => {
+    const block: DataTableBlock = {
+      type: "data_table",
+      block_id: "data-table-1",
+      caption: "Open deals",
+      page_size: 10,
+      row_header_column_index: 0,
+      rows: [
+        [
+          { type: "raw_text", text: "Deal" },
+          { type: "raw_text", text: "Amount" },
+          { type: "raw_text", text: "Stage" },
+          { type: "raw_text", text: "Action" },
+        ],
+        [
+          { type: "raw_text", text: "Acme Expansion" },
+          { type: "raw_number", value: 1200000, text: "$1.2M" },
+          {
+            type: "rich_text",
+            elements: [
+              {
+                type: "rich_text_section",
+                elements: [{ type: "text", text: "Negotiation", style: { bold: true } }],
+              },
+            ],
+          },
+          {
+            type: "action_cell",
+            element: {
+              type: "button",
+              text: { type: "plain_text", text: "Mark done" },
+              action_id: "mark_done",
+              value: "deal_123",
+            },
+            fallback: { type: "raw_text", text: "Open" },
+          },
+        ],
+      ],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    const homeTabBlocks: AnyHomeTabBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(homeTabBlocks.length, 1);
+    assert.equal(block.rows.length, 2);
+    const amount = block.rows[1][1];
+    if (amount.type === "raw_number") {
+      assert.equal(amount.value, 1200000);
+    }
   });
 
   test("section block supports expand", async () => {

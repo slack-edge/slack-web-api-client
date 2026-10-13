@@ -48,7 +48,8 @@ export type AnyBlockType =
   | "table"
   | "task_card"
   | "data_visualization"
-  | "container";
+  | "container"
+  | "data_table";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -79,7 +80,8 @@ export declare type AnyMessageBlock =
   | TableBlock
   | TaskCardBlock
   | DataVisualizationBlock
-  | ContainerBlock;
+  | ContainerBlock
+  | DataTableBlock;
 
 export declare type AnyModalBlock =
   | ActionsBlock
@@ -105,7 +107,8 @@ export declare type AnyHomeTabBlock =
   | SectionBlock
   | VideoBlock
   | RichTextBlock
-  | MarkdownBlock;
+  | MarkdownBlock
+  | DataTableBlock;
 
 // -----------------------------
 // Blocks
@@ -290,6 +293,26 @@ export interface TableBlock extends Block<"table"> {
   type: "table";
   rows: TableCell[][];
   column_settings?: TableColumnSetting[];
+}
+
+// https://docs.slack.dev/reference/block-kit/blocks/data-table-block
+export interface DataTableRawNumberCell {
+  type: "raw_number";
+  value: number;
+  text?: string;
+}
+export interface DataTableActionCell {
+  type: "action_cell";
+  element: Button;
+  fallback?: TableRawTextCell | DataTableRawNumberCell;
+}
+export type DataTableCell = TableRawTextCell | DataTableRawNumberCell | DataTableActionCell | RichTextBlock;
+export interface DataTableBlock extends Block<"data_table"> {
+  type: "data_table";
+  caption: string;
+  rows: DataTableCell[][];
+  page_size?: number;
+  row_header_column_index?: number;
 }
 
 // https://docs.slack.dev/reference/block-kit/blocks/task-card-block
