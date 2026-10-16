@@ -240,6 +240,8 @@ export interface RichTextInput extends ActionBlockElement<"rich_text_input">, Di
   initial_value?: RichTextBlock;
   dispatch_action_config?: DispatchActionConfig;
   focus_on_load?: boolean;
+  min_lines?: number;
+  max_lines?: number;
 }
 export interface PlainTextInput extends ActionBlockElement<"plain_text_input">, Dispatchable, Focusable, Placeholdable {
   type: "plain_text_input";
