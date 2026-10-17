@@ -317,6 +317,8 @@ export interface RichTextInput
   initial_value?: RichTextBlock;
   dispatch_action_config?: DispatchActionConfig;
   focus_on_load?: boolean;
+  min_lines?: number;
+  max_lines?: number;
 }
 export interface PlainTextInput
   extends

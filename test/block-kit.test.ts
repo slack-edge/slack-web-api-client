@@ -21,6 +21,15 @@ import {
 } from "../src/index";
 
 describe("Block Kit types", () => {
+  test("parse rich_text_input with min_lines and max_lines", async () => {
+    const block: MessageInputBlock = {
+      type: "input",
+      label: { type: "plain_text", text: "Body" },
+      element: { type: "rich_text_input", action_id: "body", min_lines: 3, max_lines: 20 },
+    };
+    assert.equal(block.element.type, "rich_text_input");
+  });
+
   test("parse rich text ones", async () => {
     // Verify if this compiles
     const blocks: RichTextBlock[] = [
