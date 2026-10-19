@@ -12,3 +12,5 @@ export type * from "./AgentsConversationsSetCommandsResponse";
 export type * from "./AgentsConversationsSetPropertiesResponse";
 export type * from "./AgentsConversationsSetViewResponse";
 export type * from "./BlocksValidateResponse";
+export type * from "./AppsUserConnectionBulkUpdateResponse";
+export type * from "./AppsUserConnectionRequestAuthResponse";

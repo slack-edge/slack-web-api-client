@@ -286,6 +286,8 @@ import type {
   AdminAnalyticsGetFileRequest,
   AdminAppsConfigLookupRequest,
   AdminAppsConfigSetRequest,
+  AppsUserConnectionBulkUpdateRequest,
+  AppsUserConnectionRequestAuthRequest,
   AppsUserConnectionUpdateRequest,
   CallsAddRequest,
   CallsEndRequest,
@@ -590,6 +592,8 @@ import type { AgentsConversationsSetCanvasContentResponse } from "./custom-respo
 import type { AgentsConversationsSetCommandsResponse } from "./custom-response/AgentsConversationsSetCommandsResponse";
 import type { AgentsConversationsSetPropertiesResponse } from "./custom-response/AgentsConversationsSetPropertiesResponse";
 import type { AgentsConversationsSetViewResponse } from "./custom-response/AgentsConversationsSetViewResponse";
+import type { AppsUserConnectionBulkUpdateResponse } from "./custom-response/AppsUserConnectionBulkUpdateResponse";
+import type { AppsUserConnectionRequestAuthResponse } from "./custom-response/AppsUserConnectionRequestAuthResponse";
 import type { BlocksValidateResponse } from "./custom-response/BlocksValidateResponse";
 import type { AgentsSessionsRenameResponse } from "./custom-response/AgentsSessionsRenameResponse";
 import type { AgentsSessionsSetStatusResponse } from "./custom-response/AgentsSessionsSetStatusResponse";
@@ -1318,6 +1322,14 @@ export class SlackAPIClient {
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(this, "apps.uninstall"),
     user: {
       connection: {
+        bulkUpdate: this.#bindApiCall<AppsUserConnectionBulkUpdateRequest, AppsUserConnectionBulkUpdateResponse>(
+          this,
+          "apps.user.connection.bulkUpdate",
+        ),
+        requestAuth: this.#bindApiCall<AppsUserConnectionRequestAuthRequest, AppsUserConnectionRequestAuthResponse>(
+          this,
+          "apps.user.connection.requestAuth",
+        ),
         update: this.#bindApiCall<AppsUserConnectionUpdateRequest, AppsUserConnectionUpdateResponse>(this, "apps.user.connection.update"),
       },
     },

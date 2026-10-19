@@ -12,3 +12,5 @@ export type * from "./AgentsConversationsSetCommandsResponse.ts";
 export type * from "./AgentsConversationsSetPropertiesResponse.ts";
 export type * from "./AgentsConversationsSetViewResponse.ts";
 export type * from "./BlocksValidateResponse.ts";
+export type * from "./AppsUserConnectionBulkUpdateResponse.ts";
+export type * from "./AppsUserConnectionRequestAuthResponse.ts";

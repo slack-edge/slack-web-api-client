@@ -4,6 +4,8 @@ import type {
   WebhookTriggerSettings,
 } from "./automation-response/types.ts";
 import type { AnyMessageBlock } from "../block-kit/blocks.ts";
+import type { Overflow } from "../block-kit/block-elements.ts";
+import type { PlainTextField } from "../block-kit/text-fields.ts";
 import type { LinkUnfurls } from "../block-kit/link-unfurls.ts";
 import type { MessageAttachment } from "../block-kit/message-attachment.ts";
 import type {
@@ -717,6 +719,33 @@ export interface AppsUninstallRequest extends SlackAPIRequest {
 export interface AppsUserConnectionUpdateRequest extends SlackAPIRequest {
   user_id?: string;
   status?: string;
+}
+export interface AppsUserConnectionBulkUpdateRequest extends SlackAPIRequest {
+  // At least one of connected_user_ids / disconnected_user_ids is required; combined max 1000 users
+  connected_user_ids?: string[];
+  disconnected_user_ids?: string[];
+}
+export interface AppsUserConnectionRequestAuthRequest extends SlackAPIRequest {
+  // Opens a new authorization modal. Required unless user_id is provided.
+  trigger_id?: string;
+  // Updates the authorization modal already open for this user. Ignored when trigger_id is provided.
+  user_id?: string;
+  primary_provider: AppsUserConnectionProvider;
+}
+export interface AppsUserConnectionProvider {
+  // Unique identifier within the app (max 150 chars); the connect button's action_id derives from it
+  value: string;
+  name: PlainTextField;
+  is_connected: boolean;
+  description?: PlainTextField;
+  icon_url?: string;
+  // https URLs on a host registered in features.user_connections.auth_hosts
+  auth_url?: string;
+  disconnect_url?: string;
+  connected_identity?: PlainTextField;
+  connected_context?: PlainTextField;
+  // Overflow menu shown when connected (2 to 5 options)
+  accessory?: Overflow;
 }
 
 /*

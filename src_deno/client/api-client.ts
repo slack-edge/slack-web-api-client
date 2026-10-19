@@ -121,6 +121,8 @@ import type {
   AppsManifestUpdateRequest,
   AppsManifestValidateRequest,
   AppsUninstallRequest,
+  AppsUserConnectionBulkUpdateRequest,
+  AppsUserConnectionRequestAuthRequest,
   AppsUserConnectionUpdateRequest,
   AssistantSearchContextRequest,
   AssistantSearchInfoRequest,
@@ -590,6 +592,8 @@ import type { AgentsConversationsSetCanvasContentResponse } from "./custom-respo
 import type { AgentsConversationsSetCommandsResponse } from "./custom-response/AgentsConversationsSetCommandsResponse.ts";
 import type { AgentsConversationsSetPropertiesResponse } from "./custom-response/AgentsConversationsSetPropertiesResponse.ts";
 import type { AgentsConversationsSetViewResponse } from "./custom-response/AgentsConversationsSetViewResponse.ts";
+import type { AppsUserConnectionBulkUpdateResponse } from "./custom-response/AppsUserConnectionBulkUpdateResponse.ts";
+import type { AppsUserConnectionRequestAuthResponse } from "./custom-response/AppsUserConnectionRequestAuthResponse.ts";
 import type { BlocksValidateResponse } from "./custom-response/BlocksValidateResponse.ts";
 import type { AgentsSessionsRenameResponse } from "./custom-response/AgentsSessionsRenameResponse.ts";
 import type { AgentsSessionsSetStatusResponse } from "./custom-response/AgentsSessionsSetStatusResponse.ts";
@@ -1747,6 +1751,14 @@ export class SlackAPIClient {
     ),
     user: {
       connection: {
+        bulkUpdate: this.#bindApiCall<
+          AppsUserConnectionBulkUpdateRequest,
+          AppsUserConnectionBulkUpdateResponse
+        >(this, "apps.user.connection.bulkUpdate"),
+        requestAuth: this.#bindApiCall<
+          AppsUserConnectionRequestAuthRequest,
+          AppsUserConnectionRequestAuthResponse
+        >(this, "apps.user.connection.requestAuth"),
         update: this.#bindApiCall<
           AppsUserConnectionUpdateRequest,
           AppsUserConnectionUpdateResponse
