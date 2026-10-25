@@ -394,13 +394,21 @@ describe("Block Kit types", () => {
             ],
           },
         ],
+        [
+          { type: "raw_text", text: "Bob" },
+          { type: "raw_number", value: 1200000, text: "1.2M" },
+        ],
       ],
       column_settings: [{ align: "left", is_wrapped: false }, { align: "right" }],
     };
     const messageBlocks: AnyMessageBlock[] = [block];
     assert.equal(messageBlocks.length, 1);
-    assert.equal(block.rows.length, 2);
+    assert.equal(block.rows.length, 3);
     assert.equal(block.column_settings?.length, 2);
+    const amount = block.rows[2][1];
+    if (amount.type === "raw_number") {
+      assert.equal(amount.value, 1200000);
+    }
   });
 
   test("parse data visualization blocks", async () => {
