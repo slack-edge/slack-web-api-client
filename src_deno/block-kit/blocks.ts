@@ -284,7 +284,12 @@ export interface TableRawTextCell {
   type: "raw_text";
   text: string;
 }
-export type TableCell = TableRawTextCell | RichTextBlock;
+export interface TableRawNumberCell {
+  type: "raw_number";
+  value: number;
+  text?: string;
+}
+export type TableCell = TableRawTextCell | TableRawNumberCell | RichTextBlock;
 export interface TableColumnSetting {
   align?: "left" | "center" | "right";
   is_wrapped?: boolean;
@@ -296,11 +301,7 @@ export interface TableBlock extends Block<"table"> {
 }
 
 // https://docs.slack.dev/reference/block-kit/blocks/data-table-block
-export interface DataTableRawNumberCell {
-  type: "raw_number";
-  value: number;
-  text?: string;
-}
+export type DataTableRawNumberCell = TableRawNumberCell;
 export interface DataTableActionCell {
   type: "action_cell";
   element: Button;
