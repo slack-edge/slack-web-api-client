@@ -121,6 +121,8 @@ import type {
   AppsManifestUpdateRequest,
   AppsManifestValidateRequest,
   AppsUninstallRequest,
+  AppsUserConnectionBulkUpdateRequest,
+  AppsUserConnectionRequestAuthRequest,
   AppsUserConnectionUpdateRequest,
   AssistantSearchContextRequest,
   AssistantSearchInfoRequest,
@@ -404,6 +406,8 @@ import type {
   AppsManifestUpdateResponse,
   AppsManifestValidateResponse,
   AppsUninstallResponse,
+  AppsUserConnectionBulkUpdateResponse,
+  AppsUserConnectionRequestAuthResponse,
   AppsUserConnectionUpdateResponse,
   AssistantThreadsSetStatusResponse,
   AssistantThreadsSetSuggestedPromptsResponse,
@@ -1751,6 +1755,14 @@ export class SlackAPIClient {
           AppsUserConnectionUpdateRequest,
           AppsUserConnectionUpdateResponse
         >(this, "apps.user.connection.update"),
+        bulkUpdate: this.#bindApiCall<
+          AppsUserConnectionBulkUpdateRequest,
+          AppsUserConnectionBulkUpdateResponse
+        >(this, "apps.user.connection.bulkUpdate"),
+        requestAuth: this.#bindApiCall<
+          AppsUserConnectionRequestAuthRequest,
+          AppsUserConnectionRequestAuthResponse
+        >(this, "apps.user.connection.requestAuth"),
       },
     },
   };

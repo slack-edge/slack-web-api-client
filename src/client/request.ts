@@ -664,6 +664,16 @@ export interface AppsUserConnectionUpdateRequest extends SlackAPIRequest {
   user_id?: string;
   status?: string;
 }
+export interface AppsUserConnectionBulkUpdateRequest extends SlackAPIRequest {
+  connected_user_ids?: string[];
+  disconnected_user_ids?: string[];
+}
+export interface AppsUserConnectionRequestAuthRequest extends SlackAPIRequest {
+  trigger_id: string;
+  user_id?: string;
+  // JSON object (or a serialized string) describing the primary provider
+  primary_provider?: Record<string, any> | string;
+}
 
 /*
  * `assistant.threads.*`
