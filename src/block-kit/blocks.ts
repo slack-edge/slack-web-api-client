@@ -49,7 +49,9 @@ export type AnyBlockType =
   | "task_card"
   | "data_visualization"
   | "container"
-  | "data_table";
+  | "data_table"
+  | "layout"
+  | "auth_provider";
 
 export interface Block<T extends AnyBlockType = AnyBlockType> {
   type: T;
@@ -81,7 +83,8 @@ export declare type AnyMessageBlock =
   | TaskCardBlock
   | DataVisualizationBlock
   | ContainerBlock
-  | DataTableBlock;
+  | DataTableBlock
+  | LayoutBlock;
 
 export declare type AnyModalBlock =
   | ActionsBlock
@@ -94,7 +97,8 @@ export declare type AnyModalBlock =
   | SectionBlock
   | VideoBlock
   | RichTextBlock
-  | MarkdownBlock;
+  | MarkdownBlock
+  | LayoutBlock;
 
 export declare type AnyHomeTabBlock =
   | ActionsBlock
@@ -108,7 +112,9 @@ export declare type AnyHomeTabBlock =
   | VideoBlock
   | RichTextBlock
   | MarkdownBlock
-  | DataTableBlock;
+  | DataTableBlock
+  | LayoutBlock
+  | AuthProviderBlock;
 
 // -----------------------------
 // Blocks
@@ -317,6 +323,10 @@ export interface DataTableBlock extends Block<"data_table"> {
 }
 
 // https://docs.slack.dev/reference/block-kit/blocks/task-card-block
+export interface SlackIcon {
+  type: "icon";
+  name: string;
+}
 export interface TaskCardBlock extends Block<"task_card"> {
   type: "task_card";
   task_id: string;
@@ -325,6 +335,8 @@ export interface TaskCardBlock extends Block<"task_card"> {
   output?: RichTextBlock;
   sources?: UrlSource[];
   status?: "pending" | "in_progress" | "complete" | "error";
+  icon?: SlackIcon;
+  hide_title?: boolean;
 }
 
 // https://docs.slack.dev/reference/block-kit/blocks/data-visualization-block
@@ -370,7 +382,8 @@ export type ContainerChildBlock =
   | RichTextBlock
   | SectionBlock
   | TableBlock
-  | VideoBlock;
+  | VideoBlock
+  | LayoutBlock;
 export interface ContainerBlock extends Block<"container"> {
   type: "container";
   title: PlainTextField;
@@ -380,4 +393,59 @@ export interface ContainerBlock extends Block<"container"> {
   width?: "narrow" | "standard" | "wide" | "full";
   is_collapsible?: boolean;
   default_collapsed?: boolean;
+}
+
+// Blocks allowed in `fallback`, rendered by clients that do not support the parent block
+export type FallbackBlock = ContextBlock | DividerBlock | HeaderBlock | ImageBlock | RichTextBlock | SectionBlock | TableBlock | VideoBlock;
+
+// https://docs.slack.dev/reference/block-kit/blocks/layout-block
+export type LayoutItemBlock =
+  | ActionsBlock
+  | AlertBlock
+  | CardBlock
+  | CarouselBlock
+  | ContainerBlock
+  | ContextBlock
+  | DataTableBlock
+  | DataVisualizationBlock
+  | DividerBlock
+  | FileBlock
+  | HeaderBlock
+  | ImageBlock
+  | ViewInputBlock
+  | RichTextBlock
+  | SectionBlock
+  | TableBlock
+  | VideoBlock;
+export interface LayoutItem {
+  block: LayoutItemBlock;
+  width?: "narrow" | "standard" | "wide";
+  horizontal_alignment?: "start" | "center" | "end";
+}
+export interface LayoutRow {
+  items: LayoutItem[];
+}
+export interface LayoutBlock extends Block<"layout"> {
+  type: "layout";
+  label: string;
+  rows: LayoutRow[];
+  is_label_visible?: boolean;
+  grid_lines?: "none" | "rows" | "outer";
+  fallback?: FallbackBlock[];
+}
+
+// Not yet on docs.slack.dev; fields follow the Java and Python SDKs
+export interface AuthProviderBlock extends Block<"auth_provider"> {
+  type: "auth_provider";
+  value: string;
+  name: PlainTextField;
+  is_connected: boolean;
+  description?: PlainTextField;
+  icon_url?: string;
+  auth_url?: string;
+  disconnect_url?: string;
+  connected_identity?: PlainTextField;
+  connected_context?: PlainTextField;
+  accessory?: Overflow;
+  fallback?: FallbackBlock[];
 }

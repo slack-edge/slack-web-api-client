@@ -5,12 +5,15 @@ import {
   AnyMessageBlock,
   AnyModalBlock,
   AnyRichTextBlockElement,
+  AuthProviderBlock,
+  Button,
   CardBlock,
   CarouselBlock,
   ContainerBlock,
   ContextActionsBlock,
   DataTableBlock,
   DataVisualizationBlock,
+  LayoutBlock,
   MarkdownBlock,
   MessageInputBlock,
   PlanBlock,
@@ -343,6 +346,8 @@ describe("Block Kit types", () => {
         ],
       },
       sources: [{ type: "url", url: "https://example.com/", text: "Reference" }],
+      icon: { type: "icon", name: "search" },
+      hide_title: false,
     };
     const messageBlocks: AnyMessageBlock[] = [block];
     assert.equal(messageBlocks.length, 1);
@@ -566,6 +571,99 @@ describe("Block Kit types", () => {
     if (amount.type === "raw_number") {
       assert.equal(amount.value, 1200000);
     }
+  });
+
+  test("parse layout blocks", async () => {
+    const block: LayoutBlock = {
+      type: "layout",
+      block_id: "deal_summary_layout",
+      label: "Deal summary",
+      is_label_visible: true,
+      grid_lines: "rows",
+      rows: [
+        {
+          items: [
+            { block: { type: "section", text: { type: "mrkdwn", text: "*Stage*\nNegotiation" } } },
+            { block: { type: "section", text: { type: "mrkdwn", text: "*Amount*\n$125,000" } }, width: "narrow" },
+          ],
+        },
+        {
+          items: [
+            {
+              width: "wide",
+              horizontal_alignment: "end",
+              block: {
+                type: "actions",
+                elements: [{ type: "button", text: { type: "plain_text", text: "Update Stage" }, style: "primary" }],
+              },
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              block: {
+                type: "container",
+                title: { type: "plain_text", text: "Details" },
+                child_blocks: [
+                  {
+                    type: "layout",
+                    label: "Nested",
+                    rows: [{ items: [{ block: { type: "divider" } }] }],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+      fallback: [{ type: "section", text: { type: "mrkdwn", text: "*Stage*: Negotiation, *Amount*: $125,000" } }],
+    };
+    const messageBlocks: AnyMessageBlock[] = [block];
+    const modalBlocks: AnyModalBlock[] = [block];
+    const homeTabBlocks: AnyHomeTabBlock[] = [block];
+    assert.equal(messageBlocks.length, 1);
+    assert.equal(modalBlocks.length, 1);
+    assert.equal(homeTabBlocks.length, 1);
+    assert.equal(block.rows.length, 3);
+    assert.equal(block.rows[0].items[1].width, "narrow");
+  });
+
+  test("parse auth provider blocks", async () => {
+    const block: AuthProviderBlock = {
+      type: "auth_provider",
+      block_id: "acme-auth",
+      value: "acme",
+      name: { type: "plain_text", text: "Acme" },
+      is_connected: true,
+      description: { type: "plain_text", text: "Lets the app read your Acme projects" },
+      icon_url: "https://acme.example.com/icon.png",
+      auth_url: "https://acme.example.com/oauth",
+      disconnect_url: "https://acme.example.com/disconnect",
+      connected_identity: { type: "plain_text", text: "jane@example.com" },
+      connected_context: { type: "plain_text", text: "Acme Corp" },
+      accessory: {
+        type: "overflow",
+        action_id: "acme-menu",
+        options: [{ text: { type: "plain_text", text: "Disconnect" }, value: "disconnect" }],
+      },
+      fallback: [{ type: "section", text: { type: "mrkdwn", text: "Connected to Acme" } }],
+    };
+    const homeTabBlocks: AnyHomeTabBlock[] = [block];
+    assert.equal(homeTabBlocks.length, 1);
+    assert.equal(block.is_connected, true);
+  });
+
+  test("button supports agent prompt and visibility fields", async () => {
+    const button: Button = {
+      type: "button",
+      text: { type: "plain_text", text: "Summarize" },
+      action_id: "summarize",
+      agent_prompt: "Summarize this thread",
+      agent_prompt_display: "Summarize",
+      visible_to_user_ids: ["U12345"],
+    };
+    assert.equal(button.visible_to_user_ids?.length, 1);
   });
 
   test("section block supports expand", async () => {
