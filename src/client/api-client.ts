@@ -286,6 +286,8 @@ import type {
   AdminAnalyticsGetFileRequest,
   AdminAppsConfigLookupRequest,
   AdminAppsConfigSetRequest,
+  AppsUserConnectionBulkUpdateRequest,
+  AppsUserConnectionRequestAuthRequest,
   AppsUserConnectionUpdateRequest,
   CallsAddRequest,
   CallsEndRequest,
@@ -553,6 +555,8 @@ import type {
   AdminAnalyticsGetFileResponse,
   AdminAppsConfigLookupResponse,
   AdminAppsConfigSetResponse,
+  AppsUserConnectionBulkUpdateResponse,
+  AppsUserConnectionRequestAuthResponse,
   AppsUserConnectionUpdateResponse,
   CallsAddResponse,
   CallsEndResponse,
@@ -1319,6 +1323,14 @@ export class SlackAPIClient {
     user: {
       connection: {
         update: this.#bindApiCall<AppsUserConnectionUpdateRequest, AppsUserConnectionUpdateResponse>(this, "apps.user.connection.update"),
+        bulkUpdate: this.#bindApiCall<AppsUserConnectionBulkUpdateRequest, AppsUserConnectionBulkUpdateResponse>(
+          this,
+          "apps.user.connection.bulkUpdate",
+        ),
+        requestAuth: this.#bindApiCall<AppsUserConnectionRequestAuthRequest, AppsUserConnectionRequestAuthResponse>(
+          this,
+          "apps.user.connection.requestAuth",
+        ),
       },
     },
   };

@@ -112,6 +112,8 @@ export type { AppsPermissionsScopesListResponse } from "./AppsPermissionsScopesL
 export type { AppsPermissionsUsersListResponse } from "./AppsPermissionsUsersListResponse.ts";
 export type { AppsPermissionsUsersRequestResponse } from "./AppsPermissionsUsersRequestResponse.ts";
 export type { AppsUninstallResponse } from "./AppsUninstallResponse.ts";
+export type { AppsUserConnectionBulkUpdateResponse } from "./AppsUserConnectionBulkUpdateResponse.ts";
+export type { AppsUserConnectionRequestAuthResponse } from "./AppsUserConnectionRequestAuthResponse.ts";
 export type { AppsUserConnectionUpdateResponse } from "./AppsUserConnectionUpdateResponse.ts";
 export type { AssistantThreadsSetStatusResponse } from "./AssistantThreadsSetStatusResponse.ts";
 export type { AssistantThreadsSetSuggestedPromptsResponse } from "./AssistantThreadsSetSuggestedPromptsResponse.ts";
