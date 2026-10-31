@@ -198,6 +198,9 @@ export interface Button extends ActionBlockElement<"button">, Confirmable {
   url?: string;
   style?: "danger" | "primary";
   accessibility_label?: string;
+  agent_prompt?: string;
+  agent_prompt_display?: string;
+  visible_to_user_ids?: string[];
 }
 export interface WorkflowButton extends ActionBlockElement<"workflow_button"> {
   type: "workflow_button";
