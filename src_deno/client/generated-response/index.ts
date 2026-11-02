@@ -275,3 +275,15 @@ export type { WorkflowsFeaturedAddResponse } from "./WorkflowsFeaturedAddRespons
 export type { WorkflowsFeaturedListResponse } from "./WorkflowsFeaturedListResponse.ts";
 export type { WorkflowsFeaturedRemoveResponse } from "./WorkflowsFeaturedRemoveResponse.ts";
 export type { WorkflowsFeaturedSetResponse } from "./WorkflowsFeaturedSetResponse.ts";
+export type { CanvasesGetContentResponse } from "./CanvasesGetContentResponse.ts";
+export type { SlackbotSkillsCreateResponse } from "./SlackbotSkillsCreateResponse.ts";
+export type { SlackbotSkillsDeleteResponse } from "./SlackbotSkillsDeleteResponse.ts";
+export type { SlackbotSkillsInfoResponse } from "./SlackbotSkillsInfoResponse.ts";
+export type { SlackbotSkillsLibraryAddResponse } from "./SlackbotSkillsLibraryAddResponse.ts";
+export type { SlackbotSkillsLibraryRemoveResponse } from "./SlackbotSkillsLibraryRemoveResponse.ts";
+export type { SlackbotSkillsListResponse } from "./SlackbotSkillsListResponse.ts";
+export type { SlackbotSkillsUpdateResponse } from "./SlackbotSkillsUpdateResponse.ts";
+export type { AdminSlackbotSkillsListResponse } from "./AdminSlackbotSkillsListResponse.ts";
+export type { AdminSlackbotSkillsPublishResponse } from "./AdminSlackbotSkillsPublishResponse.ts";
+export type { AdminSlackbotSkillsUnpublishResponse } from "./AdminSlackbotSkillsUnpublishResponse.ts";
+export type { AdminSlackbotSkillsSetAutoEnabledResponse } from "./AdminSlackbotSkillsSetAutoEnabledResponse.ts";

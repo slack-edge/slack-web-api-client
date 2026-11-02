@@ -874,6 +874,77 @@ export interface CanvasesSectionsLookupRequest extends SlackAPIRequest {
 }
 
 /*
+ * `canvases.getContent`
+ */
+export interface CanvasesGetContentRequest extends SlackAPIRequest {
+  canvas_id: string;
+  // "markdown" (default) or "html"
+  content_type?: "markdown" | "html" | string;
+}
+
+/*
+ * `slackbot.skills.*`
+ */
+export interface SlackbotSkillsCreateRequest extends SlackAPIRequest {
+  display_name: string;
+  instructions?: string;
+  // Turn an existing canvas the caller owns into a skill
+  canvas_id?: string;
+  description?: string;
+  category?: string;
+  example_prompt?: string;
+  mcp_servers?: Record<string, any>[];
+}
+export interface SlackbotSkillsDeleteRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsInfoRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsLibraryAddRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsLibraryRemoveRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsListRequest extends SlackAPIRequest, CursorPaginationEnabled {
+  filter?: string;
+  category?: string;
+}
+export interface SlackbotSkillsUpdateRequest extends SlackAPIRequest {
+  skill_id: string;
+  display_name?: string;
+  instructions?: string;
+  description?: string;
+  category?: string;
+  example_prompt?: string;
+  mcp_servers?: Record<string, any>[];
+}
+
+/*
+ * `admin.slackbot.skills.*`
+ */
+export interface AdminSlackbotSkillsListRequest extends SlackAPIRequest, CursorPaginationEnabled {
+  category?: string;
+  creator_ids?: string[];
+  publish_status?: string;
+  auto_enabled_status?: string;
+  sort?: string;
+  sort_dir?: string;
+}
+export interface AdminSlackbotSkillsPublishRequest extends SlackAPIRequest {
+  skill_ids: string[];
+}
+export interface AdminSlackbotSkillsUnpublishRequest extends SlackAPIRequest {
+  skill_ids: string[];
+}
+export interface AdminSlackbotSkillsSetAutoEnabledRequest extends SlackAPIRequest {
+  skill_id: string;
+  permission_type: string;
+  usergroup_ids?: string[];
+}
+
+/*
  * `chat.*`
  */
 export interface ChatDeleteRequest extends SlackAPIRequest {

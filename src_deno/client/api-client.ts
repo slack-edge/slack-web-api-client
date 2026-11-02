@@ -74,6 +74,18 @@ import type {
   AdminUsergroupsAddTeamsRequest,
   AdminUsergroupsListChannelsRequest,
   AdminUsergroupsRemoveChannelsRequest,
+  CanvasesGetContentRequest,
+  SlackbotSkillsCreateRequest,
+  SlackbotSkillsDeleteRequest,
+  SlackbotSkillsInfoRequest,
+  SlackbotSkillsLibraryAddRequest,
+  SlackbotSkillsLibraryRemoveRequest,
+  SlackbotSkillsListRequest,
+  SlackbotSkillsUpdateRequest,
+  AdminSlackbotSkillsListRequest,
+  AdminSlackbotSkillsPublishRequest,
+  AdminSlackbotSkillsUnpublishRequest,
+  AdminSlackbotSkillsSetAutoEnabledRequest,
   AdminUsersAssignRequest,
   AdminUsersGetExpirationRequest,
   AdminUsersInviteRequest,
@@ -375,6 +387,18 @@ import type {
   AdminUsergroupsAddTeamsResponse,
   AdminUsergroupsListChannelsResponse,
   AdminUsergroupsRemoveChannelsResponse,
+  CanvasesGetContentResponse,
+  SlackbotSkillsCreateResponse,
+  SlackbotSkillsDeleteResponse,
+  SlackbotSkillsInfoResponse,
+  SlackbotSkillsLibraryAddResponse,
+  SlackbotSkillsLibraryRemoveResponse,
+  SlackbotSkillsListResponse,
+  SlackbotSkillsUpdateResponse,
+  AdminSlackbotSkillsListResponse,
+  AdminSlackbotSkillsPublishResponse,
+  AdminSlackbotSkillsUnpublishResponse,
+  AdminSlackbotSkillsSetAutoEnabledResponse,
   AdminUsersAssignResponse,
   AdminUsersGetExpirationResponse,
   AdminUsersInviteResponse,
@@ -1445,6 +1469,14 @@ export class SlackAPIClient {
         ),
       },
     },
+    slackbot: {
+      skills: {
+        list: this.#bindApiCall<AdminSlackbotSkillsListRequest, AdminSlackbotSkillsListResponse>(this, "admin.slackbot.skills.list"),
+        publish: this.#bindApiCall<AdminSlackbotSkillsPublishRequest, AdminSlackbotSkillsPublishResponse>(this, "admin.slackbot.skills.publish"),
+        unpublish: this.#bindApiCall<AdminSlackbotSkillsUnpublishRequest, AdminSlackbotSkillsUnpublishResponse>(this, "admin.slackbot.skills.unpublish"),
+        setAutoEnabled: this.#bindApiCall<AdminSlackbotSkillsSetAutoEnabledRequest, AdminSlackbotSkillsSetAutoEnabledResponse>(this, "admin.slackbot.skills.setAutoEnabled"),
+      },
+    },
     usergroups: {
       addChannels: this.#bindApiCall<
         AdminUsergroupsAddChannelsRequest,
@@ -1902,6 +1934,7 @@ export class SlackAPIClient {
       this,
       "canvases.delete",
     ),
+    getContent: this.#bindApiCall<CanvasesGetContentRequest, CanvasesGetContentResponse>(this, "canvases.getContent"),
     sections: {
       lookup: this.#bindApiCall<
         CanvasesSectionsLookupRequest,
@@ -2360,6 +2393,20 @@ export class SlackAPIClient {
       this,
       "search.messages",
     ),
+  };
+
+  public readonly slackbot = {
+    skills: {
+      create: this.#bindApiCall<SlackbotSkillsCreateRequest, SlackbotSkillsCreateResponse>(this, "slackbot.skills.create"),
+      delete: this.#bindApiCall<SlackbotSkillsDeleteRequest, SlackbotSkillsDeleteResponse>(this, "slackbot.skills.delete"),
+      info: this.#bindApiCall<SlackbotSkillsInfoRequest, SlackbotSkillsInfoResponse>(this, "slackbot.skills.info"),
+      list: this.#bindApiCall<SlackbotSkillsListRequest, SlackbotSkillsListResponse>(this, "slackbot.skills.list"),
+      update: this.#bindApiCall<SlackbotSkillsUpdateRequest, SlackbotSkillsUpdateResponse>(this, "slackbot.skills.update"),
+      library: {
+        add: this.#bindApiCall<SlackbotSkillsLibraryAddRequest, SlackbotSkillsLibraryAddResponse>(this, "slackbot.skills.library.add"),
+        remove: this.#bindApiCall<SlackbotSkillsLibraryRemoveRequest, SlackbotSkillsLibraryRemoveResponse>(this, "slackbot.skills.library.remove"),
+      },
+    },
   };
 
   public readonly slackLists = {

@@ -275,3 +275,15 @@ export type { WorkflowsFeaturedAddResponse } from "./WorkflowsFeaturedAddRespons
 export type { WorkflowsFeaturedListResponse } from "./WorkflowsFeaturedListResponse";
 export type { WorkflowsFeaturedRemoveResponse } from "./WorkflowsFeaturedRemoveResponse";
 export type { WorkflowsFeaturedSetResponse } from "./WorkflowsFeaturedSetResponse";
+export type { CanvasesGetContentResponse } from "./CanvasesGetContentResponse";
+export type { SlackbotSkillsCreateResponse } from "./SlackbotSkillsCreateResponse";
+export type { SlackbotSkillsDeleteResponse } from "./SlackbotSkillsDeleteResponse";
+export type { SlackbotSkillsInfoResponse } from "./SlackbotSkillsInfoResponse";
+export type { SlackbotSkillsLibraryAddResponse } from "./SlackbotSkillsLibraryAddResponse";
+export type { SlackbotSkillsLibraryRemoveResponse } from "./SlackbotSkillsLibraryRemoveResponse";
+export type { SlackbotSkillsListResponse } from "./SlackbotSkillsListResponse";
+export type { SlackbotSkillsUpdateResponse } from "./SlackbotSkillsUpdateResponse";
+export type { AdminSlackbotSkillsListResponse } from "./AdminSlackbotSkillsListResponse";
+export type { AdminSlackbotSkillsPublishResponse } from "./AdminSlackbotSkillsPublishResponse";
+export type { AdminSlackbotSkillsUnpublishResponse } from "./AdminSlackbotSkillsUnpublishResponse";
+export type { AdminSlackbotSkillsSetAutoEnabledResponse } from "./AdminSlackbotSkillsSetAutoEnabledResponse";
