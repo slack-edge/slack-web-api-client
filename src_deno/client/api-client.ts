@@ -60,6 +60,10 @@ import type {
   AdminRolesAddAssignmentsRequest,
   AdminRolesListAssignmentsRequest,
   AdminRolesRemoveAssignmentsRequest,
+  AdminSlackbotSkillsListRequest,
+  AdminSlackbotSkillsPublishRequest,
+  AdminSlackbotSkillsSetAutoEnabledRequest,
+  AdminSlackbotSkillsUnpublishRequest,
   AdminTeamsAdminsListRequest,
   AdminTeamsCreateRequest,
   AdminTeamsListRequest,
@@ -149,6 +153,7 @@ import type {
   CanvasesCreateRequest,
   CanvasesDeleteRequest,
   CanvasesEditRequest,
+  CanvasesGetContentRequest,
   CanvasesSectionsLookupRequest,
   ChatAppendStreamRequest,
   ChatDeleteRequest,
@@ -255,6 +260,13 @@ import type {
   SlackListsItemsListRequest,
   SlackListsItemsUpdateRequest,
   SlackListsUpdateRequest,
+  SlackbotSkillsCreateRequest,
+  SlackbotSkillsDeleteRequest,
+  SlackbotSkillsInfoRequest,
+  SlackbotSkillsLibraryAddRequest,
+  SlackbotSkillsLibraryRemoveRequest,
+  SlackbotSkillsListRequest,
+  SlackbotSkillsUpdateRequest,
   StarsAddRequest,
   StarsListRequest,
   StarsRemoveRequest,
@@ -361,6 +373,10 @@ import type {
   AdminRolesAddAssignmentsResponse,
   AdminRolesListAssignmentsResponse,
   AdminRolesRemoveAssignmentsResponse,
+  AdminSlackbotSkillsListResponse,
+  AdminSlackbotSkillsPublishResponse,
+  AdminSlackbotSkillsSetAutoEnabledResponse,
+  AdminSlackbotSkillsUnpublishResponse,
   AdminTeamsAdminsListResponse,
   AdminTeamsCreateResponse,
   AdminTeamsListResponse,
@@ -431,6 +447,7 @@ import type {
   CanvasesCreateResponse,
   CanvasesDeleteResponse,
   CanvasesEditResponse,
+  CanvasesGetContentResponse,
   CanvasesSectionsLookupResponse,
   ChatAppendStreamResponse,
   ChatDeleteResponse,
@@ -528,6 +545,13 @@ import type {
   SlackListsItemsListResponse,
   SlackListsItemsUpdateResponse,
   SlackListsUpdateResponse,
+  SlackbotSkillsCreateResponse,
+  SlackbotSkillsDeleteResponse,
+  SlackbotSkillsInfoResponse,
+  SlackbotSkillsLibraryAddResponse,
+  SlackbotSkillsLibraryRemoveResponse,
+  SlackbotSkillsListResponse,
+  SlackbotSkillsUpdateResponse,
   StarsAddResponse,
   StarsListResponse,
   StarsRemoveResponse,
@@ -1382,6 +1406,38 @@ export class SlackAPIClient {
         "admin.roles.removeAssignments",
       ),
     },
+    slackbot: {
+      skills: {
+        list: this.#bindNoArgAllowedApiCall<
+          AdminSlackbotSkillsListRequest,
+          AdminSlackbotSkillsListResponse
+        >(
+          this,
+          "admin.slackbot.skills.list",
+        ),
+        publish: this.#bindApiCall<
+          AdminSlackbotSkillsPublishRequest,
+          AdminSlackbotSkillsPublishResponse
+        >(
+          this,
+          "admin.slackbot.skills.publish",
+        ),
+        setAutoEnabled: this.#bindApiCall<
+          AdminSlackbotSkillsSetAutoEnabledRequest,
+          AdminSlackbotSkillsSetAutoEnabledResponse
+        >(
+          this,
+          "admin.slackbot.skills.setAutoEnabled",
+        ),
+        unpublish: this.#bindApiCall<
+          AdminSlackbotSkillsUnpublishRequest,
+          AdminSlackbotSkillsUnpublishResponse
+        >(
+          this,
+          "admin.slackbot.skills.unpublish",
+        ),
+      },
+    },
     teams: {
       admins: {
         list: this.#bindApiCall<
@@ -1897,6 +1953,13 @@ export class SlackAPIClient {
     edit: this.#bindApiCall<CanvasesEditRequest, CanvasesEditResponse>(
       this,
       "canvases.edit",
+    ),
+    getContent: this.#bindApiCall<
+      CanvasesGetContentRequest,
+      CanvasesGetContentResponse
+    >(
+      this,
+      "canvases.getContent",
     ),
     delete: this.#bindApiCall<CanvasesDeleteRequest, CanvasesDeleteResponse>(
       this,
@@ -2419,6 +2482,62 @@ export class SlackAPIClient {
         SlackListsItemsUpdateRequest,
         SlackListsItemsUpdateResponse
       >(this, "slackLists.items.update"),
+    },
+  };
+
+  public readonly slackbot = {
+    skills: {
+      create: this.#bindApiCall<
+        SlackbotSkillsCreateRequest,
+        SlackbotSkillsCreateResponse
+      >(
+        this,
+        "slackbot.skills.create",
+      ),
+      delete: this.#bindApiCall<
+        SlackbotSkillsDeleteRequest,
+        SlackbotSkillsDeleteResponse
+      >(
+        this,
+        "slackbot.skills.delete",
+      ),
+      info: this.#bindApiCall<
+        SlackbotSkillsInfoRequest,
+        SlackbotSkillsInfoResponse
+      >(
+        this,
+        "slackbot.skills.info",
+      ),
+      list: this.#bindNoArgAllowedApiCall<
+        SlackbotSkillsListRequest,
+        SlackbotSkillsListResponse
+      >(
+        this,
+        "slackbot.skills.list",
+      ),
+      update: this.#bindApiCall<
+        SlackbotSkillsUpdateRequest,
+        SlackbotSkillsUpdateResponse
+      >(
+        this,
+        "slackbot.skills.update",
+      ),
+      library: {
+        add: this.#bindApiCall<
+          SlackbotSkillsLibraryAddRequest,
+          SlackbotSkillsLibraryAddResponse
+        >(
+          this,
+          "slackbot.skills.library.add",
+        ),
+        remove: this.#bindApiCall<
+          SlackbotSkillsLibraryRemoveRequest,
+          SlackbotSkillsLibraryRemoveResponse
+        >(
+          this,
+          "slackbot.skills.library.remove",
+        ),
+      },
     },
   };
 

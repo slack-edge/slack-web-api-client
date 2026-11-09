@@ -349,6 +349,25 @@ export interface AdminRolesRemoveAssignmentsRequest extends SlackAPIRequest {
   entity_ids: string[];
   user_ids: string[];
 }
+export interface AdminSlackbotSkillsListRequest extends SlackAPIRequest, CursorPaginationEnabled {
+  category?: SlackbotSkillCategory;
+  creator_ids?: string[];
+  publish_status?: "all" | "published" | "unpublished";
+  auto_enabled_status?: "all" | "enabled" | "disabled";
+  sort?: "name" | "usage_count" | "date_updated";
+  sort_dir?: "asc" | "desc";
+}
+export interface AdminSlackbotSkillsPublishRequest extends SlackAPIRequest {
+  skill_ids: string[];
+}
+export interface AdminSlackbotSkillsSetAutoEnabledRequest extends SlackAPIRequest {
+  skill_id: string;
+  permission_type: "everyone" | "named_entities" | "no_one";
+  usergroup_ids?: string[];
+}
+export interface AdminSlackbotSkillsUnpublishRequest extends SlackAPIRequest {
+  skill_ids: string[];
+}
 export interface AdminTeamsAdminsListRequest
   extends SlackAPIRequest, CursorPaginationEnabled {
   team_id: string;
@@ -936,6 +955,12 @@ export interface CanvasesSectionsLookupRequest extends SlackAPIRequest {
     section_types?: ("any_header" | "h1" | "h2" | "h3")[];
     contains_text?: string;
   };
+}
+
+export interface CanvasesGetContentRequest extends SlackAPIRequest {
+  canvas_id: string;
+  // default: markdown
+  content_type?: "markdown" | "html";
 }
 
 /*
@@ -1685,6 +1710,67 @@ export interface SlackListsUpdateRequest extends SlackAPIRequest {
   // deno-lint-ignore no-explicit-any
   schema?: any;
   todo_mode?: boolean;
+}
+
+/*
+ * `slackbot.skills.*`
+ */
+export type SlackbotSkillCategory =
+  | "communication"
+  | "customer_support"
+  | "data_and_analytics"
+  | "engineering"
+  | "product_management"
+  | "productivity"
+  | "professional_development"
+  | "project_management"
+  | "sales"
+  | "system"
+  | "team_management"
+  | "other";
+export interface SlackbotSkillMCPServer {
+  service_type?: string;
+  app_id?: string;
+  server_id?: string;
+  display_name?: string;
+  is_available?: boolean;
+}
+// Send exactly one of `instructions` or `canvas_id`
+export interface SlackbotSkillsCreateRequest extends SlackAPIRequest {
+  display_name: string;
+  instructions?: string;
+  canvas_id?: string;
+  description?: string;
+  category?: SlackbotSkillCategory;
+  example_prompt?: string;
+  mcp_servers?: SlackbotSkillMCPServer[];
+}
+export interface SlackbotSkillsDeleteRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsInfoRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsLibraryAddRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsLibraryRemoveRequest extends SlackAPIRequest {
+  skill_id: string;
+}
+export interface SlackbotSkillsListRequest extends SlackAPIRequest, CursorPaginationEnabled {
+  // default: library
+  filter?: "library" | "owned" | "catalog";
+  category?: SlackbotSkillCategory;
+}
+// Only the provided fields are modified; send an empty string (or [] for mcp_servers) to clear
+export interface SlackbotSkillsUpdateRequest extends SlackAPIRequest {
+  skill_id: string;
+  display_name?: string;
+  instructions?: string;
+  description?: string;
+  category?: SlackbotSkillCategory | "";
+  example_prompt?: string;
+  mcp_servers?: SlackbotSkillMCPServer[];
 }
 
 /*
