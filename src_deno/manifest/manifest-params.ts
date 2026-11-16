@@ -28,12 +28,19 @@ export interface ManifestFeatures {
   shortcuts?: ManifestShortcut[];
   slash_commands?: ManifestSlashCommand[];
   unfurl_domains?: string[];
+  user_connections?: ManifestUserConnections;
+}
+
+export interface ManifestUserConnections {
+  is_enabled?: boolean;
+  auth_hosts?: string[];
 }
 
 export interface ManifestAppHome {
   home_tab_enabled?: boolean;
   messages_tab_enabled?: boolean;
   messages_tab_read_only_enabled?: boolean;
+  agent_tasks_enabled?: boolean;
 }
 
 export interface ManifestBotUser {

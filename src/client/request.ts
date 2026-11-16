@@ -55,6 +55,19 @@ export interface AdminAppsApproveRequest extends SlackAPIRequest {
   request_id?: string;
   team_id?: string;
 }
+export interface AdminAppsMcpServersListRequest extends SlackAPIRequest, CursorPaginationEnabled {}
+export interface AdminAppsMcpServersPermissionsListRequest extends SlackAPIRequest {
+  app_id: string;
+}
+export type AdminAppsMcpServersPermissionType = "everyone" | "no_one" | "named_entities" | "named_entities_exclude";
+export interface AdminAppsMcpServersPermissionsSetRequest extends SlackAPIRequest {
+  app_id: string;
+  server_id: string;
+  permission_type: AdminAppsMcpServersPermissionType;
+  // used when permission_type is named_entities or named_entities_exclude
+  user_ids?: string[];
+  usergroup_ids?: string[];
+}
 export interface AdminAppsApprovedListRequest extends SlackAPIRequest, CursorPaginationEnabled {
   team_id?: string;
   enterprise_id?: string;
@@ -851,6 +864,7 @@ export interface CanvasDocumentContent {
 export interface CanvasesCreateRequest extends SlackAPIRequest {
   title?: string;
   document_content: CanvasDocumentContent;
+  channel_id?: string; // the channel the canvas will be tabbed in; required for free teams
 }
 export interface CanvasesDeleteRequest extends SlackAPIRequest {
   canvas_id: string;
@@ -1280,6 +1294,7 @@ export interface FileUploadV2Share {
   channel_id?: string;
   thread_ts?: string; // if specified, `channel_id` must be set
   initial_comment?: string; // if specified, `channel_id` must be set
+  blocks?: AnyMessageBlock[] | string; // if specified, `channel_id` must be set; ignored when `initial_comment` is provided
 }
 export interface FilesUploadV2Request1 extends SlackAPIRequest, FileUploadV2, FileUploadV2Share {}
 export interface FilesUploadV2RequestN extends SlackAPIRequest, FileUploadV2Share {
@@ -1305,6 +1320,7 @@ export interface FilesCompleteUploadExternalRequest extends SlackAPIRequest {
   files: FileUploadComplete[];
   channel_id?: string; // if omitted, file will be private
   initial_comment?: string;
+  blocks?: AnyMessageBlock[] | string; // ignored when initial_comment is provided
   thread_ts?: string;
 }
 export interface FileUploadComplete {
@@ -1622,6 +1638,7 @@ export interface TeamInfoRequest extends SlackAPIRequest {
   // Will only return team that the authenticated token is allowed to see through external shared channels
   team?: string;
   domain?: string; // available only for Enterprise Grid
+  include_slackbot_availability?: boolean; // adds team.slackbot_availability for your own workspace/org
 }
 export interface TeamIntegrationLogsRequest extends SlackAPIRequest {
   app_id?: string;

@@ -10,6 +10,7 @@ export type AppsManifestExportResponse = SlackAPIResponse & {
   needed?: string;
   ok: boolean;
   provided?: string;
+  warning?: string;
 };
 
 export interface Manifest {
@@ -39,6 +40,7 @@ export interface Features {
   shortcuts?: Shortcut[];
   slash_commands?: SlashCommand[];
   unfurl_domains?: string[];
+  user_connections?: UserConnections;
 }
 
 export interface AppHome {
@@ -67,6 +69,11 @@ export interface SlashCommand {
   usage_hint?: string;
 }
 
+export interface UserConnections {
+  auth_hosts?: string[];
+  is_enabled?: boolean;
+}
+
 export interface Function {
   description?: string;
   input_parameters?: { [key: string]: PutParameter };
@@ -88,6 +95,7 @@ export interface PutParameter {
 }
 
 export interface OauthConfig {
+  pkce_enabled?: boolean;
   redirect_urls?: string[];
   scopes?: Scopes;
   token_management_enabled?: boolean;
@@ -106,6 +114,7 @@ export interface Settings {
   function_runtime?: string;
   hermes_app_type?: string;
   interactivity?: Interactivity;
+  is_mcp_enabled?: boolean;
   long_description?: string;
   org_deploy_enabled?: boolean;
   socket_mode_enabled?: boolean;

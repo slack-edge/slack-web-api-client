@@ -96,6 +96,8 @@ export type AnyManifestEvent = Exclude<
   | "tokens_revoked"
   | "url_verification"
   | "user_change"
+  | "user_connection"
+  | "user_connection_status_requested"
   | "user_huddle_changed"
   | "user_resource_denied"
   | "user_resource_granted"

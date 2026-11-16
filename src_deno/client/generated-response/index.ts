@@ -3,6 +3,9 @@ export type { AdminAppsActivitiesListResponse } from "./AdminAppsActivitiesListR
 export type { AdminAppsApproveResponse } from "./AdminAppsApproveResponse.ts";
 export type { AdminAppsApprovedListResponse } from "./AdminAppsApprovedListResponse.ts";
 export type { AdminAppsClearResolutionResponse } from "./AdminAppsClearResolutionResponse.ts";
+export type { AdminAppsMcpServersListResponse } from "./AdminAppsMcpServersListResponse.ts";
+export type { AdminAppsMcpServersPermissionsListResponse } from "./AdminAppsMcpServersPermissionsListResponse.ts";
+export type { AdminAppsMcpServersPermissionsSetResponse } from "./AdminAppsMcpServersPermissionsSetResponse.ts";
 export type { AdminAppsConfigLookupResponse } from "./AdminAppsConfigLookupResponse.ts";
 export type { AdminAppsConfigSetResponse } from "./AdminAppsConfigSetResponse.ts";
 export type { AdminAppsRequestsCancelResponse } from "./AdminAppsRequestsCancelResponse.ts";

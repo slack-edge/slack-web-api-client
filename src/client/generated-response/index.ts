@@ -3,6 +3,9 @@ export type { AdminAppsActivitiesListResponse } from "./AdminAppsActivitiesListR
 export type { AdminAppsApproveResponse } from "./AdminAppsApproveResponse";
 export type { AdminAppsApprovedListResponse } from "./AdminAppsApprovedListResponse";
 export type { AdminAppsClearResolutionResponse } from "./AdminAppsClearResolutionResponse";
+export type { AdminAppsMcpServersListResponse } from "./AdminAppsMcpServersListResponse";
+export type { AdminAppsMcpServersPermissionsListResponse } from "./AdminAppsMcpServersPermissionsListResponse";
+export type { AdminAppsMcpServersPermissionsSetResponse } from "./AdminAppsMcpServersPermissionsSetResponse";
 export type { AdminAppsConfigLookupResponse } from "./AdminAppsConfigLookupResponse";
 export type { AdminAppsConfigSetResponse } from "./AdminAppsConfigSetResponse";
 export type { AdminAppsRequestsCancelResponse } from "./AdminAppsRequestsCancelResponse";

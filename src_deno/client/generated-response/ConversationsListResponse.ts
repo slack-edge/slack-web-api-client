@@ -13,6 +13,7 @@ export type ConversationsListResponse = SlackAPIResponse & {
   ok: boolean;
   provided?: string;
   response_metadata?: ResponseMetadata;
+  warning?: string;
 };
 
 export interface Channel {
@@ -25,6 +26,7 @@ export interface Channel {
   is_archived?: boolean;
   is_channel?: boolean;
   is_ext_shared?: boolean;
+  is_file?: boolean;
   is_general?: boolean;
   is_global_shared?: boolean;
   is_group?: boolean;
@@ -58,6 +60,7 @@ export interface Channel {
 export interface Properties {
   canvas?: Canvas;
   channel_workflows?: ChannelWorkflow[];
+  has_slack_connect_invite_created?: boolean;
   is_dormant?: boolean;
   meeting_notes?: MeetingNotes;
   posting_restricted_to?: RestrictedTo;
@@ -99,6 +102,7 @@ export interface Tab {
 export interface Data {
   file_id?: string;
   folder_bookmark_id?: string;
+  mute_edit_updates?: boolean;
   shared_ts?: string;
 }
 
