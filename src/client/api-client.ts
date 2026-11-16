@@ -3,6 +3,9 @@ import type {
   APITestRequest,
   AdminAppsActivitiesListRequest,
   AdminAppsApproveRequest,
+  AdminAppsMcpServersListRequest,
+  AdminAppsMcpServersPermissionsListRequest,
+  AdminAppsMcpServersPermissionsSetRequest,
   AdminAppsApprovedListRequest,
   AdminAppsClearResolutionRequest,
   AdminAppsRequestsCancelRequest,
@@ -302,6 +305,9 @@ import type {
 } from "./request";
 import type {
   AdminAppsApproveResponse,
+  AdminAppsMcpServersListResponse,
+  AdminAppsMcpServersPermissionsListResponse,
+  AdminAppsMcpServersPermissionsSetResponse,
   AdminAppsApprovedListResponse,
   AdminAppsClearResolutionResponse,
   AdminAppsRequestsCancelResponse,
@@ -882,6 +888,7 @@ export class SlackAPIClient {
         files: await Promise.all(completes),
         channel_id: params.channel_id,
         initial_comment: params.initial_comment,
+        blocks: params.blocks,
         thread_ts: params.thread_ts,
       });
       return {
@@ -925,6 +932,24 @@ export class SlackAPIClient {
       approve: this.#bindNoArgAllowedApiCall<AdminAppsApproveRequest, AdminAppsApproveResponse>(this, "admin.apps.approve"),
       approved: {
         list: this.#bindNoArgAllowedApiCall<AdminAppsApprovedListRequest, AdminAppsApprovedListResponse>(this, "admin.apps.approved.list"),
+      },
+      mcp: {
+        servers: {
+          list: this.#bindNoArgAllowedApiCall<AdminAppsMcpServersListRequest, AdminAppsMcpServersListResponse>(
+            this,
+            "admin.apps.mcp.servers.list",
+          ),
+          permissions: {
+            list: this.#bindApiCall<AdminAppsMcpServersPermissionsListRequest, AdminAppsMcpServersPermissionsListResponse>(
+              this,
+              "admin.apps.mcp.servers.permissions.list",
+            ),
+            set: this.#bindApiCall<AdminAppsMcpServersPermissionsSetRequest, AdminAppsMcpServersPermissionsSetResponse>(
+              this,
+              "admin.apps.mcp.servers.permissions.set",
+            ),
+          },
+        },
       },
       clearResolution: this.#bindApiCall<AdminAppsClearResolutionRequest, AdminAppsClearResolutionResponse>(
         this,

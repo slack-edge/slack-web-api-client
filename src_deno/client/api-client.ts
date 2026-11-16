@@ -7,6 +7,9 @@ import type {
   AdminAppsClearResolutionRequest,
   AdminAppsConfigLookupRequest,
   AdminAppsConfigSetRequest,
+  AdminAppsMcpServersListRequest,
+  AdminAppsMcpServersPermissionsListRequest,
+  AdminAppsMcpServersPermissionsSetRequest,
   AdminAppsRequestsCancelRequest,
   AdminAppsRequestsListRequest,
   AdminAppsRestrictedListRequest,
@@ -308,6 +311,9 @@ import type {
   AdminAppsClearResolutionResponse,
   AdminAppsConfigLookupResponse,
   AdminAppsConfigSetResponse,
+  AdminAppsMcpServersListResponse,
+  AdminAppsMcpServersPermissionsListResponse,
+  AdminAppsMcpServersPermissionsSetResponse,
   AdminAppsRequestsCancelResponse,
   AdminAppsRequestsListResponse,
   AdminAppsRestrictedListResponse,
@@ -943,6 +949,7 @@ export class SlackAPIClient {
         files: await Promise.all(completes),
         channel_id: params.channel_id,
         initial_comment: params.initial_comment,
+        blocks: params.blocks,
         thread_ts: params.thread_ts,
       });
       return {
@@ -1006,6 +1013,33 @@ export class SlackAPIClient {
           AdminAppsApprovedListRequest,
           AdminAppsApprovedListResponse
         >(this, "admin.apps.approved.list"),
+      },
+      mcp: {
+        servers: {
+          list: this.#bindNoArgAllowedApiCall<
+            AdminAppsMcpServersListRequest,
+            AdminAppsMcpServersListResponse
+          >(
+            this,
+            "admin.apps.mcp.servers.list",
+          ),
+          permissions: {
+            list: this.#bindApiCall<
+              AdminAppsMcpServersPermissionsListRequest,
+              AdminAppsMcpServersPermissionsListResponse
+            >(
+              this,
+              "admin.apps.mcp.servers.permissions.list",
+            ),
+            set: this.#bindApiCall<
+              AdminAppsMcpServersPermissionsSetRequest,
+              AdminAppsMcpServersPermissionsSetResponse
+            >(
+              this,
+              "admin.apps.mcp.servers.permissions.set",
+            ),
+          },
+        },
       },
       clearResolution: this.#bindApiCall<
         AdminAppsClearResolutionRequest,
@@ -1758,11 +1792,17 @@ export class SlackAPIClient {
         bulkUpdate: this.#bindApiCall<
           AppsUserConnectionBulkUpdateRequest,
           AppsUserConnectionBulkUpdateResponse
-        >(this, "apps.user.connection.bulkUpdate"),
+        >(
+          this,
+          "apps.user.connection.bulkUpdate",
+        ),
         requestAuth: this.#bindApiCall<
           AppsUserConnectionRequestAuthRequest,
           AppsUserConnectionRequestAuthResponse
-        >(this, "apps.user.connection.requestAuth"),
+        >(
+          this,
+          "apps.user.connection.requestAuth",
+        ),
       },
     },
   };
