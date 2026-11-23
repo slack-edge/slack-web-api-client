@@ -111,6 +111,8 @@ export type { AppsPermissionsResourcesListResponse } from "./AppsPermissionsReso
 export type { AppsPermissionsScopesListResponse } from "./AppsPermissionsScopesListResponse";
 export type { AppsPermissionsUsersListResponse } from "./AppsPermissionsUsersListResponse";
 export type { AppsPermissionsUsersRequestResponse } from "./AppsPermissionsUsersRequestResponse";
+export type { AppsIconSetResponse } from "./AppsIconSetResponse";
+export type { AppsManagedPermissionsSetResponse } from "./AppsManagedPermissionsSetResponse";
 export type { AppsUninstallResponse } from "./AppsUninstallResponse";
 export type { AppsUserConnectionBulkUpdateResponse } from "./AppsUserConnectionBulkUpdateResponse";
 export type { AppsUserConnectionRequestAuthResponse } from "./AppsUserConnectionRequestAuthResponse";

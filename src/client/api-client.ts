@@ -117,6 +117,8 @@ import type {
   AppsManifestExportRequest,
   AppsManifestUpdateRequest,
   AppsManifestValidateRequest,
+  AppsIconSetRequest,
+  AppsManagedPermissionsSetRequest,
   AppsUninstallRequest,
   AssistantSearchContextRequest,
   AssistantSearchInfoRequest,
@@ -382,6 +384,8 @@ import type {
   ApiTestResponse,
   AppsConnectionsOpenResponse,
   AppsEventAuthorizationsListResponse,
+  AppsIconSetResponse,
+  AppsManagedPermissionsSetResponse,
   AppsUninstallResponse,
   AuthRevokeResponse,
   AuthTeamsListResponse,
@@ -1318,6 +1322,14 @@ export class SlackAPIClient {
       update: this.#bindApiCall<AppsManifestUpdateRequest, AppsManifestUpdateResponse>(this, "apps.manifest.update"),
       export: this.#bindApiCall<AppsManifestExportRequest, AppsManifestExportResponse>(this, "apps.manifest.export"),
       validate: this.#bindApiCall<AppsManifestValidateRequest, AppsManifestValidateResponse>(this, "apps.manifest.validate"),
+    },
+    icon: {
+      set: this.#bindApiCall<AppsIconSetRequest, AppsIconSetResponse>(this, "apps.icon.set"),
+    },
+    managed: {
+      permissions: {
+        set: this.#bindApiCall<AppsManagedPermissionsSetRequest, AppsManagedPermissionsSetResponse>(this, "apps.managed.permissions.set"),
+      },
     },
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(this, "apps.uninstall"),
     user: {

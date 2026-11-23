@@ -656,6 +656,19 @@ export interface AppsManifestValidateRequest extends SlackAPIRequest {
   manifest: ManifestParams | string;
 }
 
+// https://docs.slack.dev/reference/methods/apps.icon.set
+export interface AppsIconSetRequest extends SlackAPIRequest {
+  app_id: string;
+  // URL of a publicly hosted image.
+  // Note: uploading the image bytes as `file` requires multipart/form-data,
+  // which this client does not send, so pass a public image URL instead.
+  url: string;
+}
+// https://docs.slack.dev/reference/methods/apps.managed.permissions.set
+export interface AppsManagedPermissionsSetRequest extends SlackAPIRequest {
+  app_id: string;
+  permissions: "everyone" | "app_owner";
+}
 export interface AppsUninstallRequest extends SlackAPIRequest {
   client_id: string;
   client_secret: string;

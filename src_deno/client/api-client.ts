@@ -115,6 +115,8 @@ import type {
   AppsDatastoreQueryRequest,
   AppsDatastoreUpdateRequest,
   AppsEventAuthorizationsListRequest,
+  AppsIconSetRequest,
+  AppsManagedPermissionsSetRequest,
   AppsManifestCreateRequest,
   AppsManifestDeleteRequest,
   AppsManifestExportRequest,
@@ -400,6 +402,8 @@ import type {
   ApiTestResponse,
   AppsConnectionsOpenResponse,
   AppsEventAuthorizationsListResponse,
+  AppsIconSetResponse,
+  AppsManagedPermissionsSetResponse,
   AppsManifestCreateResponse,
   AppsManifestDeleteResponse,
   AppsManifestExportResponse,
@@ -1745,6 +1749,20 @@ export class SlackAPIClient {
         AppsManifestValidateResponse
       >(this, "apps.manifest.validate"),
     },
+    icon: {
+      set: this.#bindApiCall<AppsIconSetRequest, AppsIconSetResponse>(
+        this,
+        "apps.icon.set",
+      ),
+    },
+    managed: {
+      permissions: {
+        set: this.#bindApiCall<
+          AppsManagedPermissionsSetRequest,
+          AppsManagedPermissionsSetResponse
+        >(this, "apps.managed.permissions.set"),
+      },
+    },
     uninstall: this.#bindApiCall<AppsUninstallRequest, AppsUninstallResponse>(
       this,
       "apps.uninstall",
@@ -1758,11 +1776,17 @@ export class SlackAPIClient {
         bulkUpdate: this.#bindApiCall<
           AppsUserConnectionBulkUpdateRequest,
           AppsUserConnectionBulkUpdateResponse
-        >(this, "apps.user.connection.bulkUpdate"),
+        >(
+          this,
+          "apps.user.connection.bulkUpdate",
+        ),
         requestAuth: this.#bindApiCall<
           AppsUserConnectionRequestAuthRequest,
           AppsUserConnectionRequestAuthResponse
-        >(this, "apps.user.connection.requestAuth"),
+        >(
+          this,
+          "apps.user.connection.requestAuth",
+        ),
       },
     },
   };

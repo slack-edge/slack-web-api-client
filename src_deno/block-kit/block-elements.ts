@@ -444,7 +444,18 @@ export type AnyRichTextSectionElement =
   | RichTextSectionUsergroup
   | RichTextSectionDate
   | RichTextSectionBroadcast
-  | RichTextSectionColor;
+  | RichTextSectionColor
+  | RichTextSectionAttachmentMention
+  | RichTextSectionCanvas
+  | RichTextSectionCanvasMessageUnfurl
+  | RichTextSectionCanvasUserMention
+  | RichTextSectionCitation
+  | RichTextSectionListRecord
+  | RichTextSectionMessageMention
+  | RichTextSectionSalesforceDataField
+  | RichTextSectionTag
+  | RichTextSectionWorkObjectMention
+  | RichTextSectionWorkflowMention;
 
 export interface RichTextSectionElement {
   type:
@@ -457,7 +468,18 @@ export interface RichTextSectionElement {
     | "usergroup"
     | "date"
     | "broadcast"
-    | "color";
+    | "color"
+    | "attachment_mention"
+    | "canvas"
+    | "canvas_message_unfurl"
+    | "canvas_user_mention"
+    | "citation"
+    | "list_record"
+    | "message_mention"
+    | "salesforce_data_field"
+    | "tag"
+    | "work_object_mention"
+    | "workflow_mention";
   style?: RichTextSectionElementStyle;
 }
 export interface RichTextSectionText extends RichTextSectionElement {
@@ -509,6 +531,153 @@ export interface RichTextSectionBroadcast extends RichTextSectionElement {
 export interface RichTextSectionColor extends RichTextSectionElement {
   type: "color";
   value: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/attachment-mention-element
+export interface RichTextSectionAttachmentMention
+  extends RichTextSectionElement {
+  type: "attachment_mention";
+  url: string;
+  text?: string;
+  app_id?: string;
+  entity_id?: string;
+  icon_url?: string;
+  channel_id?: string;
+  ts?: string;
+  full_size_preview_enabled?: boolean;
+  icon_name?: string;
+  reference_object_type?: string;
+  product_name?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/canvas-element
+export interface RichTextSectionCanvas extends RichTextSectionElement {
+  type: "canvas";
+  file_id: string;
+  label?: string;
+  hide_title?: boolean;
+  section_id?: string;
+  text?: string;
+  url?: string;
+  is_skill_invocation?: boolean;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/canvas-message-unfurl-element
+export interface RichTextSectionCanvasMessageUnfurl
+  extends RichTextSectionElement {
+  type: "canvas_message_unfurl";
+  root_message_ts: string;
+  root_message_channel: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/canvas-user-mention-element
+export interface RichTextSectionCanvasUserMention
+  extends RichTextSectionElement {
+  type: "canvas_user_mention";
+  user_id: string;
+  thread_id?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/citation-element
+export interface RichTextSectionCitation extends RichTextSectionElement {
+  type: "citation";
+  url: string;
+  text: string;
+  index: number;
+  details: AnyRichTextCitationDetails;
+  from_llm?: boolean;
+  is_slack_url?: boolean;
+}
+export type AnyRichTextCitationDetails =
+  | RichTextCitationFileDetails
+  | RichTextCitationExternalDetails
+  | RichTextCitationWebDetails
+  | RichTextCitationMessageDetails
+  | RichTextCitationMemoryDetails;
+export interface RichTextCitationFileDetails {
+  citation_type: "file";
+  descriptor?: string;
+  file_id?: string;
+}
+export interface RichTextCitationExternalDetails {
+  citation_type: "external";
+  app_name?: string;
+  app_icon_url?: string;
+}
+export interface RichTextCitationWebDetails {
+  citation_type: "web";
+  display_name?: string;
+  title?: string;
+  snippet?: string;
+}
+export interface RichTextCitationMessageDetails {
+  citation_type: "message";
+  channel?: string;
+  message_ts?: string;
+}
+export interface RichTextCitationMemoryDetails {
+  citation_type: "memory";
+  memory_id?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/list-record-element
+export interface RichTextSectionListRecord extends RichTextSectionElement {
+  type: "list_record";
+  file_id: string;
+  record_id?: string;
+  view_id?: string;
+  text?: string;
+  url?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/message-mention-element
+export interface RichTextSectionMessageMention extends RichTextSectionElement {
+  type: "message_mention";
+  channel_id: string;
+  message_ts: string;
+  author_id?: string;
+  thread_ts?: string;
+  text?: string;
+  url?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/salesforce-data-field-element
+export interface RichTextSectionSalesforceDataField
+  extends RichTextSectionElement {
+  type: "salesforce_data_field";
+  salesforce_record_id: string;
+  salesforce_field_label?: string;
+  salesforce_field_api_name?: string;
+  salesforce_include_field_label?: boolean;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/tag-element
+export interface RichTextSectionTag extends RichTextSectionElement {
+  type: "tag";
+  text: string;
+  color?:
+    | "gray"
+    | "brown"
+    | "purple"
+    | "indigo"
+    | "blue"
+    | "green"
+    | "yellow"
+    | "orange"
+    | "red";
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/work-object-mention-element
+export interface RichTextSectionWorkObjectMention
+  extends RichTextSectionElement {
+  type: "work_object_mention";
+  entity_id: string;
+  app_id: string;
+  text: string;
+  url: string;
+  icon_url?: string;
+  full_size_preview_enabled?: boolean;
+  product_name?: string;
+}
+// https://docs.slack.dev/reference/block-kit/block-elements/workflow-mention-element
+export interface RichTextSectionWorkflowMention extends RichTextSectionElement {
+  type: "workflow_mention";
+  workflow_id: string;
+  function_trigger_id: string;
+  text: string;
+  url?: string;
+  channel_id?: string;
+  ts?: string;
 }
 
 export interface RichTextSectionElementStyle {
